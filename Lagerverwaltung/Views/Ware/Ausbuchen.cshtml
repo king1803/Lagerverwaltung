@@ -1,0 +1,58 @@
+﻿@model Lagerverwaltung.ViewModels.AusbuchenViewModel
+@{
+    ViewData["Title"] = "Ausbuchen";
+}
+
+    
+        <div class="container">
+            <h1>Ausbuchen</h1>
+            <div class="card">
+                <h4 class="card-header">
+                    ID: @Model.Ware_Id
+                </h4>
+                <div class="card-body">
+                    <ul class="list-group-flush">
+                        <li class="list-group-item">
+                            Beschreibung: @Model.Ware_Beschreibung
+                        </li>
+                        <li class="list-group-item">
+                            Eingelagerte Menge: <span class="text-danger">@Convert.ToInt32(Model.Menge)</span>
+                        </li>
+                        <li class="list-group-item">
+                            Lagerplatz: <span class="text-danger ">@Model.Lagerplatz_Beschreibung</span>
+</li>
+                        <li class="list-group-item">
+                            <form asp-action="Ausbuchen" method="post">
+                                <div class="form-group align-content-center col-2">
+                                    <label asp-for="MengeNeu" class="form-label"></label>
+                                    <input asp-for="MengeNeu" class="form-control" value=@Convert.ToInt32(Model.Menge) />
+                                    <span asp-validation-for="MengeNeu" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <input asp-for="Menge" class="form-control" type="hidden" value=@Convert.ToInt32(Model.Menge) />
+                                    <input asp-for="Ware_Id" class="form-control" type="hidden" value=@Model.Ware_Id />
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <input type="submit" value="Buchen" class="btn btn-primary" />
+                                    <button asp-action="Index" class="btn btn-outline-danger">Abbrechen</button>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                    
+                    
+                    
+
+            </div>
+                <div class="card-footer text-muted">
+                    Einlagerungsdatum: @Model.Ware_Einlagerungsdatum.ToShortDateString()
+                </div>
+
+            </div>
+
+        </div>

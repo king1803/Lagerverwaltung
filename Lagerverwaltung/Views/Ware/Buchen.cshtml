@@ -1,0 +1,53 @@
+﻿@model Lagerverwaltung.ViewModels.BuchenViewModel
+
+@{
+    ViewData["Title"] = "Buchen";
+}
+
+<h1>Buchen</h1>
+
+<h4>Ware</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Buchen">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ware_Beschreibung" class="control-label"></label>
+                <input asp-for="Ware_Beschreibung" class="form-control" value="Beschreibung..."/>
+                <span asp-validation-for="Ware_Beschreibung" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Menge" class="control-label"></label>
+                <input asp-for="Menge" type="number" class="form-control" value="1" />
+                <span asp-validation-for="Menge" class="text-danger"></span>
+            </div>
+            
+                <div class="input-group mb-3">
+                    <input type="text" asp-for="Suche" class="form-control" placeholder="Lagerplatz Suche..." aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" asp-action="BuchenSuche">Suche</button>
+                    </div>
+                </div>
+            
+            
+
+            <div class="form-group">
+                <label asp-for="Lagerplatz_Id" class="control-label"></label>
+                <select asp-for="Lagerplatz_Id" asp-items="@(new SelectList(Model.Lagerplatz,"Lagerplatz_Id", "Lagerplatz_Beschreibung"))" class="custom-select">
+                </select>
+                <span asp-validation-for="Lagerplatz" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Buchen" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+

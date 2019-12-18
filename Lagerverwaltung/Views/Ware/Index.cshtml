@@ -1,0 +1,108 @@
+﻿@model Lagerverwaltung.ViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Übersicht";
+}
+
+
+
+    <div class="container">
+        <h1>Index</h1>
+        <a asp-action="Buchen" class="btn btn-primary btn-sm m-1">
+            Einbuchen
+        </a>
+        <a asp-action="Dazubuchen" class="btn btn-primary btn-sm m-1">
+            Ware dazu
+        </a>
+        <form asp-action="Index">
+            <div class="input-group mb-3">
+                <input asp-for="Suche" class="form-control" placeholder="Suche...">
+                <input asp-for="Sortierung" type="hidden" value="@Model.Sortierung">
+                <div class="input-group-append">
+                    <input type="submit" value="Suchen" class="btn btn-primary" />
+                </div>
+            </div>
+         </form>
+
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <form asp-action="Index">
+                                <div class="input-group">
+                                    <input asp-for="Suche" type="hidden" value="@Model.Suche">
+                                    <input asp-for="Sortierung" type="hidden" value="Beschreibung">
+                                    <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
+                                    <input asp-for="Menge" type="hidden" value="@Model.Menge">
+                                    <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                    <button type="submit" class=" btn btn-dark">
+                                        Beschreibung
+                                    </button>
+                                </div>
+                            </form>
+
+                        </th>
+                        <th scope="col">
+                            <form asp-action="Index">
+                                <div class="input-group">
+                                    <input asp-for="Suche" type="hidden" value="@Model.Suche">
+                                    <input asp-for="Sortierung" type="hidden" value="Menge">
+                                    <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
+                                    <input asp-for="Menge" type="hidden" value="@Model.Menge">
+                                    <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                    <button type="submit" class=" btn btn-dark">
+                                        Menge
+                                    </button>
+                                </div>
+                            </form>
+                        </th>
+                        <th scope="col">
+                            <form asp-action="Index">
+                                <div class="input-group">
+                                    <input asp-for="Suche" type="hidden" value="@Model.Suche">
+                                    <input asp-for="Sortierung" type="hidden" value="Datum">
+                                    <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
+                                    <input asp-for="Menge" type="hidden" value="@Model.Menge">
+                                    <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                    <button type="submit" class=" btn btn-dark">
+                                        Einlagerungsdatum
+                                    </button>
+                                </div>
+                            </form>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0;
+
+                    }
+                    @foreach (var ware in Model.Waren)
+                    {
+                        i++;
+
+
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>
+                                @ware.Ware_Beschreibung
+                            </td>
+                            <td>
+                                @Convert.ToInt32(ware.Menge)
+                            </td>
+                            <td>
+                                @ware.Ware_Einlagerungsdatum.ToShortDateString()
+                            </td>
+                            <td>
+                                <a asp-action="Ausbuchen" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
+                                    Ausbuchen
+                                </a>
+
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>

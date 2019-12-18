@@ -1,0 +1,16 @@
+﻿@model Lagerverwaltung.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+    
+        
+    
+    <div class="text-center">
+        <h3 class="display-3">Willkommen</h3>
+        <h5 class="display-4">Im Lager sind @Model.AnzahlWare Waren</h5>
+        <div class="progress m-2">
+            <div class="progress-bar" role="progressbar" style="width: @Model.Auslastung%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">@Model.Auslastung%</div>
+        </div>
+        <img class="img-fluid rounded-circle " src="~/Bilder/Logo.png" />
+
+    </div>

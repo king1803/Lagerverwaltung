@@ -1,0 +1,48 @@
+﻿@model Lagerverwaltung.ViewModels.DazuBuchenViewModel
+
+@{
+    ViewData["Title"] = "DazuBuchen";
+}
+
+<h1>Dazuuchen</h1>
+
+<h4>Ware</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DazuBuchenSuche" >
+            <div class="input-group mb-3">
+                <input asp-for="Suche" class="form-control" placeholder="Suche...">
+                <div class="input-group-append">
+                    <input type="submit" value="Suchen" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+        <form asp-action="Dazubuchen" method="post">
+
+            <div class="form-group">
+                <label asp-for="Ware_Id" class="control-label"></label>
+                <select asp-for="Ware_Id" asp-items="@(new SelectList(Model.Waren,"Ware_Id", "Ware_Beschreibung"))" class="custom-select">
+                </select>
+                <span asp-validation-for="Ware_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MengeNeu" class="control-label"></label>
+                <input asp-for="MengeNeu" type="number" class="form-control" value="1" />
+                <span asp-validation-for="MengeNeu" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="DazuBuchen" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+

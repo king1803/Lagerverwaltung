@@ -1,0 +1,91 @@
+﻿@model Lagerverwaltung.ViewModels.LagerEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+<div asp-validation-summary="All" class="text-danger"></div>
+<hr />
+
+<div class="row">
+    
+    <div class="col-md-4">
+
+        <div class="list-group">
+            <div class="list-group-item">
+                <span class="text-danger">Neues Lager</span>
+            </div>
+            <div class="list-group-item">
+                <form asp-action="Edit">
+
+                    <input asp-for="lager" type="hidden" value="1" />
+                    @for (int t = 0; t < Model.lagerbezeichner.Count(); t++)
+                    {
+                        <input asp-for="lagerbezeichner[t]" type="hidden" value="@Model.lagerbezeichner[t]" />
+                    }
+
+                    <div class="form-group">
+                        <label asp-for="Anzahl" class="control-label"></label>
+                        <input asp-for="Anzahl" class="form-control" value="0" />
+                        @if (Model.lager == 1)
+                        {
+                            <span asp-validation-for="Anzahl" class="text-danger"></span>
+                        }
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Erstellen" class="btn btn-danger" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    @foreach (var i in Model.lagerbezeichner)
+    {
+        <div class="col-md-4">
+            <div class="list-group">
+                <div class="list-group-item">
+                    @i
+                </div>
+                <div class="list-group-item">
+                    <form asp-action="Edit">
+
+                        <input asp-for="lager" type="hidden" value="@i" />
+                        @for (int t = 0; t < Model.lagerbezeichner.Count(); t++)
+                        {
+                            <input asp-for="lagerbezeichner[t]" type="hidden" value="@Model.lagerbezeichner[t]" />
+                        }
+
+                        <div class="form-group">
+                            <label asp-for="Anzahl" class="control-label"></label>
+                            <input asp-for="Anzahl" class="form-control" value="0" />
+                            @if (Model.lager == i)
+                            {
+                                <span asp-validation-for="Anzahl" class="text-danger"></span>
+                            }
+
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Erweitern" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    }
+
+</div>
+<hr />
+
+    <div class="btn-outline-danger">
+        <a asp-controller="Home" asp-action="Index">Abbrechen</a>
+    </div>
+
+
+
+
