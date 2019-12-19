@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lagerverwaltung.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,12 +24,14 @@ namespace Lagerverwaltung.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Regestrieren()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Regestrieren(RegestrierenViewModel model)
         {
             if(ModelState.IsValid)
@@ -54,12 +57,14 @@ namespace Lagerverwaltung.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lagerverwaltung.Models;
 using Lagerverwaltung.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SSG_Lagerverwaltung.Data;
@@ -14,10 +15,12 @@ namespace Lagerverwaltung.Controllers
     public class WareController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> usernManager;
 
-        public WareController(ApplicationDbContext context)
+        public WareController(ApplicationDbContext context, UserManager<IdentityUser> usernManager)
         {
             _context = context;
+            this.usernManager = usernManager;
         }
 
         public IActionResult Index(IndexViewModel? model)
@@ -185,12 +188,15 @@ namespace Lagerverwaltung.Controllers
             
             if (ModelState.IsValid)
             {
+                var userID = usernManager.GetUserId(HttpContext.User);
                 Ware ware = new Ware
                 {
                     Ware_Beschreibung = model.Ware_Beschreibung,
                     Ware_Einlagerungsdatum = DateTime.Today,
                     Lagerplatz_Id = model.Lagerplatz_Id,
-                    Menge = model.Menge
+                    Menge = model.Menge,
+                    User_id = userID
+                    
                 };
 
                 _context.Ware.Add(ware);
@@ -207,17 +213,19 @@ namespace Lagerverwaltung.Controllers
             return View(model);
         }
 
-        public IActionResult Ausbuchen(int id)
+        public async Task<IActionResult> Ausbuchen(int id)
         {
             var ware = _context.Ware.Find(id);
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
+             var user = await usernManager.FindByIdAsync(ware.User_id);
             AusbuchenViewModel model = new AusbuchenViewModel
             {
                 Ware_Beschreibung = ware.Ware_Beschreibung,
                 Ware_Id = ware.Ware_Id,
                 Menge = ware.Menge,
                 Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
-                Lagerplatz_Beschreibung = lager.Lagerplatz_Beschreibung
+                Lagerplatz_Beschreibung = lager.Lagerplatz_Beschreibung,
+                User = user.UserName
             };
 
 

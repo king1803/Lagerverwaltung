@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Lagerverwaltung.Models;
 using Lagerverwaltung.ViewModels;
 using SSG_Lagerverwaltung.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lagerverwaltung.Controllers
 {
@@ -25,7 +26,7 @@ namespace Lagerverwaltung.Controllers
         
 
         
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = new HomeViewModel();

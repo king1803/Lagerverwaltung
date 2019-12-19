@@ -28,5 +28,7 @@ namespace Lagerverwaltung.ViewModels
         public int Lagerplatz_Id { get; set; }
 
         public string Lagerplatz_Beschreibung { get; set; }
+
+        public string User { get; set; }
     }
 }
