@@ -34,17 +34,32 @@ namespace Lagerverwaltung.Controllers
 
             foreach(var i in test)
             {
+               
                 if (!(model.lagerbezeichner == null))
                 {
                     if (!model.lagerbezeichner.Contains(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1))))
                     {
                         model.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
+                        
                     }
                 }
                 else
                 {
                     model.lagerbezeichner = new List<char>();
+                    model.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
+                    
+                    
+                    
                 }
+
+            }
+            model.bestand = new List<int>();
+            foreach(var i in model.lagerbezeichner)
+            {   
+                
+                
+                model.bestand.Add(_context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(i.ToString())).Count());
+                
             }
            
             return View(model);

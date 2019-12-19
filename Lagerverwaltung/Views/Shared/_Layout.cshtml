@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> signInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,7 +25,7 @@
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -31,20 +33,46 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Ware" asp-action="Index">Übersicht</a>
                             </li>
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                <div class="nav-item dropdown">
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" asp-controller="Ware" asp-action="Buchen">Buchen</a>
-                                    <a class="dropdown-item" asp-controller="Ware" asp-action="DazuBuchen">DazuBuchen</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" asp-controller="Ware" asp-action="Buchen">Einbuchen</a>
+                                        <a class="dropdown-item" asp-controller="Ware" asp-action="DazuBuchen">DazuBuchen</a>
 
+                                    </div>
                                 </div>
                             </li>
-
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Lager" asp-action="Edit">Lager</a>
                             </li>
                         </ul>
+                        <ul class="navbar-nav flex-grow-1 ml-auto">
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <form method="post" asp-action="Ausloggen" asp-controller="Account">
+                                        <button type="submit" class="nav-link btn btn-link" style="width:auto">
+                                            Ausloggen @User.Identity.Name
+                                        </button>
+
+                                    </form>
+                                    
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a asp-controller="Account" asp-action="Regestrieren" class="nav-link">Regestrieren</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                                </li>
+                            }
+
+                        </ul>
+
                     </div>
                 </div>
             </nav>

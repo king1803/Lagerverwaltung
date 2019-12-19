@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    int t = 0;
 }
 
 <h1>Edit</h1>
@@ -45,10 +46,11 @@
     </div>
     @foreach (var i in Model.lagerbezeichner)
     {
+        
         <div class="col-md-4">
             <div class="list-group">
                 <div class="list-group-item">
-                    @i
+                    @i Bestand @Model.bestand[t] 
                 </div>
                 <div class="list-group-item">
                     <form asp-action="Edit">
@@ -77,14 +79,15 @@
             </div>
 
         </div>
+        t++;
     }
 
 </div>
 <hr />
 
-    <div class="btn-outline-danger">
-        <a asp-controller="Home" asp-action="Index">Abbrechen</a>
-    </div>
+    <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Index" >
+        Abbrechen
+    </a>
 
 
 

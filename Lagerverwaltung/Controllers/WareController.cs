@@ -153,8 +153,7 @@ namespace Lagerverwaltung.Controllers
 
                 model.Lagerplatz.RemoveAll(s => s.Lagerplatz_Id == i.Lagerplatz_Id);
             }
-            
-
+            model.Menge = 1;
             return View(model);
         }
         public IActionResult BuchenSuche (BuchenViewModel model)
@@ -175,10 +174,15 @@ namespace Lagerverwaltung.Controllers
         [HttpPost]
         public async Task<IActionResult> Buchen(BuchenViewModel model)
         {
-            if(model.Ware_Beschreibung == "Beschreibung...")
+            var test = _context.Ware;
+            foreach( var i in test)
             {
-                ModelState.AddModelError("Ware_Beschreibung", "Bitte Beschreibung ändern");
+                if (i.Ware_Beschreibung.Contains(model.Ware_Beschreibung))
+                {
+                    ModelState.AddModelError("Ware_Beschreibung", "Ware schon vorhanden");
+                }
             }
+            
             if (ModelState.IsValid)
             {
                 Ware ware = new Ware

@@ -14,12 +14,12 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Ware_Beschreibung" class="control-label"></label>
-                <input asp-for="Ware_Beschreibung" class="form-control" value="Beschreibung..."/>
+                <input asp-for="Ware_Beschreibung" class="form-control" placeholder="Beschreibung"  value="@Model.Ware_Beschreibung"/>
                 <span asp-validation-for="Ware_Beschreibung" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Menge" class="control-label"></label>
-                <input asp-for="Menge" type="number" class="form-control" value="1" />
+                <input asp-for="Menge" type="number" class="form-control" value="@Model.Menge" />
                 <span asp-validation-for="Menge" class="text-danger"></span>
             </div>
             

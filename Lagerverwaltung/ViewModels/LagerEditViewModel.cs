@@ -19,6 +19,8 @@ namespace Lagerverwaltung.ViewModels
 
         public List<char> lagerbezeichner  { get; set; }
 
+        public List<int> bestand { get; set; }
+
         public char lager { get; set; }
 
 
