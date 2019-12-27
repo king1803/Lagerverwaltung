@@ -29,6 +29,9 @@ namespace Lagerverwaltung.ViewModels
 
         public string Suche { get; set; }
 
+        [Display(Name = "Seriennummer")]
+        public string Seriennr { get; set; }
+
 
     }
 }

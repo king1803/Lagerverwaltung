@@ -195,7 +195,8 @@ namespace Lagerverwaltung.Controllers
                     Ware_Einlagerungsdatum = DateTime.Today,
                     Lagerplatz_Id = model.Lagerplatz_Id,
                     Menge = model.Menge,
-                    User_id = userID
+                    User_id = userID,
+                    Seriennr = model.Seriennr
                     
                 };
 

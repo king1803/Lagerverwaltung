@@ -20,5 +20,7 @@ namespace Lagerverwaltung.ViewModels
 
         public bool Menge { get; set; }
 
+        public string Seriennr { get; set; }
+
     }
 }

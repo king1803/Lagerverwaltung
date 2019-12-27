@@ -71,6 +71,7 @@
                                 </div>
                             </form>
                         </th>
+                        <th scope="col">Seriennummer</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -83,25 +84,28 @@
                         i++;
 
 
-                        <tr>
-                            <th scope="row">@i</th>
-                            <td>
-                                @ware.Ware_Beschreibung
-                            </td>
-                            <td>
-                                @Convert.ToInt32(ware.Menge)
-                            </td>
-                            <td>
-                                @ware.Ware_Einlagerungsdatum.ToShortDateString()
-                            </td>
-                            <td>
-                                <a asp-action="Ausbuchen" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
-                                    Ausbuchen
-                                </a>
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>
+                            @ware.Ware_Beschreibung
+                        </td>
+                        <td>
+                            @Convert.ToInt32(ware.Menge)
+                        </td>
+                        <td>
+                            @ware.Ware_Einlagerungsdatum.ToShortDateString()
+                        </td>
+                        <td>
+                            @ware.Seriennr
+                        </td>
+                        <td>
+                            <a asp-action="Ausbuchen" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
+                                Ausbuchen
+                            </a>
 
 
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

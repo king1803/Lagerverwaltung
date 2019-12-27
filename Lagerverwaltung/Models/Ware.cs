@@ -23,7 +23,9 @@ namespace Lagerverwaltung.Models
 
         public int Lagerplatz_Id { get; set; }
 
-       public string User_id { get; set; }
+        public string User_id { get; set; }
+
+        public string Seriennr { get; set; }
 
 
 

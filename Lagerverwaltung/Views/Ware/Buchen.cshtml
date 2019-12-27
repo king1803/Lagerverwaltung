@@ -14,7 +14,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Ware_Beschreibung" class="control-label"></label>
-                <input asp-for="Ware_Beschreibung" class="form-control" placeholder="Beschreibung"  value="@Model.Ware_Beschreibung"/>
+                <input asp-for="Ware_Beschreibung" class="form-control" placeholder="Beschreibung" value="@Model.Ware_Beschreibung" />
                 <span asp-validation-for="Ware_Beschreibung" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -22,15 +22,20 @@
                 <input asp-for="Menge" type="number" class="form-control" value="@Model.Menge" />
                 <span asp-validation-for="Menge" class="text-danger"></span>
             </div>
-            
-                <div class="input-group mb-3">
-                    <input type="text" asp-for="Suche" class="form-control" placeholder="Lagerplatz Suche..." aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" asp-action="BuchenSuche">Suche</button>
-                    </div>
+            <div class="form-group">
+                <label asp-for="Seriennr" class="control-label"></label>
+                <input asp-for="Seriennr" class="form-control" value="@Model.Seriennr" />
+                <span asp-validation-for="Seriennr" class="text-danger"></span>
+            </div>
+
+            <div class="input-group mb-3">
+                <input type="text" asp-for="Suche" class="form-control" placeholder="Lagerplatz Suche..." aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" asp-action="BuchenSuche">Suche</button>
                 </div>
-            
-            
+            </div>
+
+
 
             <div class="form-group">
                 <label asp-for="Lagerplatz_Id" class="control-label"></label>
