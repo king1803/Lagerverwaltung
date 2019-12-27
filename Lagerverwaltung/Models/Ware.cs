@@ -21,11 +21,24 @@ namespace Lagerverwaltung.Models
         
         public Decimal Menge { get; set; }
 
+        public string Seriennr { get; set; }
+
+        public Decimal Anschaff_Kosten { get; set; }
+
+
+        //Fremdschluessel:
+
         public int Lagerplatz_Id { get; set; }
 
         public string User_id { get; set; }
 
-        public string Seriennr { get; set; }
+        public int Lieferant_Id { get; set; }
+
+        public int Kostenstelle_Nr { get; set; }
+
+        public int Hersteller_Id { get; set; }
+
+        public string Kategorie_Name { get; set; }
 
 
 

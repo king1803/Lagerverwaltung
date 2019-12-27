@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace Lagerverwaltung.Models
 {
-    public class Lagerplatz
+    public class Kategorie
     {
-
         [Key]
-        public int Lagerplatz_Id { get; set; }
+        public string Kategorie_Name { get; set; }
 
-        public string Lagerplatz_Beschreibung { get; set; }
-
-        public int Lager_Id { get; set; }
+        public string Kategorie_Beschreibung { get; set; }
     }
 }
+
