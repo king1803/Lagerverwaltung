@@ -18,16 +18,15 @@ namespace Lagerverwaltung.Models
         [Display(Name = "Einlagerungsdatum")]
         public DateTime Ware_Einlagerungsdatum { get; set; }
 
-        
         public Decimal Menge { get; set; }
 
         public string Seriennr { get; set; }
+        public string Modelnr { get; set; }
 
         public Decimal Anschaff_Kosten { get; set; }
 
 
         //Fremdschluessel:
-
         public int Lagerplatz_Id { get; set; }
 
         public string User_id { get; set; }
@@ -39,8 +38,6 @@ namespace Lagerverwaltung.Models
         public int Hersteller_Id { get; set; }
 
         public string Kategorie_Name { get; set; }
-
-
 
 
     }

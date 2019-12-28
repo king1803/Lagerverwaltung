@@ -17,6 +17,7 @@ namespace SSG_Lagerverwaltung.Data
         public DbSet<Kostenstelle> Kostenstelle { get; set; }
         public DbSet<Lager> Lager { get; set; }
         public DbSet<Lieferant> Lieferant { get; set; }
+        public DbSet<WareHistorie> WareHistorie { get; set; }
 
 
 
