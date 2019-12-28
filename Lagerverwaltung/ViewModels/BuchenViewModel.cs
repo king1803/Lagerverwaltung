@@ -31,7 +31,7 @@ namespace Lagerverwaltung.ViewModels
 
         [Display(Name = "Seriennummer")]
         public string Seriennr { get; set; }
-
+        public string Modellnummer { get; set; }
 
     }
 }

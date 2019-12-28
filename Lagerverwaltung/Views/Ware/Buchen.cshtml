@@ -27,6 +27,11 @@
                 <input asp-for="Seriennr" class="form-control" value="@Model.Seriennr" />
                 <span asp-validation-for="Seriennr" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Modellnummer" class="control-label"></label>
+                <input asp-for="Modellnummer" class="form-control" value="@Model.Modellnummer" />
+                <span asp-validation-for="Modellnummer" class="text-danger"></span>
+            </div>
 
             <div class="input-group mb-3">
                 <input type="text" asp-for="Suche" class="form-control" placeholder="Lagerplatz Suche..." aria-describedby="basic-addon2">

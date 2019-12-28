@@ -196,8 +196,9 @@ namespace Lagerverwaltung.Controllers
                     Lagerplatz_Id = model.Lagerplatz_Id,
                     Menge = model.Menge,
                     User_id = userID,
-                    Seriennr = model.Seriennr
-                    
+                    Seriennr = model.Seriennr,
+                    Modellnummer = model.Modellnummer
+
                 };
 
                 _context.Ware.Add(ware);

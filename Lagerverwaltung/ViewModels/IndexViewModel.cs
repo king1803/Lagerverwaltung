@@ -22,5 +22,7 @@ namespace Lagerverwaltung.ViewModels
 
         public string Seriennr { get; set; }
 
+        public string Modellnummer { get; set; }
+
     }
 }

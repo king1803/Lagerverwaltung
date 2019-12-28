@@ -21,7 +21,8 @@ namespace Lagerverwaltung.Models
         public Decimal Menge { get; set; }
 
         public string Seriennr { get; set; }
-        public string Modelnr { get; set; }
+
+        public string Modellnummer { get; set; }
 
         public Decimal Anschaff_Kosten { get; set; }
 

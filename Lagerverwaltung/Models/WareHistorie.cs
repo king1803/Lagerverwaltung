@@ -23,7 +23,7 @@ namespace Lagerverwaltung.Models
 
         public string Seriennr_hi { get; set; }
 
-        public string Modelnr_hi { get; set; }
+        public string Modellnr_hi { get; set; }
 
         public DateTime Ware_Auslagerungsdatum_hi { get; set; }
 
