@@ -30,5 +30,24 @@ namespace Lagerverwaltung.ViewModels
         public string Lagerplatz_Beschreibung { get; set; }
 
         public string User { get; set; }
+
+        public string Hersteller_Beschreibung { get; set; }
+
+        public string Kategorie_Beschreibung { get; set; }
+
+        public string Lieferant_Beschreibung { get; set; }
+
+        public string Kostenstellennr { get; set; }
+
+        public string Seriennummer { get; set; }
+
+        public string Modellnummer { get; set; }
+
+        public string Anschaffungskosten { get; set; }
+
+
+
+
+
     }
 }
