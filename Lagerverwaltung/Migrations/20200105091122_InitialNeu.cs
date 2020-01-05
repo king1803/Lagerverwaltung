@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Lagerverwaltung.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialNeu : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,16 +48,130 @@ namespace Lagerverwaltung.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Hersteller",
+                columns: table => new
+                {
+                    Hersteller_Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Hersteller_Beschreibung = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hersteller", x => x.Hersteller_Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Kategorie",
+                columns: table => new
+                {
+                    Kategorie_Name = table.Column<string>(nullable: false),
+                    Kategorie_Beschreibung = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kategorie", x => x.Kategorie_Name);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Kostenstelle",
+                columns: table => new
+                {
+                    Kostenstelle_Nr = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Kostenstelle_Beschreibung = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kostenstelle", x => x.Kostenstelle_Nr);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lager",
+                columns: table => new
+                {
+                    Lager_Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Lager_Beschreibung = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lager", x => x.Lager_Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Lagerplatz",
                 columns: table => new
                 {
                     Lagerplatz_Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Lagerplatz_Beschreibung = table.Column<string>(nullable: true)
+                    Lagerplatz_Beschreibung = table.Column<string>(nullable: true),
+                    Lager_Id = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lagerplatz", x => x.Lagerplatz_Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lieferant",
+                columns: table => new
+                {
+                    Lieferant_Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Lieferant_Beschreibung = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lieferant", x => x.Lieferant_Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ware",
+                columns: table => new
+                {
+                    Ware_Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Ware_Beschreibung = table.Column<string>(nullable: true),
+                    Ware_Einlagerungsdatum = table.Column<DateTime>(nullable: false),
+                    Menge = table.Column<decimal>(nullable: false),
+                    Seriennr = table.Column<string>(nullable: true),
+                    Modellnummer = table.Column<string>(nullable: true),
+                    Anschaff_Kosten = table.Column<decimal>(nullable: false),
+                    Lagerplatz_Id = table.Column<int>(nullable: false),
+                    User_id = table.Column<string>(nullable: true),
+                    Lieferant_Id = table.Column<int>(nullable: false),
+                    Kostenstelle_Nr = table.Column<int>(nullable: false),
+                    Hersteller_Id = table.Column<int>(nullable: false),
+                    Kategorie_Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ware", x => x.Ware_Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WareHistorie",
+                columns: table => new
+                {
+                    Ware_Id_hi = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Ware_Beschreibung_hi = table.Column<string>(nullable: true),
+                    Ware_Einlagerungsdatum_hi = table.Column<DateTime>(nullable: false),
+                    Menge_hi = table.Column<decimal>(nullable: false),
+                    Seriennr_hi = table.Column<string>(nullable: true),
+                    Modellnr_hi = table.Column<string>(nullable: true),
+                    Ware_Auslagerungsdatum_hi = table.Column<DateTime>(nullable: false),
+                    Anschaff_Kosten_hi = table.Column<decimal>(nullable: false),
+                    Lagerplatz_Id_hi = table.Column<int>(nullable: false),
+                    User_id_hi = table.Column<string>(nullable: true),
+                    Lieferant_Id_hi = table.Column<int>(nullable: false),
+                    Kostenstelle_Nr_hi = table.Column<int>(nullable: false),
+                    Hersteller_Id_hi = table.Column<int>(nullable: false),
+                    Kategorie_Name_hi = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WareHistorie", x => x.Ware_Id_hi);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,28 +280,6 @@ namespace Lagerverwaltung.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Ware",
-                columns: table => new
-                {
-                    Ware_Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Ware_Beschreibung = table.Column<string>(nullable: true),
-                    Ware_Einlagerungsdatum = table.Column<DateTime>(nullable: false),
-                    Lagerplatz_Id = table.Column<int>(nullable: false),
-                    Lagerplatz_Id1 = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ware", x => x.Ware_Id);
-                    table.ForeignKey(
-                        name: "FK_Ware_Lagerplatz_Lagerplatz_Id1",
-                        column: x => x.Lagerplatz_Id1,
-                        principalTable: "Lagerplatz",
-                        principalColumn: "Lagerplatz_Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -224,11 +316,6 @@ namespace Lagerverwaltung.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ware_Lagerplatz_Id1",
-                table: "Ware",
-                column: "Lagerplatz_Id1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -249,16 +336,34 @@ namespace Lagerverwaltung.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Hersteller");
+
+            migrationBuilder.DropTable(
+                name: "Kategorie");
+
+            migrationBuilder.DropTable(
+                name: "Kostenstelle");
+
+            migrationBuilder.DropTable(
+                name: "Lager");
+
+            migrationBuilder.DropTable(
+                name: "Lagerplatz");
+
+            migrationBuilder.DropTable(
+                name: "Lieferant");
+
+            migrationBuilder.DropTable(
                 name: "Ware");
+
+            migrationBuilder.DropTable(
+                name: "WareHistorie");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Lagerplatz");
         }
     }
 }

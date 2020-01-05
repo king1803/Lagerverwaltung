@@ -80,36 +80,41 @@
                     @{ int i = 0;
 
                     }
-                    @foreach (var ware in Model.Waren)
+                    @if (Model.Waren != null)
                     {
-                        i++;
 
 
-                    <tr>
-                        <th scope="row">@i</th>
-                        <td>
-                            @ware.Ware_Beschreibung
-                        </td>
-                        <td>
-                            @Convert.ToInt32(ware.Menge)
-                        </td>
-                        <td>
-                            @ware.Ware_Einlagerungsdatum.ToShortDateString()
-                        </td>
-                        <td>
-                            @ware.Seriennr
-                        </td>
-                        <td>
-                            @ware.Modellnummer
-                        </td>
-                        <td>
-                            <a asp-action="Ausbuchen" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
-                                Ausbuchen
-                            </a>
+                        @foreach (var ware in Model.Waren)
+                        {
+                            i++;
 
 
-                        </td>
-                    </tr>
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>
+                                @ware.Ware_Beschreibung
+                            </td>
+                            <td>
+                                @Convert.ToInt32(ware.Menge)
+                            </td>
+                            <td>
+                                @ware.Ware_Einlagerungsdatum.ToShortDateString()
+                            </td>
+                            <td>
+                                @ware.Seriennr
+                            </td>
+                            <td>
+                                @ware.Modellnummer
+                            </td>
+                            <td>
+                                <a asp-action="Ausbuchen" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
+                                    Ausbuchen
+                                </a>
+
+
+                            </td>
+                        </tr>
+                        }
                     }
                 </tbody>
             </table>

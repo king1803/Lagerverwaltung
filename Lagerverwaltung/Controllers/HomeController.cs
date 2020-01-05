@@ -32,8 +32,8 @@ namespace Lagerverwaltung.Controllers
             var model = new HomeViewModel();
             decimal lager = _context.Lagerplatz.Count();
             decimal ware = _context.Ware.Count();
-            decimal aus = Decimal.Divide(ware, lager);
-            model.Auslastung = Convert.ToInt32(aus*100);
+            //decimal aus = Decimal.Divide(ware, lager);
+            //model.Auslastung = Convert.ToInt32(aus*100);
             model.AnzahlWare = _context.Ware.Count();
             return View(model);
         }

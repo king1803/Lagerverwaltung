@@ -139,7 +139,7 @@ namespace Lagerverwaltung.Controllers
             }
 
                 IndexViewModel model1 = new IndexViewModel();
-            model1.Waren = _context.Ware.ToList();
+            //model1.Waren = _context.Ware.ToList();
             return View(model1);
         }
 
