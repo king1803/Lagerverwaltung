@@ -1,11 +1,11 @@
-﻿@model Lagerverwaltung.ViewModels.AusbuchenViewModel
+﻿@model Lagerverwaltung.ViewModels.DetailsViewModel
 @{
-    ViewData["Title"] = "Ausbuchen";
+    ViewData["Title"] = "Details";
 }
 
     
         <div class="container">
-            <h1>Ausbuchen</h1>
+            <h1>Details</h1>
             <div class="card">
                 <h4 class="card-header">
                     ID: @Model.Ware_Id
@@ -20,7 +20,28 @@
                         </li>
                         <li class="list-group-item">
                             Lagerplatz: <span class="text-danger ">@Model.Lagerplatz_Beschreibung</span>
-</li>
+                        </li>
+                        <li class="list-group-item">
+                            Hersteller: <span class="text-danger ">@Model.Hersteller_Beschreibung</span>
+                        </li>
+                        <li class="list-group-item">
+                            Lieferant: <span class="text-danger ">@Model.Lieferant_Beschreibung</span>
+                        </li>
+                        <li class="list-group-item">
+                            Seriennummer: <span class="text-danger ">@Model.Seriennummer</span>
+                        </li>
+                        <li class="list-group-item">
+                            Modellnummer: <span class="text-danger ">@Model.Modellnummer</span>
+                        </li>
+                        <li class="list-group-item">
+                            Kategorie: <span class="text-danger ">@Model.Kategorie_Beschreibung</span>
+                        </li>
+                        <li class="list-group-item">
+                            Anschaffungskosten: <span class="text-danger ">@Model.Anschaffungskosten</span>
+                        </li>
+                        <li class="list-group-item">
+                            Kostenstelle: <span class="text-danger ">@Model.Kostenstellennr</span>
+                        </li>
                         <li class="list-group-item">
                             <form asp-action="Ausbuchen" method="post">
                                 <div class="form-group align-content-center col-2">
