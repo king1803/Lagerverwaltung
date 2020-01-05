@@ -25,16 +25,47 @@ namespace Lagerverwaltung.Controllers
 
         public IActionResult Index(IndexViewModel? model)
         {
+            string suche_Beschreibung = "";
+           
+            string suche_Hersteller = "";
+            string suche_Kategorie = "";
+            string suche_Knummer = "";
+            string suche_Lagerplatz = "";
+            string suche_Lieferant = "";
+            string suche_Modelnr = "";
+            string suche_Seriennr = "";
+
             if (!string.IsNullOrEmpty(model.Suche_Beschreibung))
             {
-                string suche_Beschreibung =  "";
-                string suche_Hersteller = model.Suche_Hersteller;
-                string suche_Kategorie = model.Suche_Kategorie;
-                string suche_Knummer = model.Suche_Kostenstellennr;
-                string suche_Lagerplatz = model.Suche_Lagerplatz;
-                string suche_Lieferant = model.Suche_Lieferanten;
-                string suche_Modelnr = model.Suche_Modellnummer; 
-                string suche_Seriennr = model.Suche_Seriennummer;
+                 suche_Beschreibung =  model.Suche_Beschreibung;
+                if (!string.IsNullOrEmpty(model.Suche_Hersteller))
+                {
+                    suche_Hersteller = model.Suche_Hersteller;
+                }
+                if (!string.IsNullOrEmpty(model.Suche_Kategorie))
+                {
+                    suche_Kategorie = model.Suche_Kategorie;
+                }
+                if (!string.IsNullOrEmpty(model.Suche_Kostenstellennr))
+                {
+                    suche_Knummer = model.Suche_Kostenstellennr;
+                }
+                if (!string.IsNullOrEmpty(model.Suche_Beschreibung))
+                {
+                    suche_Lagerplatz = model.Suche_Lagerplatz;
+                }
+                if (!string.IsNullOrEmpty(model.Suche_Lieferanten))
+                {
+                    suche_Lieferant = model.Suche_Lieferanten;
+                }
+                if (!string.IsNullOrEmpty(model.Suche_Modellnummer))
+                {
+                     suche_Modelnr = model.Suche_Modellnummer;
+                }
+                if (!string.IsNullOrEmpty(model.Suche_Seriennummer))
+                {
+                     suche_Seriennr = model.Suche_Seriennummer;
+                }
                 if (!string.IsNullOrEmpty(model.Sortierung))
                 {
                     
@@ -88,21 +119,54 @@ namespace Lagerverwaltung.Controllers
                     return View(model);
                 }
 
-                var waren = _context.Ware.Join(_context.Hersteller, ware => ware.Hersteller_Id,hersteller => hersteller.Hersteller_Id,
+                
+                 var waren = _context.Ware.Join(_context.Hersteller, ware => ware.Hersteller_Id,hersteller => hersteller.Hersteller_Id,
                     (ware, hersteller) => new
                     {
+                        Ware_Id = ware.Ware_Id,
                         Ware_Beschreibung = ware.Ware_Beschreibung,
                         Ware_Hersteller = hersteller.Hersteller_Beschreibung,
-                        Kategorie_Name = ware.Kategorie_Name
+                        Kategorie_Name = ware.Kategorie_Name,
+                        Kostenstelle_Nr = ware.Kostenstelle_Nr,
+                        Lagerplatz_Id = ware.Lagerplatz_Id,
+                        Lieferant_Id = ware.Lieferant_Id,
+                        Modellnummer = ware.Modellnummer,
+                        Seriennr = ware.Seriennr
                     }).Join(_context.Kategorie,ware => ware.Kategorie_Name,kategorie => kategorie.Kategorie_Name,
                     (ware, kategorie) => new
                     {
+                        Ware_Id = ware.Ware_Id,
                         Ware_Beschreibung = ware.Ware_Beschreibung,
                         Ware_Hersteller = ware.Ware_Hersteller,
-                        Kategorie_Beschreibung = kategorie.Kategorie_Beschreibung
+                        Kategorie_Beschreibung = kategorie.Kategorie_Beschreibung,
+                        Kostenstelle_Nr = ware.Kostenstelle_Nr,
+                        Lagerplatz_Id = ware.Lagerplatz_Id,
+                        Lieferant_Id = ware.Lieferant_Id,
+                        Modellnummer = ware.Modellnummer,
+                        Seriennr = ware.Seriennr
                     }
-                        ).Where(a => a.Ware_Beschreibung.Contains(suche_Beschreibung)).ToList();
-                
+                        ).Join(_context.Kostenstelle, ware => ware.Kostenstelle_Nr, kostenstelle=> kostenstelle.Kostenstelle_Nr,
+                    (ware, kostenstelle) => new
+                    {
+                        Ware_Id = ware.Ware_Id,
+                        Ware_Beschreibung = ware.Ware_Beschreibung,
+                        Ware_Hersteller = ware.Ware_Hersteller,
+                        Kategorie_Beschreibung = ware.Kategorie_Beschreibung,
+                        Kostenstelle = kostenstelle.Kostenstelle_Beschreibung,
+                        Lagerplatz = ware.Lagerplatz_Id,
+                        Lieferant = ware.Lieferant_Id,
+                        Modellnr = ware.Modellnummer,
+                        Seriennr = ware.Seriennr
+                    }
+                        )
+                        .Where(a => a.Ware_Beschreibung.Contains(suche_Beschreibung)).Where(a => a.Kategorie_Beschreibung.Contains(suche_Kategorie)).ToList();
+
+                model.Waren = new List<Ware>();
+
+                foreach(var a in waren)
+                {
+                    model.Waren.Add(_context.Ware.Find(a.Ware_Id));
+                }
                 
                 
                 return View(model);
