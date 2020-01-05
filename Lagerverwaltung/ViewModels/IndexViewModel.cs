@@ -10,7 +10,21 @@ namespace Lagerverwaltung.ViewModels
     {
         public List<Ware> Waren { get; set; }
 
-        public string Suche { get; set; }
+        public string Suche_Beschreibung { get; set; }
+
+        public string Suche_Seriennummer { get; set; }
+
+        public string Suche_Modellnummer { get; set; }
+
+        public string Suche_Lagerplatz { get; set; }
+
+        public string Suche_Lieferanten { get; set; }
+
+        public string Suche_Kostenstellennr { get; set; }
+
+        public string Suche_Hersteller { get; set; }
+
+        public string Suche_Kategorie { get; set; }
 
         public string Sortierung { get; set; }
 

@@ -25,9 +25,16 @@ namespace Lagerverwaltung.Controllers
 
         public IActionResult Index(IndexViewModel? model)
         {
-            if (!string.IsNullOrEmpty(model.Suche))
+            if (!string.IsNullOrEmpty(model.Suche_Beschreibung))
             {
-                string suche = model.Suche;
+                string suche_Beschreibung =  "";
+                string suche_Hersteller = model.Suche_Hersteller;
+                string suche_Kategorie = model.Suche_Kategorie;
+                string suche_Knummer = model.Suche_Kostenstellennr;
+                string suche_Lagerplatz = model.Suche_Lagerplatz;
+                string suche_Lieferant = model.Suche_Lieferanten;
+                string suche_Modelnr = model.Suche_Modellnummer; 
+                string suche_Seriennr = model.Suche_Seriennummer;
                 if (!string.IsNullOrEmpty(model.Sortierung))
                 {
                     
@@ -35,12 +42,12 @@ namespace Lagerverwaltung.Controllers
                     {
                         if(model.Beschreiung)
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche)).OrderByDescending(a => a.Ware_Beschreibung).ToList();
+                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderByDescending(a => a.Ware_Beschreibung).ToList();
                             model.Beschreiung = false;
                         }
                         else
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche)).OrderBy(a => a.Ware_Beschreibung).ToList();
+                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderBy(a => a.Ware_Beschreibung).ToList();
                             model.Beschreiung = true;
                         }
                         
@@ -52,12 +59,12 @@ namespace Lagerverwaltung.Controllers
 
                         if (model.Datum)
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche)).OrderByDescending(a => a.Ware_Einlagerungsdatum).ToList();
+                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderByDescending(a => a.Ware_Einlagerungsdatum).ToList();
                             model.Datum = false;
                         }
                         else
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche)).OrderBy(a => a.Ware_Einlagerungsdatum).ToList();
+                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderBy(a => a.Ware_Einlagerungsdatum).ToList();
                             model.Datum = true;
                         }
 
@@ -68,20 +75,36 @@ namespace Lagerverwaltung.Controllers
 
                         if (model.Menge)
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche)).OrderByDescending(a => a.Menge).ToList();
+                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderByDescending(a => a.Menge).ToList();
                             model.Menge = false;
                         }
                         else
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche)).OrderBy(a => a.Menge).ToList();
+                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderBy(a => a.Menge).ToList();
                             model.Menge = true;
                         }
 
                     }
                     return View(model);
                 }
+
+                var waren = _context.Ware.Join(_context.Hersteller, ware => ware.Hersteller_Id,hersteller => hersteller.Hersteller_Id,
+                    (ware, hersteller) => new
+                    {
+                        Ware_Beschreibung = ware.Ware_Beschreibung,
+                        Ware_Hersteller = hersteller.Hersteller_Beschreibung,
+                        Kategorie_Name = ware.Kategorie_Name
+                    }).Join(_context.Kategorie,ware => ware.Kategorie_Name,kategorie => kategorie.Kategorie_Name,
+                    (ware, kategorie) => new
+                    {
+                        Ware_Beschreibung = ware.Ware_Beschreibung,
+                        Ware_Hersteller = ware.Ware_Hersteller,
+                        Kategorie_Beschreibung = kategorie.Kategorie_Beschreibung
+                    }
+                        ).Where(a => a.Ware_Beschreibung.Contains(suche_Beschreibung)).ToList();
                 
-                model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche)).ToList();
+                
+                
                 return View(model);
             }
 
