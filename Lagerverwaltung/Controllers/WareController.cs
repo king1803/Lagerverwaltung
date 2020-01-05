@@ -238,19 +238,32 @@ namespace Lagerverwaltung.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Ausbuchen(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var ware = _context.Ware.Find(id);
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
-             var user = await usernManager.FindByIdAsync(ware.User_id);
-            AusbuchenViewModel model = new AusbuchenViewModel
+            var user = await usernManager.FindByIdAsync(ware.User_id);
+            var hersteller = _context.Hersteller.Find(ware.Hersteller_Id);
+            var lieferant = _context.Lieferant.Find(ware.Lieferant_Id);
+            var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
+            var kostenstellennummer = _context.Kostenstelle.Find(ware.Kostenstelle_Nr);
+
+            DetailsViewModel model = new DetailsViewModel
             {
                 Ware_Beschreibung = ware.Ware_Beschreibung,
                 Ware_Id = ware.Ware_Id,
                 Menge = ware.Menge,
                 Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
                 Lagerplatz_Beschreibung = lager.Lagerplatz_Beschreibung,
-                User = user.UserName
+                User = user.UserName,
+                Hersteller_Beschreibung = hersteller.Hersteller_Beschreibung,
+                Lieferant_Beschreibung = lieferant.Lieferant_Beschreibung,
+                Kategorie_Beschreibung = kategorie.Kategorie_Name,
+                Kostenstellennr = kostenstellennummer.Kostenstelle_Nr,
+                Modellnummer = ware.Modellnummer,
+                Seriennummer = ware.Seriennr,
+                Anschaffungskosten = ware.Anschaff_Kosten
+
             };
 
 
@@ -259,7 +272,7 @@ namespace Lagerverwaltung.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Ausbuchen(AusbuchenViewModel model)
+        public async Task<IActionResult> Ausbuchen(DetailsViewModel model)
         {
 
             Ware ware = _context.Ware.Find(model.Ware_Id);

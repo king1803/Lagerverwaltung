@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lagerverwaltung.ViewModels
 {
-    public class AusbuchenViewModel
+    public class DetailsViewModel
     {
         public int Ware_Id { get; set; }
 
@@ -37,13 +37,13 @@ namespace Lagerverwaltung.ViewModels
 
         public string Lieferant_Beschreibung { get; set; }
 
-        public string Kostenstellennr { get; set; }
+        public int Kostenstellennr { get; set; }
 
         public string Seriennummer { get; set; }
 
         public string Modellnummer { get; set; }
 
-        public string Anschaffungskosten { get; set; }
+        public decimal Anschaffungskosten { get; set; }
 
 
 
