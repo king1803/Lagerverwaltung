@@ -23,21 +23,25 @@ namespace Lagerverwaltung.Controllers
             this.usernManager = usernManager;
         }
 
-        public IActionResult Index(IndexViewModel? model)
+        public IActionResult Index(IndexViewModel model)
         {
-            string suche_Beschreibung = "";
-           
-            string suche_Hersteller = "";
-            string suche_Kategorie = "";
-            string suche_Knummer = "";
-            string suche_Lagerplatz = "";
-            string suche_Lieferant = "";
-            string suche_Modelnr = "";
-            string suche_Seriennr = "";
+            if(model.Suche)
 
-            if (!string.IsNullOrEmpty(model.Suche_Beschreibung))
-            {
-                 suche_Beschreibung =  model.Suche_Beschreibung;
+            { 
+                string suche_Beschreibung = "";
+
+                string suche_Hersteller = "";
+                string suche_Kategorie = "";
+                string suche_Knummer = "";
+                string suche_Lagerplatz = "";
+                string suche_Lieferant = "";
+                string suche_Modelnr = "";
+                string suche_Seriennr = "";
+
+                if (!string.IsNullOrEmpty(model.Suche_Beschreibung))
+                {
+                    suche_Beschreibung = model.Suche_Beschreibung;
+                }
                 if (!string.IsNullOrEmpty(model.Suche_Hersteller))
                 {
                     suche_Hersteller = model.Suche_Hersteller;
@@ -50,7 +54,7 @@ namespace Lagerverwaltung.Controllers
                 {
                     suche_Knummer = model.Suche_Kostenstellennr;
                 }
-                if (!string.IsNullOrEmpty(model.Suche_Beschreibung))
+                if (!string.IsNullOrEmpty(model.Suche_Lagerplatz))
                 {
                     suche_Lagerplatz = model.Suche_Lagerplatz;
                 }
@@ -60,174 +64,157 @@ namespace Lagerverwaltung.Controllers
                 }
                 if (!string.IsNullOrEmpty(model.Suche_Modellnummer))
                 {
-                     suche_Modelnr = model.Suche_Modellnummer;
+                    suche_Modelnr = model.Suche_Modellnummer;
                 }
                 if (!string.IsNullOrEmpty(model.Suche_Seriennummer))
                 {
-                     suche_Seriennr = model.Suche_Seriennummer;
+                    suche_Seriennr = model.Suche_Seriennummer;
                 }
+
+
+
+                var waren = _context.Ware.Join(_context.Hersteller, ware => ware.Hersteller_Id, hersteller => hersteller.Hersteller_Id,
+                   (ware, hersteller) => new
+                   {
+                       Ware_Id = ware.Ware_Id,
+                       Ware_Beschreibung = ware.Ware_Beschreibung,
+                       Ware_Hersteller = hersteller.Hersteller_Beschreibung,
+                       Kategorie_Name = ware.Kategorie_Name,
+                       Kostenstelle_Nr = ware.Kostenstelle_Nr,
+                       Lagerplatz_Id = ware.Lagerplatz_Id,
+                       Lieferant_Id = ware.Lieferant_Id,
+                       Modellnummer = ware.Modellnummer,
+                       Seriennr = ware.Seriennr
+                   }).Join(_context.Kategorie, ware => ware.Kategorie_Name, kategorie => kategorie.Kategorie_Name,
+                   (ware, kategorie) => new
+                   {
+                       Ware_Id = ware.Ware_Id,
+                       Ware_Beschreibung = ware.Ware_Beschreibung,
+                       Ware_Hersteller = ware.Ware_Hersteller,
+                       Kategorie_Beschreibung = kategorie.Kategorie_Beschreibung,
+                       Kostenstelle_Nr = ware.Kostenstelle_Nr,
+                       Lagerplatz_Id = ware.Lagerplatz_Id,
+                       Lieferant_Id = ware.Lieferant_Id,
+                       Modellnummer = ware.Modellnummer,
+                       Seriennr = ware.Seriennr
+                   }
+                       ).Join(_context.Kostenstelle, ware => ware.Kostenstelle_Nr, kostenstelle => kostenstelle.Kostenstelle_Nr,
+                   (ware, kostenstelle) => new
+                   {
+                       Ware_Id = ware.Ware_Id,
+                       Ware_Beschreibung = ware.Ware_Beschreibung,
+                       Ware_Hersteller = ware.Ware_Hersteller,
+                       Kategorie_Beschreibung = ware.Kategorie_Beschreibung,
+                       Kostenstelle = kostenstelle.Kostenstelle_Beschreibung,
+                       Lagerplatz_Id = ware.Lagerplatz_Id,
+                       Lieferant_Id = ware.Lieferant_Id,
+                       Modellnummer = ware.Modellnummer,
+                       Seriennr = ware.Seriennr
+                   }
+                       ).Join(_context.Lagerplatz, ware => ware.Lagerplatz_Id, lagerplatz => lagerplatz.Lagerplatz_Id,
+                   (ware, lagerplatz) => new
+                   {
+                       Ware_Id = ware.Ware_Id,
+                       Ware_Beschreibung = ware.Ware_Beschreibung,
+                       Ware_Hersteller = ware.Ware_Hersteller,
+                       Kategorie_Beschreibung = ware.Kategorie_Beschreibung,
+                       Kostenstelle = ware.Kostenstelle,
+                       Lagerplatz = lagerplatz.Lagerplatz_Beschreibung,
+                       Lieferant_Id = ware.Lieferant_Id,
+                       Modellnummer = ware.Modellnummer,
+                       Seriennr = ware.Seriennr
+                   }
+                       ).Join(_context.Lieferant, ware => ware.Lieferant_Id, lieferant => lieferant.Lieferant_Id,
+                   (ware, lieferant) => new
+                   {
+                       Ware_Id = ware.Ware_Id,
+                       Ware_Beschreibung = ware.Ware_Beschreibung,
+                       Hersteller = ware.Ware_Hersteller,
+                       Kategorie= ware.Kategorie_Beschreibung,
+                       Kostenstelle = ware.Kostenstelle,
+                       Lagerplatz = ware.Lagerplatz,
+                       Lieferant = lieferant.Lieferant_Beschreibung,
+                       Modellnummer = ware.Modellnummer,
+                       Seriennr = ware.Seriennr
+                   }
+                       )
+                       .Where(a => a.Ware_Beschreibung.Contains(suche_Beschreibung))
+                       .Where(a => a.Kategorie.Contains(suche_Kategorie))
+                       .Where(a => a.Hersteller.Contains(suche_Hersteller))
+                       .Where(a => a.Kostenstelle.Contains(suche_Knummer))
+                       .Where(a => a.Lagerplatz.Contains(suche_Lagerplatz))
+                       .Where(a => a.Lieferant.Contains(suche_Lieferant))
+                       .Where(a => a.Modellnummer.Contains(suche_Modelnr))
+                       .Where(a => a.Seriennr.Contains(suche_Seriennr))
+                       .ToList();
+
+                model.Waren = new List<Ware>();
+
+                foreach (var a in waren)
+                {
+                    model.Waren.Add(_context.Ware.Find(a.Ware_Id));
+                }
+
                 if (!string.IsNullOrEmpty(model.Sortierung))
                 {
-                    
                     if (model.Sortierung == "Beschreibung")
                     {
-                        if(model.Beschreiung)
+                        if (model.Beschreiung)
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderByDescending(a => a.Ware_Beschreibung).ToList();
+                            model.Waren = model.Waren.OrderByDescending(s => s.Ware_Beschreibung).ToList();
                             model.Beschreiung = false;
                         }
                         else
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderBy(a => a.Ware_Beschreibung).ToList();
+                            model.Waren = model.Waren.OrderBy(s => s.Ware_Beschreibung).ToList();
                             model.Beschreiung = true;
                         }
-                        
-                        
-                    }
 
-                    if (model.Sortierung == "Datum")
-                    {
-
-                        if (model.Datum)
-                        {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderByDescending(a => a.Ware_Einlagerungsdatum).ToList();
-                            model.Datum = false;
-                        }
-                        else
-                        {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderBy(a => a.Ware_Einlagerungsdatum).ToList();
-                            model.Datum = true;
-                        }
 
                     }
 
                     if (model.Sortierung == "Menge")
                     {
-
                         if (model.Menge)
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderByDescending(a => a.Menge).ToList();
+                            model.Waren = model.Waren.OrderByDescending(s => s.Menge).ToList();
                             model.Menge = false;
                         }
                         else
                         {
-                            model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(suche_Beschreibung)).OrderBy(a => a.Menge).ToList();
+                            model.Waren = model.Waren.OrderBy(s => s.Menge).ToList();
                             model.Menge = true;
                         }
 
+
                     }
-                    return View(model);
+
+                    if (model.Sortierung == "Datum")
+                    {
+                        if (model.Datum)
+                        {
+                            model.Waren = model.Waren.OrderByDescending(s => s.Ware_Einlagerungsdatum).ToList();
+                            model.Datum = false;
+                        }
+                        else
+                        {
+                            model.Waren = model.Waren.OrderBy(s => s.Ware_Einlagerungsdatum).ToList();
+                            model.Datum = true;
+                        }
+
+
+                    }
+
+
                 }
 
-                
-                 var waren = _context.Ware.Join(_context.Hersteller, ware => ware.Hersteller_Id,hersteller => hersteller.Hersteller_Id,
-                    (ware, hersteller) => new
-                    {
-                        Ware_Id = ware.Ware_Id,
-                        Ware_Beschreibung = ware.Ware_Beschreibung,
-                        Ware_Hersteller = hersteller.Hersteller_Beschreibung,
-                        Kategorie_Name = ware.Kategorie_Name,
-                        Kostenstelle_Nr = ware.Kostenstelle_Nr,
-                        Lagerplatz_Id = ware.Lagerplatz_Id,
-                        Lieferant_Id = ware.Lieferant_Id,
-                        Modellnummer = ware.Modellnummer,
-                        Seriennr = ware.Seriennr
-                    }).Join(_context.Kategorie,ware => ware.Kategorie_Name,kategorie => kategorie.Kategorie_Name,
-                    (ware, kategorie) => new
-                    {
-                        Ware_Id = ware.Ware_Id,
-                        Ware_Beschreibung = ware.Ware_Beschreibung,
-                        Ware_Hersteller = ware.Ware_Hersteller,
-                        Kategorie_Beschreibung = kategorie.Kategorie_Beschreibung,
-                        Kostenstelle_Nr = ware.Kostenstelle_Nr,
-                        Lagerplatz_Id = ware.Lagerplatz_Id,
-                        Lieferant_Id = ware.Lieferant_Id,
-                        Modellnummer = ware.Modellnummer,
-                        Seriennr = ware.Seriennr
-                    }
-                        ).Join(_context.Kostenstelle, ware => ware.Kostenstelle_Nr, kostenstelle=> kostenstelle.Kostenstelle_Nr,
-                    (ware, kostenstelle) => new
-                    {
-                        Ware_Id = ware.Ware_Id,
-                        Ware_Beschreibung = ware.Ware_Beschreibung,
-                        Ware_Hersteller = ware.Ware_Hersteller,
-                        Kategorie_Beschreibung = ware.Kategorie_Beschreibung,
-                        Kostenstelle = kostenstelle.Kostenstelle_Beschreibung,
-                        Lagerplatz = ware.Lagerplatz_Id,
-                        Lieferant = ware.Lieferant_Id,
-                        Modellnr = ware.Modellnummer,
-                        Seriennr = ware.Seriennr
-                    }
-                        )
-                        .Where(a => a.Ware_Beschreibung.Contains(suche_Beschreibung)).Where(a => a.Kategorie_Beschreibung.Contains(suche_Kategorie)).ToList();
 
-                model.Waren = new List<Ware>();
 
-                foreach(var a in waren)
-                {
-                    model.Waren.Add(_context.Ware.Find(a.Ware_Id));
-                }
-                
-                
-                return View(model);
-            }
-
-            if (!string.IsNullOrEmpty(model.Sortierung))
-            {
-                if(model.Sortierung == "Beschreibung")
-                {
-                    if(model.Beschreiung)
-                    {
-                        model.Waren = _context.Ware.OrderByDescending(s => s.Ware_Beschreibung).ToList();
-                        model.Beschreiung = false;
-                    }
-                    else
-                    {
-                        model.Waren = _context.Ware.OrderBy(s => s.Ware_Beschreibung).ToList();
-                        model.Beschreiung = true;
-                    }
-                    
-                   
-                }
-
-                if (model.Sortierung == "Menge")
-                {
-                    if(model.Menge)
-                    {
-                        model.Waren = _context.Ware.OrderByDescending(s => s.Menge).ToList();
-                        model.Menge = false;
-                    }
-                    else
-                    {
-                        model.Waren = _context.Ware.OrderBy(s => s.Menge).ToList();
-                        model.Menge = true;
-                    }
-                    
-                    
-                }
-
-                if (model.Sortierung == "Datum")
-                {
-                    if(model.Datum)
-                    {
-                        model.Waren = _context.Ware.OrderByDescending(s => s.Ware_Einlagerungsdatum).ToList();
-                        model.Datum = false;
-                    }
-                    else
-                    {
-                        model.Waren = _context.Ware.OrderBy(s => s.Ware_Einlagerungsdatum).ToList();
-                        model.Datum = true;
-                    }
-                    
-                    
-                }
-                return View(model);
 
             }
+            
 
-                IndexViewModel model1 = new IndexViewModel();
-            //model1.Waren = _context.Ware.ToList();
-            return View(model1);
+            return View(model);
         }
 
 
@@ -244,6 +231,9 @@ namespace Lagerverwaltung.Controllers
                 model.Lagerplatz.RemoveAll(s => s.Lagerplatz_Id == i.Lagerplatz_Id);
             }
             model.Menge = 1;
+
+            model.Kategorie = _context.Kategorie.ToList();
+
             return View(model);
         }
         public IActionResult BuchenSuche (BuchenViewModel model)
@@ -264,14 +254,7 @@ namespace Lagerverwaltung.Controllers
         [HttpPost]
         public async Task<IActionResult> Buchen(BuchenViewModel model)
         {
-            var test = _context.Ware;
-            foreach( var i in test)
-            {
-                if (i.Ware_Beschreibung.Contains(model.Ware_Beschreibung))
-                {
-                    ModelState.AddModelError("Ware_Beschreibung", "Ware schon vorhanden");
-                }
-            }
+            
             
             if (ModelState.IsValid)
             {
@@ -284,7 +267,8 @@ namespace Lagerverwaltung.Controllers
                     Menge = model.Menge,
                     User_id = userID,
                     Seriennr = model.Seriennr,
-                    Modellnummer = model.Modellnummer
+                    Modellnummer = model.Modellnummer,
+                    Kategorie_Name = model.Kategorie_Name
 
                 };
 
@@ -299,6 +283,7 @@ namespace Lagerverwaltung.Controllers
 
                 model.Lagerplatz.RemoveAll(s => s.Lagerplatz_Id == i.Lagerplatz_Id);
             }
+            model.Kategorie = _context.Kategorie.ToList();
             return View(model);
         }
 

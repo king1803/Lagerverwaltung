@@ -20,7 +20,11 @@ namespace Lagerverwaltung.ViewModels
         //[RegularExpression(@"[A-Z][0-9]*" , ErrorMessage ="A-Z 0-9")]
         public List<Lagerplatz> Lagerplatz { get; set; }
 
+        public List<Kategorie> Kategorie { get; set; }
+
         public int Lagerplatz_Id { get; set; }
+
+        public string Kategorie_Name { get; set; }
 
         [Required(ErrorMessage = "Menge muss ausgefült sein")]
         [Range(1,100000, ErrorMessage = "Menge darf nicht negativ sein")]

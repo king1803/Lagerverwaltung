@@ -33,6 +33,7 @@ namespace Lagerverwaltung.ViewModels
         public bool Datum { get; set; }
 
         public bool Menge { get; set; }
+        public bool Suche { get; set; }
 
         public string Seriennr { get; set; }
 

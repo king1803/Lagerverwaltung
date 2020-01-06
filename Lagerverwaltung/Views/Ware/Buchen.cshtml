@@ -50,6 +50,13 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="Kategorie_Name" class="control-label"></label>
+                <select asp-for="Kategorie_Name" asp-items="@(new SelectList(Model.Kategorie,"Kategorie_Name", "Kategorie_Beschreibung"))" class="custom-select">
+                </select>
+                <span asp-validation-for="Kategorie_Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <input type="submit" value="Buchen" class="btn btn-danger" />
             </div>
         </form>

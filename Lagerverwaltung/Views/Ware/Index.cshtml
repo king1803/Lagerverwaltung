@@ -17,31 +17,55 @@
         <form asp-action="Index">
             <div class="input-group mb-3">
                 <input asp-for="Suche_Beschreibung" class="form-control" placeholder="Beschreibung...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary dropdown-toggle dropdown-toggle-split" type="button" data-toggle="collapse" data-target="#Erweiterung" aria-expanded="false" aria-controls="Erweiterung">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                </div>
             </div>
-            <div class="input-group mb-3">
-                <input asp-for="Suche_Hersteller" class="form-control" placeholder="Hersteller...">
+            <div class="collapse" id="Erweiterung">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input asp-for="Suche_Hersteller" class="form-control" placeholder="Hersteller...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input asp-for="Suche_Kategorie" class="form-control" placeholder="Kategorie...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input asp-for="Suche_Kostenstellennr" class="form-control" placeholder="Kostenstellennr...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input asp-for="Suche_Lagerplatz" class="form-control" placeholder="Lagerplatz...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input asp-for="Suche_Lieferanten" class="form-control" placeholder="Lieferanten...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input asp-for="Suche_Modellnummer" class="form-control" placeholder="Modellnummer...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input asp-for="Suche_Seriennummer" class="form-control" placeholder="Seriennummer...">
+                        </div>
+                    </div>
+
+                    <input asp-for="Sortierung" type="hidden" value="@Model.Sortierung">
+                    <input asp-for="Suche" type="hidden" value="true">
+                </div>                         
             </div>
-            <div class="input-group mb-3">
-                <input asp-for="Suche_Kategorie" class="form-control" placeholder="Kategorie...">
-            </div>
-            <div class="input-group mb-3">
-                <input asp-for="Suche_Kostenstellennr" class="form-control" placeholder="Kostenstellennr...">
-            </div>
-            <div class="input-group mb-3">
-                <input asp-for="Suche_Lagerplatz" class="form-control" placeholder="Lagerplatz...">
-            </div>
-            <div class="input-group mb-3">
-                <input asp-for="Suche_Lieferanten" class="form-control" placeholder="Lieferanten...">
-            </div>
-            <div class="input-group mb-3">
-                <input asp-for="Suche_Modellnummer" class="form-control" placeholder="Modellnummer...">
-            </div>
-            <div class="input-group mb-3">
-                <input asp-for="Suche_Seriennummer" class="form-control" placeholder="Seriennummer...">
-            </div>
-            <div class="input-group mb-3">
-                <input asp-for="Sortierung" type="hidden" value="@Model.Sortierung">
-            </div>
+
             <div class="input-group mb-3">
                 <input type="submit"  value="Suchen" class="btn btn-primary" />
             </div>

@@ -19,35 +19,35 @@
                             Eingelagerte Menge: <span class="text-danger">@Convert.ToInt32(Model.Menge)</span>
                         </li>
                         <li class="list-group-item">
-                            Lagerplatz: <span class="text-danger ">@Model.Lagerplatz_Beschreibung</span>
+                            Lagerplatz: <span class="text-danger "></span>
                         </li>
                         <li class="list-group-item">
-                            Hersteller: <span class="text-danger ">@Model.Hersteller_Beschreibung</span>
+                            Hersteller: <span class="text-danger "></span>
                         </li>
                         <li class="list-group-item">
-                            Lieferant: <span class="text-danger ">@Model.Lieferant_Beschreibung</span>
+                            Lieferant: <span class="text-danger "></span>
                         </li>
                         <li class="list-group-item">
-                            Seriennummer: <span class="text-danger ">@Model.Seriennummer</span>
+                            Seriennummer: <span class="text-danger "></span>
                         </li>
                         <li class="list-group-item">
-                            Modellnummer: <span class="text-danger ">@Model.Modellnummer</span>
+                            Modellnummer: <span class="text-danger "></span>
                         </li>
                         <li class="list-group-item">
-                            Kategorie: <span class="text-danger ">@Model.Kategorie_Beschreibung</span>
+                            Kategorie: <span class="text-danger "></span>
                         </li>
                         <li class="list-group-item">
-                            Anschaffungskosten: <span class="text-danger ">@Model.Anschaffungskosten</span>
+                            Anschaffungskosten: <span class="text-danger "></span>
                         </li>
                         <li class="list-group-item">
-                            Kostenstelle: <span class="text-danger ">@Model.Kostenstellennr</span>
+                            Kostenstelle: <span class="text-danger "></span>
                         </li>
                         <li class="list-group-item">
                             <form asp-action="Ausbuchen" method="post">
                                 <div class="form-group align-content-center col-2">
-                                    <label asp-for="MengeNeu" class="form-label"></label>
-                                    <input asp-for="MengeNeu" class="form-control" value=@Convert.ToInt32(Model.Menge) />
-                                    <span asp-validation-for="MengeNeu" class="text-danger"></span>
+                                    <label asp-for="Menge" class="form-label"></label>
+                                    <input asp-for="Menge" class="form-control" value=@Convert.ToInt32(Model.Menge) />
+                                    <span asp-validation-for="Menge" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
@@ -72,7 +72,7 @@
 
             </div>
                 <div class="card-footer text-muted">
-                    Einlagerungsdatum: @Model.Ware_Einlagerungsdatum.ToShortDateString()<span class="text-danger"> eingebucht von : @Model.User </span>
+                    Einlagerungsdatum: <span class="text-danger"> eingebucht von :  </span>
                 </div>
 
             </div>
