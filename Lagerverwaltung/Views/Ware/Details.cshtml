@@ -41,38 +41,21 @@
                         </li>
                         <li class="list-group-item">
                             Kostenstelle: <span class="text-danger ">@Model.Kostenstellennr</span>
-                        </li>
-                        <li class="list-group-item">
-                            <form asp-action="Ausbuchen" method="post">
-                                <div class="form-group align-content-center col-2">
-                                    <label asp-for="MengeNeu" class="form-label"></label>
-                                    <input asp-for="MengeNeu" class="form-control" value=@Convert.ToInt32(Model.Menge) />
-                                    <span asp-validation-for="MengeNeu" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <input asp-for="Menge" class="form-control" type="hidden" value=@Convert.ToInt32(Model.Menge) />
-                                    <input asp-for="Ware_Id" class="form-control" type="hidden" value=@Model.Ware_Id />
-                                </div>
-
-
-
-
-                                <div class="form-group">
-                                    <input type="submit" value="Ausbuchen" class="btn btn-primary" />
-                                    <button asp-action="Index" class="btn btn-outline-danger">Abbrechen</button>
-                                    <button asp-action="Bearbeiten" class="btn btn-outline-danger">Bearbeiten</button>
-                                </div>
-                            </form>
-                        </li>
+                        </li>                  
+                       
+                                <div class="form-group, m-3">
+                                    <button asp-action="Bearbeiten" class="btn btn-warning">Bearbeiten</button>
+                                    <input type="submit" value="Ausbuchen" class="btn btn-danger" />
+                                    <button asp-action="Index" class="btn btn-primary">Zurück</button>
+                                    
+                                </div>                    
+                            
                     </ul>
-                    
-                    
-                    
+                                                         
 
             </div>
                 <div class="card-footer text-muted">
-                    Einlagerungsdatum: @Model.Ware_Einlagerungsdatum.ToShortDateString()<span class="text-danger"> eingebucht von : @Model.User </span>
+                    Einlagerungsdatum: @Model.Ware_Einlagerungsdatum.ToShortDateString()<span class="text-danger"> eingebucht von : </span>
                 </div>
 
             </div>

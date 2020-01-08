@@ -25,9 +25,9 @@ namespace Lagerverwaltung.Controllers
 
         public IActionResult Index(IndexViewModel model)
         {
-            if(model.Suche)
+            if (model.Suche)
 
-            { 
+            {
                 string suche_Beschreibung = "";
 
                 string suche_Hersteller = "";
@@ -130,7 +130,7 @@ namespace Lagerverwaltung.Controllers
                        Ware_Id = ware.Ware_Id,
                        Ware_Beschreibung = ware.Ware_Beschreibung,
                        Hersteller = ware.Ware_Hersteller,
-                       Kategorie= ware.Kategorie_Beschreibung,
+                       Kategorie = ware.Kategorie_Beschreibung,
                        Kostenstelle = ware.Kostenstelle,
                        Lagerplatz = ware.Lagerplatz,
                        Lieferant = lieferant.Lieferant_Beschreibung,
@@ -212,7 +212,7 @@ namespace Lagerverwaltung.Controllers
 
 
             }
-            
+
 
             return View(model);
         }
@@ -233,13 +233,16 @@ namespace Lagerverwaltung.Controllers
             model.Menge = 1;
 
             model.Kategorie = _context.Kategorie.ToList();
+            model.Hersteller = _context.Hersteller.ToList();
+            model.Kostenstelle = _context.Kostenstelle.ToList();
+            model.Lieferant = _context.Lieferant.ToList();
 
             return View(model);
         }
-        public IActionResult BuchenSuche (BuchenViewModel model)
+        public IActionResult BuchenSuche(BuchenViewModel model)
         {
             var ware = _context.Ware;
-            
+
 
 
             model.Lagerplatz = _context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(model.Suche)).OrderBy(i => i.Lagerplatz_Beschreibung).ToList();
@@ -249,13 +252,13 @@ namespace Lagerverwaltung.Controllers
                 model.Lagerplatz.RemoveAll(s => s.Lagerplatz_Id == i.Lagerplatz_Id);
             }
 
-            return View("Buchen",model);
+            return View("Buchen", model);
         }
         [HttpPost]
         public async Task<IActionResult> Buchen(BuchenViewModel model)
         {
-            
-            
+
+
             if (ModelState.IsValid)
             {
                 var userID = usernManager.GetUserId(HttpContext.User);
@@ -291,7 +294,7 @@ namespace Lagerverwaltung.Controllers
         {
             var ware = _context.Ware.Find(id);
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
-            var user = await usernManager.FindByIdAsync(ware.User_id);
+            //var user = await usernManager.FindByIdAsync(ware.User_id);
             var hersteller = _context.Hersteller.Find(ware.Hersteller_Id);
             var lieferant = _context.Lieferant.Find(ware.Lieferant_Id);
             var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
@@ -304,7 +307,7 @@ namespace Lagerverwaltung.Controllers
                 Menge = ware.Menge,
                 Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
                 Lagerplatz_Beschreibung = lager.Lagerplatz_Beschreibung,
-                User = user.UserName,
+                //User = user.UserName,
                 Hersteller_Beschreibung = hersteller.Hersteller_Beschreibung,
                 Lieferant_Beschreibung = lieferant.Lieferant_Beschreibung,
                 Kategorie_Beschreibung = kategorie.Kategorie_Name,
@@ -315,13 +318,11 @@ namespace Lagerverwaltung.Controllers
 
             };
 
-
-
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Ausbuchen(DetailsViewModel model)
+        public async Task<IActionResult> Ausbuchen(BearbeitenViewModel model)
         {
 
             Ware ware = _context.Ware.Find(model.Ware_Id);
@@ -360,23 +361,23 @@ namespace Lagerverwaltung.Controllers
             return View(model);
         }
         public IActionResult DazuBuchenSuche(DazuBuchenViewModel model)
-        {   
+        {
 
-            
-            
+
+
             var ware = _context.Ware;
             model.Waren = _context.Ware.ToList();
             if (!string.IsNullOrEmpty(model.Suche))
             {
-                model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(model.Suche)).ToList();  
+                model.Waren = _context.Ware.Where(s => s.Ware_Beschreibung.Contains(model.Suche)).ToList();
             }
-            
-            foreach(var i in model.Waren)
+
+            foreach (var i in model.Waren)
             {
                 i.Ware_Beschreibung = i.Ware_Beschreibung + " Menge: " + Convert.ToInt32(i.Menge);
             }
             model.MengeNeu = 1;
-            return View("DazuBuchen",model);
+            return View("DazuBuchen", model);
         }
 
         public IActionResult DazuBuchen()
@@ -417,5 +418,69 @@ namespace Lagerverwaltung.Controllers
             return View(model);
 
         }
+
+        public async Task<IActionResult> Bearbeiten(int id)
+        {
+
+            var ware = _context.Ware.Find(id);
+            var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
+            //var user = await usernManager.FindByIdAsync(ware.User_id);
+            var hersteller = _context.Hersteller.Find(ware.Hersteller_Id);
+            var lieferant = _context.Lieferant.Find(ware.Lieferant_Id);
+            var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
+            var kostenstellennummer = _context.Kostenstelle.Find(ware.Kostenstelle_Nr);
+
+            BearbeitenViewModel model = new BearbeitenViewModel
+            {
+                Ware_Beschreibung = ware.Ware_Beschreibung,
+                Ware_Id = ware.Ware_Id,
+                Menge = ware.Menge,
+                Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
+                Lagerplatz = lager.Lagerplatz_Beschreibung,
+                //User = user.UserName,
+                Hersteller_Beschreibung = hersteller.Hersteller_Beschreibung,
+                Lieferant_Beschreibung = lieferant.Lieferant_Beschreibung,
+                Kategorie_Beschreibung = kategorie.Kategorie_Name,
+                Kostenstellennr = kostenstellennummer.Kostenstelle_Nr,
+                Modellnummer = ware.Modellnummer,
+                Seriennummer = ware.Seriennr,
+                Anschaffungskosten = ware.Anschaff_Kosten
+
+            };
+
+            return View(model);
+        }
+        /*           [HttpPost]
+                     public async Task<IActionResult> Bearbeiten(BearbeitenViewModel model)
+                     {
+
+                        if (ModelState.IsValid)
+                        {
+                            var userID = usernManager.GetUserId(HttpContext.User);
+                            Ware ware = new Ware
+                            {
+
+                                Ware_Beschreibung = model.Ware_Beschreibung_NEU,
+                                Lagerplatz_Id = model.Lagerplatz_NEU,
+                                Menge = model.Menge_NEU,                
+                                Seriennr = model.Seriennummer_NEU,
+                                Modellnummer = model.Modellnummer_NEU,
+                                Kategorie_Name = model.Kategorie_Beschreibung_NEU,
+                                Anschaff_Kosten = model.Anschaffungskosten_NEU,
+                                Lieferant_Id = model.Lieferant_Beschreibung_NEU,
+                                Kostenstelle_Nr = model.Kostenstellennr_NEU,
+                                Hersteller_Id = model.Hersteller_Beschreibung_NEU,
+
+                            };
+
+                            _context.Ware.Add(ware);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction("Index");
+                        }
+                       
+                    }
+                */
+            
+        
     }
 }

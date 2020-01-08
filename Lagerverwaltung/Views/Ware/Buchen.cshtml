@@ -57,6 +57,27 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="Hersteller" class="control-label"></label>
+                <select asp-for="Hersteller" asp-items="@(new SelectList(Model.Hersteller,"Hersteller_Id", "Hersteller_Beschreibung"))" class="custom-select">
+                </select>
+                <span asp-validation-for="Hersteller" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Kostenstelle" class="control-label"></label>
+                <select asp-for="Kostenstelle" asp-items="@(new SelectList(Model.Kostenstelle,"Kostenstelle_Nr", "Kostenstelle_Beschreibung"))" class="custom-select">
+                </select>
+                <span asp-validation-for="Kostenstelle" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Lieferant" class="control-label"></label>
+                <select asp-for="Lieferant" asp-items="@(new SelectList(Model.Lieferant,"Lieferant_Id", "Lieferant_Beschreibung"))" class="custom-select">
+                </select>
+                <span asp-validation-for="Lieferant" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <input type="submit" value="Buchen" class="btn btn-danger" />
             </div>
         </form>
