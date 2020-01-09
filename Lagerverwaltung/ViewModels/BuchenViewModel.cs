@@ -32,6 +32,12 @@ namespace Lagerverwaltung.ViewModels
 
         public string Kategorie_Name { get; set; }
 
+        public string Hersteller_Id { get; set; }
+
+        public string Lieferant_Id { get; set; }
+
+        public string Kostenstelle_Id { get; set; }
+
         [Required(ErrorMessage = "Menge muss ausgefült sein")]
         [Range(1,100000, ErrorMessage = "Menge darf nicht negativ sein")]
         [RegularExpression(@"[0-9]*", ErrorMessage = "nur ganze Zahlen")]

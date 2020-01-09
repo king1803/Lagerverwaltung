@@ -57,24 +57,24 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Hersteller" class="control-label"></label>
-                <select asp-for="Hersteller" asp-items="@(new SelectList(Model.Hersteller,"Hersteller_Id", "Hersteller_Beschreibung"))" class="custom-select">
+                <label asp-for="Hersteller_Id" class="control-label"></label>
+                <select asp-for="Hersteller_Id" asp-items="@(new SelectList(Model.Hersteller,"Hersteller_Id", "Hersteller_Beschreibung"))" class="custom-select">
                 </select>
-                <span asp-validation-for="Hersteller" class="text-danger"></span>
+                <span asp-validation-for="Hersteller_Id" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Kostenstelle" class="control-label"></label>
-                <select asp-for="Kostenstelle" asp-items="@(new SelectList(Model.Kostenstelle,"Kostenstelle_Nr", "Kostenstelle_Beschreibung"))" class="custom-select">
+                <label asp-for="Kostenstelle_Id" class="control-label"></label>
+                <select asp-for="Kostenstelle_Id" asp-items="@(new SelectList(Model.Kostenstelle,"Kostenstelle_Nr", "Kostenstelle_Beschreibung"))" class="custom-select">
                 </select>
-                <span asp-validation-for="Kostenstelle" class="text-danger"></span>
+                <span asp-validation-for="Kostenstelle_Id" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Lieferant" class="control-label"></label>
-                <select asp-for="Lieferant" asp-items="@(new SelectList(Model.Lieferant,"Lieferant_Id", "Lieferant_Beschreibung"))" class="custom-select">
+                <label asp-for="Lieferant_Id" class="control-label"></label>
+                <select asp-for="Lieferant_Id" asp-items="@(new SelectList(Model.Lieferant,"Lieferant_Id", "Lieferant_Beschreibung"))" class="custom-select">
                 </select>
-                <span asp-validation-for="Lieferant" class="text-danger"></span>
+                <span asp-validation-for="Lieferant_Id" class="text-danger"></span>
             </div>
 
             <div class="form-group">
