@@ -314,7 +314,7 @@ namespace Lagerverwaltung.Controllers
                 Kostenstellennr = kostenstellennummer.Kostenstelle_Nr,
                 Modellnummer = ware.Modellnummer,
                 Seriennummer = ware.Seriennr,
-                Anschaffungskosten = ware.Anschaff_Kosten
+                Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero)
 
             };
 
