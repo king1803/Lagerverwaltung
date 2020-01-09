@@ -22,6 +22,12 @@ namespace Lagerverwaltung.ViewModels
 
         public List<Kategorie> Kategorie { get; set; }
 
+        public List<Hersteller> Hersteller { get; set; }
+
+        public List<Kostenstelle> Kostenstelle { get; set; }
+
+        public List<Lieferant> Lieferant { get; set; }
+
         public int Lagerplatz_Id { get; set; }
 
         public string Kategorie_Name { get; set; }

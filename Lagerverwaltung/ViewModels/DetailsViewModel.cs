@@ -21,15 +21,11 @@ namespace Lagerverwaltung.ViewModels
        
         public decimal Menge { get; set; }
 
-        [Display(Name ="Menge")]
-        [Range(0,100000, ErrorMessage ="Darf nicht negativ sein")]
-        public decimal MengeNeu { get; set; }
-
         public int Lagerplatz_Id { get; set; }
 
         public string Lagerplatz_Beschreibung { get; set; }
 
-        public string User { get; set; }
+        //public string User { get; set; }
 
         public string Hersteller_Beschreibung { get; set; }
 
