@@ -421,7 +421,7 @@ namespace Lagerverwaltung.Controllers
 
         public async Task<IActionResult> Bearbeiten(int id)
         {
-
+           
             var ware = _context.Ware.Find(id);
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
             //var user = await usernManager.FindByIdAsync(ware.User_id);
@@ -429,6 +429,8 @@ namespace Lagerverwaltung.Controllers
             var lieferant = _context.Lieferant.Find(ware.Lieferant_Id);
             var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
             var kostenstellennummer = _context.Kostenstelle.Find(ware.Kostenstelle_Nr);
+
+
 
             BearbeitenViewModel model = new BearbeitenViewModel
             {
@@ -444,7 +446,12 @@ namespace Lagerverwaltung.Controllers
                 Kostenstellennr = kostenstellennummer.Kostenstelle_Nr,
                 Modellnummer = ware.Modellnummer,
                 Seriennummer = ware.Seriennr,
-                Anschaffungskosten = ware.Anschaff_Kosten
+                Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero),
+                Lagerplatz_NEU = _context.Lagerplatz.ToList(),
+                Kategorie_NEU = _context.Kategorie.ToList(),
+                Hersteller_NEU = _context.Hersteller.ToList(),
+                Kostenstelle_NEU = _context.Kostenstelle.ToList(),
+                Lieferant_NEU = _context.Lieferant.ToList()
 
             };
 

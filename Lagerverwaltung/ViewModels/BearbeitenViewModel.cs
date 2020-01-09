@@ -54,10 +54,10 @@ namespace Lagerverwaltung.ViewModels
 
         public List<Lagerplatz> Lagerplatz_NEU { get; set; }
 
-        public List<Hersteller> Hersteller_Beschreibung_NEU { get; set;}
-        public List<Lieferant> Lieferant_Beschreibung_NEU { get; set; }
-        public List<Kategorie> Kategorie_Beschreibung_NEU { get; set; }
-        public List<Kostenstelle> Kostenstellennr_NEU { get; set; }
+        public List<Hersteller> Hersteller_NEU { get; set;}
+        public List<Lieferant> Lieferant_NEU { get; set; }
+        public List<Kategorie> Kategorie_NEU { get; set; }
+        public List<Kostenstelle> Kostenstelle_NEU { get; set; }
         public decimal Anschaffungskosten_NEU { get; set; }
         public string Seriennummer_NEU { get; set; }
         public string Modellnummer_NEU { get; set; }
