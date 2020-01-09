@@ -1,0 +1,218 @@
+﻿@model Lagerverwaltung.ViewModels.VerwaltungÜbersichtViewmodel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Verwaltung</h1>
+<div class="custom-control custom-checkbox  custom-control-inline m-2 ml-4" data-toggle="collapse" data-target="#Kategorie" aria-expanded="false" aria-controls="Kategorie">
+    <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+    <label class="custom-control-label" for="customCheck1">Kategorie</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline m-2" data-toggle="collapse" data-target="#Hersteller" aria-expanded="false" aria-controls="Hersteller">
+    <input type="checkbox" class="custom-control-input" id="customCheck2" checked>
+    <label class="custom-control-label" for="customCheck2">Hersteller</label>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 collapse show" id="Kategorie">
+            <div class="card">
+                <div class="card-header">
+                    Kategorie
+                </div>
+                <div class="card-body">
+                    <ul class="list-group-flush">
+                        @foreach (var k in Model.Kategorien)
+                        {
+                            <a asp-action="Index" asp-route-Id="@k.Kategorie_Name" asp-route-Kat="Kategorie" class="list-group-item list-group-item-action">
+
+                                @k.Kategorie_Beschreibung
+
+
+                            </a>
+                        }
+                    </ul>
+                </div>
+                <div class="card-footer">
+
+                    <div class="collapse multi-collapse text-center" id="neuLable">
+                        <span class="text-danger text-center my-2">Neu</span>
+                    </div>
+                    <div class="collapse multi-collapse1 text-center" id="bearbeitenLable">
+                        <span class="text-danger text-center my-2">Bearbeiten</span>
+                    </div>
+                    <div class="collapse multi-collapse2 text-center" id="löschen">
+                        <span class="text-danger text-center my-2">Löschen</span>
+                    </div>
+                    <form method="post">
+                        <div class="collapse multi-collapse multi-collapse1" id="neu">
+                            <input asp-for="Kategorie.Kategorie_Name" type="hidden" value="@Model.Kategorie.Kategorie_Name" />
+                            <input asp-for="Kategorie.Kategorie_Beschreibung" class="form-control" value="@Model.Kategorie.Kategorie_Beschreibung" />
+                            <span asp-validation-for="Kategorie" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="collapse show multi-collapse multi-collapse1" id="bearbeitenFeld">
+                            @if (!string.IsNullOrEmpty(Model.Kategorie.Kategorie_Name))
+                            {
+                                <input asp-for="Kategorie.Kategorie_Beschreibung" class="form-control" value="@Model.Kategorie.Kategorie_Beschreibung" readonly />
+
+                            }
+                        </div>
+
+                        <div class="collapse show multi-collapse multi-collapse1 multi-collapse2" id="neu">
+                            <button class="btn btn-info my-2" data-toggle="collapse" type="button" data-target=".multi-collapse" aria-expanded="false" aria-controls="neu bearbeitenFeld speichern neuLable">
+                                Neu
+                            </button>
+                            @if (!string.IsNullOrEmpty(Model.Kategorie.Kategorie_Name))
+                            {
+                                <button class="btn btn-success my-2" data-toggle="collapse" type="button" data-target=".multi-collapse1" aria-expanded="false" aria-controls="bearbeiten bearbeitenFeld neu speichern bearbeitenLable">
+                                    Bearbeiten
+                                </button>
+                                <button class="btn btn-danger my-2" data-toggle="collapse" type="button" data-target=".multi-collapse2" aria-expanded="false" aria-controls="löschen löschenLable neu ">
+                                    Löschen
+                                </button>
+                            }
+                        </div>
+
+
+                        <div class="collapse multi-collapse" id="speichern">
+                            <button class="btn btn-outline-danger my-2" data-toggle="collapse" type="button" data-target=".multi-collapse" aria-expanded="false" aria-controls="neu">
+                                Abbrechen
+                            </button>
+
+                            <input asp-action="Neu" asp-route-Id="Kategorie" class="btn btn-primary float-right my-2" type="submit" value="Speichern">
+
+
+
+
+                        </div>
+                        <div class="collapse  multi-collapse1" id="speichern">
+                            <button class="btn btn-outline-danger my-2" data-toggle="collapse" type="button" data-target=".multi-collapse1" aria-expanded="false" aria-controls="neu">
+                                Abbrechen
+                            </button>
+
+                            <input asp-action="Bearbeiten" asp-route-Id="Kategorie" class="btn btn-primary float-right my-2" type="submit" value="Speichern">
+
+
+                        </div>
+                    </form>
+                    <div class="collapse  multi-collapse2" id="löschen">
+                        <form asp-action="Löschen" asp-route-Id="Kategorie" method="post">
+                            <button class="btn btn-outline-danger my-2" data-toggle="collapse" type="button" data-target=".multi-collapse2" aria-expanded="false" aria-controls="neu">
+                                Abbrechen
+                            </button>
+
+                            <input type="hidden" asp-for="Kategorie.Kategorie_Name" value="@Model.Kategorie.Kategorie_Name" />
+                            <input class="btn btn-danger float-right my-2" type="submit" value="Löschen bestätigen">
+                        </form>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4  collapse show" id="Hersteller">
+            <div class="card">
+                <div class="card-header">
+                    Hersteller
+                </div>
+                <div class="card-body">
+                    <ul class="list-group-flush">
+                        @foreach (var k in Model.Herstellers)
+                        {
+                            <a asp-action="Index" asp-route-Id="@k.Hersteller_Id" asp-route-Kat="Hersteller" class="list-group-item list-group-item-action">
+
+                                @k.Hersteller_Beschreibung
+
+
+                            </a>
+                        }
+                    </ul>
+                </div>
+                <div class="card-footer">
+
+                    <div class="collapse multi-collapse3 text-center" id="neuLable">
+                        <span class="text-danger text-center my-2">Neu</span>
+                    </div>
+                    <div class="collapse multi-collapse4 text-center" id="bearbeitenLable">
+                        <span class="text-danger text-center my-2">Bearbeiten</span>
+                    </div>
+                    <div class="collapse multi-collapse5 text-center" id="löschen">
+                        <span class="text-danger text-center my-2">Löschen</span>
+                    </div>
+                    <form method="post">
+                        <div class="collapse multi-collapse3 multi-collapse4" id="neu">
+                            <input asp-for="Hersteller.Hersteller_Id" type="hidden" value="@Model.Hersteller.Hersteller_Id" />
+                            <input asp-for="Hersteller.Hersteller_Beschreibung" class="form-control" value="@Model.Hersteller.Hersteller_Beschreibung" />
+                            <span asp-validation-for="Hersteller" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="collapse show multi-collapse3 multi-collapse4" id="bearbeitenFeld">
+                            @if (Model.Hersteller.Hersteller_Id > 0)
+                            {
+                                <input asp-for="Hersteller.Hersteller_Beschreibung" class="form-control" value="@Model.Hersteller.Hersteller_Beschreibung" readonly />
+
+                            }
+                        </div>
+
+                        <div class="collapse show multi-collapse3 multi-collapse4 multi-collapse5" id="neu">
+                            <button class="btn btn-info my-2" data-toggle="collapse" type="button" data-target=".multi-collapse3" aria-expanded="false" aria-controls="neu bearbeitenFeld speichern neuLable">
+                                Neu
+                            </button>
+                            @if (Model.Hersteller.Hersteller_Id > 0)
+                            {
+                                <button class="btn btn-success my-2" data-toggle="collapse" type="button" data-target=".multi-collapse4" aria-expanded="false" aria-controls="bearbeiten bearbeitenFeld neu speichern bearbeitenLable">
+                                    Bearbeiten
+                                </button>
+                                <button class="btn btn-danger my-2" data-toggle="collapse" type="button" data-target=".multi-collapse5" aria-expanded="false" aria-controls="löschen löschenLable neu ">
+                                    Löschen
+                                </button>
+                            }
+                        </div>
+
+
+                        <div class="collapse multi-collapse3" id="speichern">
+                            <button class="btn btn-outline-danger my-2" data-toggle="collapse" type="button" data-target=".multi-collapse3" aria-expanded="false" aria-controls="neu">
+                                Abbrechen
+                            </button>
+
+                            <input asp-action="Neu" asp-route-Id="Hersteller" class="btn btn-primary float-right my-2" type="submit" value="Speichern">
+
+
+
+
+                        </div>
+                        <div class="collapse  multi-collapse4" id="speichern">
+                            <button class="btn btn-outline-danger my-2" data-toggle="collapse" type="button" data-target=".multi-collapse4" aria-expanded="false" aria-controls="neu">
+                                Abbrechen
+                            </button>
+
+                            <input asp-action="Bearbeiten" asp-route-Id="Hersteller" class="btn btn-primary float-right my-2" type="submit" value="Speichern">
+
+
+                        </div>
+                    </form>
+                    <div class="collapse  multi-collapse5" id="löschen">
+                        <form asp-action="Löschen" asp-route-Id="Hersteller" method="post">
+                            <button class="btn btn-outline-danger my-2" data-toggle="collapse" type="button" data-target=".multi-collapse5" aria-expanded="false" aria-controls="neu">
+                                Abbrechen
+                            </button>
+
+                            <input type="hidden" asp-for="Hersteller.Hersteller_Id" value="@Model.Hersteller.Hersteller_Id" />
+                            <input class="btn btn-danger float-right my-2" type="submit" value="Löschen bestätigen">
+                        </form>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

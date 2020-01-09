@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
-    int t = 0;
+    int s = 0;
 }
 
 <h1>Edit</h1>
@@ -50,7 +50,7 @@
         <div class="col-md-4">
             <div class="list-group">
                 <div class="list-group-item">
-                    @i Bestand @Model.bestand[t] 
+                    @i Bestand @Model.bestand[s] 
                 </div>
                 <div class="list-group-item">
                     <form asp-action="Edit">
@@ -79,7 +79,7 @@
             </div>
 
         </div>
-        t++;
+        s++;
     }
 
 </div>

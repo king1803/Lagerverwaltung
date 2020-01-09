@@ -88,7 +88,7 @@ namespace Lagerverwaltung.Controllers
                    }).Join(_context.Kategorie, ware => ware.Kategorie_Name, kategorie => kategorie.Kategorie_Name,
                    (ware, kategorie) => new
                    {
-                       Ware_Id = ware.Ware_Id,
+                       ware.Ware_Id,
                        Ware_Beschreibung = ware.Ware_Beschreibung,
                        Ware_Hersteller = ware.Ware_Hersteller,
                        Kategorie_Beschreibung = kategorie.Kategorie_Beschreibung,
