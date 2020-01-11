@@ -44,7 +44,7 @@
                         </li>                  
                        
                                 <div class="form-group, m-3">
-                                    <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning">Bearbeiten</a>
+                                    <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning" asp-route-id="@Model.Ware_Id">Bearbeiten</a>
                                     <input type="submit" value="Ausbuchen" class="btn btn-danger" />
                                     <a asp-action="Index" class="btn btn-primary">Zurück</a>
                                     

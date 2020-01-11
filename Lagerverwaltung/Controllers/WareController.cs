@@ -438,26 +438,26 @@ namespace Lagerverwaltung.Controllers
                 Ware_Id = ware.Ware_Id,
                 Menge = ware.Menge,
                 Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
-                Lagerplatz = lager.Lagerplatz_Beschreibung,
+                Lagerplatz_NEU = ware.Lagerplatz_Id,
                 //User = user.UserName,
-                Hersteller_Beschreibung = hersteller.Hersteller_Beschreibung,
-                Lieferant_Beschreibung = lieferant.Lieferant_Beschreibung,
-                Kategorie_Beschreibung = kategorie.Kategorie_Name,
+                Hersteller_NEU = hersteller.Hersteller_Id,
+                Lieferant_NEU = lieferant.Lieferant_Id,
+                Kategorie_NEU = kategorie.Kategorie_Name,
                 Kostenstellennr = kostenstellennummer.Kostenstelle_Nr,
                 Modellnummer = ware.Modellnummer,
                 Seriennummer = ware.Seriennr,
                 Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero),
-                Lagerplatz_NEU = _context.Lagerplatz.ToList(),
-                Kategorie_NEU = _context.Kategorie.ToList(),
-                Hersteller_NEU = _context.Hersteller.ToList(),
-                Kostenstelle_NEU = _context.Kostenstelle.ToList(),
-                Lieferant_NEU = _context.Lieferant.ToList()
+                Lagerplatz = _context.Lagerplatz.ToList(),
+                Kategorie = _context.Kategorie.ToList(),
+                Hersteller = _context.Hersteller.ToList(),
+                Kostenstelle = _context.Kostenstelle.ToList(),
+                Lieferant = _context.Lieferant.ToList()
 
             };
 
             return View(model);
         }
-        /*           [HttpPost]
+                   [HttpPost]
                      public async Task<IActionResult> Bearbeiten(BearbeitenViewModel model)
                      {
 
@@ -466,27 +466,29 @@ namespace Lagerverwaltung.Controllers
                             var userID = usernManager.GetUserId(HttpContext.User);
                             Ware ware = new Ware
                             {
-
+                                Ware_Id = model.Ware_Id,
                                 Ware_Beschreibung = model.Ware_Beschreibung_NEU,
+                                Ware_Einlagerungsdatum = model.Ware_Einlagerungsdatum,
                                 Lagerplatz_Id = model.Lagerplatz_NEU,
                                 Menge = model.Menge_NEU,                
                                 Seriennr = model.Seriennummer_NEU,
                                 Modellnummer = model.Modellnummer_NEU,
-                                Kategorie_Name = model.Kategorie_Beschreibung_NEU,
+                                Kategorie_Name = model.Kategorie_NEU,
                                 Anschaff_Kosten = model.Anschaffungskosten_NEU,
-                                Lieferant_Id = model.Lieferant_Beschreibung_NEU,
-                                Kostenstelle_Nr = model.Kostenstellennr_NEU,
-                                Hersteller_Id = model.Hersteller_Beschreibung_NEU,
+                                Lieferant_Id = model.Lieferant_NEU,
+                                Kostenstelle_Nr = model.Kostenstelle_NEU,
+                                Hersteller_Id = model.Hersteller_NEU,
+
 
                             };
-
-                            _context.Ware.Add(ware);
+                            
+                            _context.Ware.Update(ware);
                             await _context.SaveChangesAsync();
                             return RedirectToAction("Index");
                         }
-                       
+                        return View(model);
                     }
-                */
+                
             
         
     }
