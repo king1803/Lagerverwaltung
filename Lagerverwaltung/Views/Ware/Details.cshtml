@@ -4,60 +4,60 @@
 }
 
     
-        <div class="container">
-            <h1>Details</h1>
-            <div class="card">
-                <h4 class="card-header">
-                    ID: @Model.Ware_Id
-                </h4>
-                <div class="card-body">
-                    <ul class="list-group-flush">
-                        <li class="list-group-item">
-                            Beschreibung: @Model.Ware_Beschreibung
-                        </li>
-                        <li class="list-group-item">
-                            Eingelagerte Menge: <span class="text-danger">@Convert.ToInt32(Model.Menge)</span>
-                        </li>
-                        <li class="list-group-item">
-                            Lagerplatz: <span class="text-danger ">@Model.Lagerplatz_Beschreibung</span>
-                        </li>
-                        <li class="list-group-item">
-                            Hersteller: <span class="text-danger ">@Model.Hersteller_Beschreibung</span>
-                        </li>
-                        <li class="list-group-item">
-                            Lieferant: <span class="text-danger ">@Model.Lieferant_Beschreibung</span>
-                        </li>
-                        <li class="list-group-item">
-                            Seriennummer: <span class="text-danger ">@Model.Seriennummer</span>
-                        </li>
-                        <li class="list-group-item">
-                            Modellnummer: <span class="text-danger ">@Model.Modellnummer</span>
-                        </li>
-                        <li class="list-group-item">
-                            Kategorie: <span class="text-danger ">@Model.Kategorie_Beschreibung</span>
-                        </li>
-                        <li class="list-group-item">
-                            Anschaffungskosten: <span class="text-danger ">@Model.Anschaffungskosten</span>
-                        </li>
-                        <li class="list-group-item">
-                            Kostenstelle: <span class="text-danger ">@Model.Kostenstellennr</span>
-                        </li>                  
-                       
-                                <div class="form-group, m-3">
-                                    <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning" asp-route-id="@Model.Ware_Id">Bearbeiten</a>
-                                    <input type="submit" value="Ausbuchen" class="btn btn-danger" />
-                                    <a asp-action="Index" class="btn btn-primary">Zurück</a>
-                                    
-                                </div>                    
-                            
-                    </ul>
-                                                         
+    <div class="container">       
+        <h1>Details</h1>
+        <div class="card">
+            <h4 class="card-header">
+                ID: @Model.Ware_Id
+            </h4>
+            <div class="card-body">               
+                <ul class="list-group-flush">
+                    <li class="list-group-item">
+                        Beschreibung: @Model.Ware_Beschreibung
+                    </li>
+                    <li class="list-group-item">
+                        Eingelagerte Menge: <span class="text-danger">@Convert.ToInt32(Model.Menge)</span>
+                    </li>
+                    <li class="list-group-item">
+                        Lagerplatz: <span class="text-danger ">@Model.Lagerplatz_Beschreibung</span>
+                    </li>
+                    <li class="list-group-item">
+                        Hersteller: <span class="text-danger ">@Model.Hersteller_Beschreibung</span>
+                    </li>
+                    <li class="list-group-item">
+                        Lieferant: <span class="text-danger ">@Model.Lieferant_Beschreibung</span>
+                    </li>
+                    <li class="list-group-item">
+                        Seriennummer: <span class="text-danger ">@Model.Seriennummer</span>
+                    </li>
+                    <li class="list-group-item">
+                        Modellnummer: <span class="text-danger ">@Model.Modellnummer</span>
+                    </li>
+                    <li class="list-group-item">
+                        Kategorie: <span class="text-danger ">@Model.Kategorie_Beschreibung</span>
+                    </li>
+                    <li class="list-group-item">
+                        Anschaffungskosten: <span class="text-danger ">@Model.Anschaffungskosten</span>
+                    </li>
+                    <li class="list-group-item">
+                        Kostenstelle: <span class="text-danger ">@Model.Kostenstellennr</span>
+                    </li>
+
+                    <div class="form-group, m-3">
+                        <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning" asp-route-id="@Model.Ware_Id"><i class="fas fa-pen"></i>Bearbeiten</a>
+                        <input type="submit" value="Ausbuchen" class="btn btn-danger" />
+                        <a asp-action="Index" class="btn btn-primary">Zurück</a>
+
+                    </div>
+
+                </ul>
+
 
             </div>
-                <div class="card-footer text-muted">
-                    Einlagerungsdatum: @Model.Ware_Einlagerungsdatum.ToShortDateString()<span class="text-danger"> eingebucht von : </span>
-                </div>
-
+            <div class="card-footer text-muted">
+                Einlagerungsdatum: @Model.Ware_Einlagerungsdatum.ToShortDateString()<span class="text-danger"> eingebucht von : </span>
             </div>
 
         </div>
+
+    </div>
