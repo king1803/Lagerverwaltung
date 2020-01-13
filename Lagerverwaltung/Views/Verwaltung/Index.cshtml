@@ -30,13 +30,13 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-4 collapse show mb-2 " id="Kategorie">
+                <div class="col-md-4 collapse mb-2 " id="Kategorie">
                     <div class="card">
                         <div class="card-header">
                             Kategorie
                         </div>
                         <div class="card-body" style="overflow-y: scroll;height: 300px;">
-                            <ul class="list-group-flush">
+                            <ul class="list-group-flush ">
                                 @foreach (var k in Model.Kategorien)
                                 {
                                     <input type="submit" asp-action="Index" asp-route-Id="@k.Kategorie_Name" asp-route-Kat="Kategorie" class="list-group-item list-group-item-action" id="test" value="@k.Kategorie_Beschreibung" />
@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4  collapse show mb-2" id="Hersteller">
+                <div class="col-md-4  collapse mb-2" id="Hersteller">
                     <div class="card">
                         <div class="card-header">
                             Hersteller
@@ -226,7 +226,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4  collapse show mb-2" id="Lieferant">
+                <div class="col-md-4  collapse  mb-2" id="Lieferant">
                     <div class="card">
                         <div class="card-header">
                             Lieferanten
@@ -322,7 +322,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4  collapse show mb-2" id="Kostenstelle">
+                <div class="col-md-4  collapse  mb-2" id="Kostenstelle">
                     <div class="card">
                         <div class="card-header">
                             Kostenstellen
@@ -520,21 +520,33 @@
 
 
 
-            if ("@Model.KFilter" == "False") {
+            if ("@Model.KFilter" == "True") {
+                
+                $("#Kategorie").collapse('show');
+            }
+            else {
                 $("#customCheck1").prop("checked", false);
-                $("#Kategorie").collapse('hide');
             }
-            if ("@Model.HFilter" == "False") {
+            if ("@Model.HFilter" == "True") {
+                
+                $("#Hersteller").collapse('show');
+            }
+            else {
                 $("#customCheck2").prop("checked", false);
-                $("#Hersteller").collapse('hide');
             }
-            if ("@Model.LFilter" == "False") {
+            if ("@Model.LFilter" == "True") {
+               
+                 $("#Lieferant").collapse('show');
+            }
+            else {
                 $("#customCheck3").prop("checked", false);
-                 $("#Lieferant").collapse('hide');
             }
-            if ("@Model.KSFilter" == "False") {
+            if ("@Model.KSFilter" == "True") {
+                
+                $("#Kostenstelle").collapse('show');
+            }
+            else {
                 $("#customCheck4").prop("checked", false);
-                $("#Kostenstelle").collapse('hide');
             }
 
 
