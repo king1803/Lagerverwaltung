@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Lagerverwaltung</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
+   
+
 
 </head>
 <body>
@@ -31,23 +33,23 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Ware" asp-action="Index">Übersicht</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                            
+                            
+                                
                                 <div class="nav-item dropdown">
-
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Ware" asp-action="Index">Übersicht</a>
+                                    
+                                    <div class="dropdown-menu">
                                         <a class="dropdown-item" asp-controller="Ware" asp-action="Buchen">Einbuchen</a>
                                         <a class="dropdown-item" asp-controller="Ware" asp-action="DazuBuchen">DazuBuchen</a>
 
                                     </div>
                                 </div>
-                            </li>
+                            
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Lager" asp-action="Edit">Lager</a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" data-target=".dropdown-menu"></a>
                             </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Verwaltung" asp-action="Index">Verwaltung</a>
                             </li>
@@ -62,7 +64,7 @@
                                         </button>
 
                                     </form>
-                                    
+
                                 </li>
                             }
                             else
@@ -83,10 +85,10 @@
         </div>
 
     </header>
-    
+
     <div class="container">
         <main role="main" class="pb-3 pt-5 mt-3">
-            
+
             @RenderBody()
         </main>
     </div>
@@ -98,7 +100,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/font-awesome/js/fontawesome.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

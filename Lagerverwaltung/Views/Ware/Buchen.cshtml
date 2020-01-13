@@ -8,26 +8,34 @@
 
 <h4>Ware</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Buchen">
-            <div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="Buchen">
+    <div class="row">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="Ware_Beschreibung" class="control-label"></label>
                 <input asp-for="Ware_Beschreibung" class="form-control" placeholder="Beschreibung" value="@Model.Ware_Beschreibung" />
                 <span asp-validation-for="Ware_Beschreibung" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="customRadio" name="example" value="customEx" checked>
+                <label class="custom-control-label" for="customRadio">Menge</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="customRadio2" name="example" value="customEx">
+                <label class="custom-control-label" for="customRadio2">Seriennummer</label>
+            </div>
+            <div class="form-group collapse show" id="Menge">
                 <label asp-for="Menge" class="control-label"></label>
                 <input asp-for="Menge" type="number" class="form-control" value="@Model.Menge" />
                 <span asp-validation-for="Menge" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group collapse" id="Serie">
                 <label asp-for="Seriennr" class="control-label"></label>
                 <input asp-for="Seriennr" class="form-control" value="@Model.Seriennr" />
                 <span asp-validation-for="Seriennr" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group collapse" id="Modell">
                 <label asp-for="Modellnummer" class="control-label"></label>
                 <input asp-for="Modellnummer" class="form-control" value="@Model.Modellnummer" />
                 <span asp-validation-for="Modellnummer" class="text-danger"></span>
@@ -48,6 +56,14 @@
                 </select>
                 <span asp-validation-for="Lagerplatz" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <input type="submit" value="Buchen" class="btn btn-danger" />
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
 
             <div class="form-group">
                 <label asp-for="Kategorie_Name" class="control-label"></label>
@@ -77,15 +93,52 @@
                 <span asp-validation-for="Lieferant_Id" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Buchen" class="btn btn-danger" />
-            </div>
-        </form>
+
+        </div>
+
     </div>
-</div>
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    <script>
 
+        $(document).ready(function () {
+
+            var test = true;
+
+            $("#customRadio").click(function () {
+
+                if (!test)
+                {
+                    $("#Menge").show();
+                    $("#Serie").hide();
+                    $("#Modell").hide();
+                    test = true;
+                    alert("test");
+                }
+
+            });
+
+            $("#customRadio2").click(function () {
+
+                if (test)
+                {
+                    $("#Menge").hide();
+                    $("#Serie").show();
+                    $("#Modell").show();
+                    test = false;
+                }
+
+            });
+            
+
+
+
+        });
+
+    </script>
+}

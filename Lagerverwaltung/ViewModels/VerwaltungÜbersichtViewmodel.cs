@@ -18,8 +18,19 @@ namespace Lagerverwaltung.ViewModels
 
        public Kategorie Kategorie { get; set; }
 
-      public Hersteller Hersteller { get; set; }
+       public Hersteller Hersteller { get; set; }
 
+       public Lieferant Lieferant { get; set; }
 
+       public Kostenstelle Kostenstelle { get; set; }
+
+      public string Filter { get; set; }
+
+     public bool KFilter { get; set; }
+        public bool LFilter { get; set; }
+        public bool HFilter { get; set; }
+        public bool KSFilter { get; set; }
+
+        public LagerEditViewModel Lager { get; set; }
     }
 }

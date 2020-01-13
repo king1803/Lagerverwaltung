@@ -78,7 +78,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">
-                            <form asp-action="Index">
+                            <form asp-action="Index" >
                                 <div class="input-group">
                                     <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
                                     <input asp-for="Sortierung" type="hidden" value="Beschreibung">
@@ -92,7 +92,7 @@
                             </form>
 
                         </th>
-                        <th scope="col">
+                        <th scope="col" class="align-items-center">
                             <form asp-action="Index">
                                 <div class="input-group">
                                     <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
@@ -106,7 +106,7 @@
                                 </div>
                             </form>
                         </th>
-                        <th scope="col">
+                        <th scope="col" class="align-items-center">
                             <form asp-action="Index">
                                 <div class="input-group">
                                     <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
@@ -120,8 +120,7 @@
                                 </div>
                             </form>
                         </th>
-                        <th scope="col">Seriennummer</th>
-                        <th scope="col">Modellnummer</th>
+                        
                         <th></th>
                     </tr>
                 </thead>
@@ -143,18 +142,13 @@
                             <td>
                                 @ware.Ware_Beschreibung
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @Convert.ToInt32(ware.Menge)
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @ware.Ware_Einlagerungsdatum.ToShortDateString()
                             </td>
-                            <td>
-                                @ware.Seriennr
-                            </td>
-                            <td>
-                                @ware.Modellnummer
-                            </td>
+                            
                             <td>
                                 <a asp-action="Details" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
                                    Details

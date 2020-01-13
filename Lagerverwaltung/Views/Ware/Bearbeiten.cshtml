@@ -12,6 +12,7 @@
                 </h4>
                 <div class="card-body">
                     <form method="post" asp-action="Bearbeiten">
+                    <input type="hidden" asp-for="Ware_Id" value="@Model.Ware_Id" />
                     <ul class="list-group-flush">
                         <li class="list-group-item">
                             Beschreibung:      

@@ -19,20 +19,62 @@ namespace Lagerverwaltung.Controllers
             _context = context;
 
         }
-        public IActionResult Index(string Id, string Kat)
+        public IActionResult Index(string Id, string Kat, VerwaltungÜbersichtViewmodel model)
         {
-            VerwaltungÜbersichtViewmodel model = new VerwaltungÜbersichtViewmodel
+            if (string.IsNullOrEmpty(Id) && string.IsNullOrEmpty(Request.Cookies["Filter"]))
             {
-                Kategorien = _context.Kategorie.ToList(),
-                Herstellers = _context.Hersteller.ToList(),
-                Lieferanten = _context.Lieferant.ToList(),
-                Kostenstellen = _context.Kostenstelle.ToList()
-            };
-
+                model.KFilter = true;
+                model.LFilter = true;
+                model.HFilter = true;
+                model.KSFilter = true;
+            }
             
-            model.Kategorie = new Kategorie();
-            model.Hersteller = new Hersteller();
-            if (!string.IsNullOrEmpty(Id)&& Kat =="Kategorie")
+                string Filter = "";
+
+                if (model.KFilter)
+                {
+                    Filter = Filter + "Kategorie";
+                }
+                if (model.HFilter)
+                {
+                    Filter = Filter + "Hersteller";
+                }
+                if (model.LFilter)
+                {
+                    Filter = Filter + "Lieferant";
+                }
+                if (model.KSFilter)
+                {
+                    Filter = Filter + "Kostenstelle";
+                }
+                Response.Cookies.Append("Filter", Filter);
+            
+
+
+            model.Kategorien = _context.Kategorie.ToList();
+            model.Herstellers = _context.Hersteller.ToList();
+            model.Lieferanten = _context.Lieferant.ToList();
+            model.Kostenstellen = _context.Kostenstelle.ToList();
+
+
+            if(model.Kategorie == null)
+                {
+                model.Kategorie = new Kategorie();
+            }
+            if (model.Hersteller == null)
+            {
+                model.Hersteller = new Hersteller();
+            }
+            if (model.Lieferant == null)
+            {
+                model.Lieferant = new Lieferant();
+            }
+            if (model.Kostenstelle == null)
+            {
+                model.Kostenstelle = new Kostenstelle();
+            }
+
+            if (!string.IsNullOrEmpty(Id) && Kat == "Kategorie")
             {
                 model.Kategorie = _context.Kategorie.Find(Id);
             }
@@ -43,6 +85,54 @@ namespace Lagerverwaltung.Controllers
                 model.Hersteller = _context.Hersteller.Find(Convert.ToInt32(Id));
             }
 
+            if (!string.IsNullOrEmpty(Id) && Kat == "Lieferant")
+            {
+
+                model.Lieferant = _context.Lieferant.Find(Convert.ToInt32(Id));
+            }
+
+            if (!string.IsNullOrEmpty(Id) && Kat == "Kostenstelle")
+            {
+
+                model.Kostenstelle = _context.Kostenstelle.Find(Convert.ToInt32(Id));
+            }
+
+            //Lager
+
+            model.Lager = new LagerEditViewModel();
+            model.Lager.LetzesElement = _context.Lagerplatz.ToList().Last();
+            var test = _context.Lagerplatz;
+
+
+            foreach (var i in test)
+            {
+
+                if (!(model.Lager.lagerbezeichner == null))
+                {
+                    if (!model.Lager.lagerbezeichner.Contains(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1))))
+                    {
+                        model.Lager.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
+
+                    }
+                }
+                else
+                {
+                    model.Lager.lagerbezeichner = new List<char>();
+                    model.Lager.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
+
+
+
+                }
+
+            }
+            model.Lager.bestand = new List<int>();
+            foreach (var i in model.Lager.lagerbezeichner)
+            {
+
+
+                model.Lager.bestand.Add(_context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(i.ToString())).Count());
+
+            }
 
             return View(model);
         }
@@ -52,34 +142,58 @@ namespace Lagerverwaltung.Controllers
         {
             if (Id == "Kategorie")
             {
-                
-                
-                    _context.Kategorie.Update(model.Kategorie);
-                    await _context.SaveChangesAsync();
-                    model.Kategorie.Kategorie_Name = null;
-                    model.Hersteller.Hersteller_Id = 0;
 
+
+                _context.Kategorie.Update(model.Kategorie);
+                await _context.SaveChangesAsync();
+                model.Kategorie.Kategorie_Name = null;
 
 
             }
 
-            if(Id == "Hersteller")
+            if (Id == "Hersteller")
             {
 
-                
-                    _context.Hersteller.Update(model.Hersteller);
-                    await _context.SaveChangesAsync();
-                model.Kategorie.Kategorie_Name = null;
-                model.Hersteller.Hersteller_Id = 0;
+
+                _context.Hersteller.Update(model.Hersteller);
+                await _context.SaveChangesAsync();
+
 
 
 
 
             }
 
-            model.Kategorien = _context.Kategorie.ToList();
-            model.Herstellers = _context.Hersteller.ToList();
-            return View("Index", model);
+            if (Id == "Lieferant")
+            {
+
+
+                _context.Lieferant.Update(model.Lieferant);
+                await _context.SaveChangesAsync();
+
+
+
+
+
+            }
+
+            if (Id == "Kostenstelle")
+            {
+
+
+                _context.Kostenstelle.Update(model.Kostenstelle);
+                await _context.SaveChangesAsync();
+
+
+
+
+
+            }
+
+
+            
+
+            return RedirectToAction("Index", model);
         }
 
         [HttpPost]
@@ -87,12 +201,21 @@ namespace Lagerverwaltung.Controllers
         {
             if (Id == "Kategorie")
             {
-                
-                
+                foreach(var ware in _context.Ware)
+                {
+                    if(ware.Kategorie_Name == model.Kategorie.Kategorie_Name)
+                    {
+                        ModelState.AddModelError("Kategorie", "Kategorie noch in verwendung");
+                        break;
+                    }
+
+                }
+                if (ModelState.IsValid)
+                {
                     _context.Kategorie.Remove(model.Kategorie);
                     await _context.SaveChangesAsync();
-                model.Kategorie.Kategorie_Name = null;
-                model.Hersteller.Hersteller_Id = 0;
+                    model.Kategorie = new Kategorie();
+                }
 
 
 
@@ -104,16 +227,77 @@ namespace Lagerverwaltung.Controllers
 
                 _context.Hersteller.Remove(model.Hersteller);
                 await _context.SaveChangesAsync();
-                model.Kategorie.Kategorie_Name = null;
-                model.Hersteller.Hersteller_Id = 0;
+
 
 
 
 
             }
 
+            if (Id == "Lieferant")
+            {
+
+
+                _context.Lieferant.Remove(model.Lieferant);
+                await _context.SaveChangesAsync();
+
+
+
+
+            }
+
+            if (Id == "Kostenstelle")
+            {
+
+
+                _context.Kostenstelle.Remove(model.Kostenstelle);
+                await _context.SaveChangesAsync();
+
+
+
+
+
+            }
+
+            model.Lager = new LagerEditViewModel();
+            model.Lager.LetzesElement = _context.Lagerplatz.ToList().Last();
+            var test = _context.Lagerplatz;
+
+
+            foreach (var i in test)
+            {
+
+                if (!(model.Lager.lagerbezeichner == null))
+                {
+                    if (!model.Lager.lagerbezeichner.Contains(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1))))
+                    {
+                        model.Lager.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
+
+                    }
+                }
+                else
+                {
+                    model.Lager.lagerbezeichner = new List<char>();
+                    model.Lager.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
+
+
+
+                }
+
+            }
+            model.Lager.bestand = new List<int>();
+            foreach (var i in model.Lager.lagerbezeichner)
+            {
+
+
+                model.Lager.bestand.Add(_context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(i.ToString())).Count());
+
+            }
+
             model.Kategorien = _context.Kategorie.ToList();
             model.Herstellers = _context.Hersteller.ToList();
+            model.Lieferanten = _context.Lieferant.ToList();
+            model.Kostenstellen = _context.Kostenstelle.ToList();
 
             return View("Index", model);
         }
@@ -121,14 +305,14 @@ namespace Lagerverwaltung.Controllers
         [HttpPost]
         public async Task<IActionResult> Neu(string Id, VerwaltungÜbersichtViewmodel model)
         {
+
             if (Id == "Kategorie")
             {
-                
-                    model.Kategorie.Kategorie_Name = model.Kategorie.Kategorie_Beschreibung;
-                    _context.Kategorie.Add(model.Kategorie);
-                    await _context.SaveChangesAsync();
-                model.Kategorie.Kategorie_Name = null;
-                model.Hersteller.Hersteller_Id = 0;
+
+                model.Kategorie.Kategorie_Name = model.Kategorie.Kategorie_Beschreibung;
+                _context.Kategorie.Add(model.Kategorie);
+                await _context.SaveChangesAsync();
+
 
 
 
@@ -137,22 +321,118 @@ namespace Lagerverwaltung.Controllers
 
             if (Id == "Hersteller")
             {
-                
-                    
-                    _context.Hersteller.Add(model.Hersteller);
-                    await _context.SaveChangesAsync();
-                model.Kategorie.Kategorie_Name = null;
+
                 model.Hersteller.Hersteller_Id = 0;
+                _context.Hersteller.Add(model.Hersteller);
+                await _context.SaveChangesAsync();
+
 
 
 
 
             }
 
+            if (Id == "Lieferant")
+            {
+
+                model.Lieferant.Lieferant_Id = 0;
+                _context.Lieferant.Add(model.Lieferant);
+                await _context.SaveChangesAsync();
+
+
+
+
+
+            }
+
+            if (Id == "Kostenstelle")
+            {
+
+                model.Kostenstelle.Kostenstelle_Nr = 0;
+                _context.Kostenstelle.Add(model.Kostenstelle);
+                await _context.SaveChangesAsync();
+
+
+
+
+
+            }
+
+            
+
+            return RedirectToAction("Index", model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(VerwaltungÜbersichtViewmodel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var liste = _context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(model.Lager.lager.ToString()));
+                int nummer = liste.Count();
+                for (int i = 1; i <= model.Lager.Anzahl; i++)
+                {
+
+                    var lager = new Lagerplatz();
+                    if (model.Lager.lager == '1')
+                    {
+                        lager.Lagerplatz_Beschreibung = Convert.ToChar(model.Lager.lagerbezeichner.Count() + 65).ToString() + i;
+                    }
+                    else
+                    {
+                        lager.Lagerplatz_Beschreibung = model.Lager.lager.ToString() + (nummer + i);
+                    }
+                    _context.Lagerplatz.Add(lager);
+                    await _context.SaveChangesAsync();
+                }
+                
+            }
+
+            model.Lager.LetzesElement = _context.Lagerplatz.ToList().Last();
+            var test = _context.Lagerplatz;
+
+
+            foreach (var i in test)
+            {
+
+                if (!(model.Lager.lagerbezeichner == null))
+                {
+                    if (!model.Lager.lagerbezeichner.Contains(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1))))
+                    {
+                        model.Lager.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
+
+                    }
+                }
+                else
+                {
+                    model.Lager.lagerbezeichner = new List<char>();
+                    model.Lager.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
+
+
+
+                }
+
+            }
+            model.Lager.bestand = new List<int>();
+            foreach (var i in model.Lager.lagerbezeichner)
+            {
+
+
+                model.Lager.bestand.Add(_context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(i.ToString())).Count());
+
+            }
+
             model.Kategorien = _context.Kategorie.ToList();
             model.Herstellers = _context.Hersteller.ToList();
+            model.Lieferanten = _context.Lieferant.ToList();
+            model.Kostenstellen = _context.Kostenstelle.ToList();
 
-            return View("Index", model);
+            return View("Index",model);
         }
     }
+
+   
+
+    
 }

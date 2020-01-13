@@ -28,15 +28,22 @@ namespace Lagerverwaltung.ViewModels
 
         public List<Lieferant> Lieferant { get; set; }
 
+        [Display(Name = "Lagerplatz")]
         public int Lagerplatz_Id { get; set; }
+        [Display(Name = "Kategorie")]
 
         public string Kategorie_Name { get; set; }
 
-        public string Hersteller_Id { get; set; }
+        [Display(Name = "Hersteller")]
+        public int Hersteller_Id { get; set; }
 
-        public string Lieferant_Id { get; set; }
+        [Display(Name = "Lieferant")]
 
-        public string Kostenstelle_Id { get; set; }
+        public int Lieferant_Id { get; set; }
+
+        [Display(Name = "Kostenstelle")]
+
+        public int Kostenstelle_Id { get; set; }
 
         [Required(ErrorMessage = "Menge muss ausgefült sein")]
         [Range(1,100000, ErrorMessage = "Menge darf nicht negativ sein")]

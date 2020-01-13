@@ -66,30 +66,30 @@ namespace Lagerverwaltung.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(LagerEditViewModel model)
+        public async Task<IActionResult> Edit(VerwaltungÜbersichtViewmodel model)
         {
             if(ModelState.IsValid)
             {
-                var liste = _context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(model.lager.ToString()));
+                var liste = _context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(model.Lager.lager.ToString()));
                 int nummer = liste.Count();
-                for (int i = 1; i <= model.Anzahl; i++)
+                for (int i = 1; i <= model.Lager.Anzahl; i++)
                 {
 
                     var lager = new Lagerplatz();
-                    if (model.lager == '1')
+                    if (model.Lager.lager == '1')
                     {
-                        lager.Lagerplatz_Beschreibung = Convert.ToChar(model.lagerbezeichner.Count() + 65).ToString() + i;
+                        lager.Lagerplatz_Beschreibung = Convert.ToChar(model.Lager.lagerbezeichner.Count() + 65).ToString() + i;
                     }
                     else
                     {
-                        lager.Lagerplatz_Beschreibung = model.lager.ToString() + (nummer + i);
+                        lager.Lagerplatz_Beschreibung = model.Lager.lager.ToString() + (nummer + i);
                     }
                     _context.Lagerplatz.Add(lager);
                     await _context.SaveChangesAsync();
                 }
                 return RedirectToAction("Index", "Ware");
             }
-            return View(model);
+            return RedirectToAction("Index", "Verwaltung");
         }
     }
 }

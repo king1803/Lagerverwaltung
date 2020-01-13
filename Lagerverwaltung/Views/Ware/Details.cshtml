@@ -6,6 +6,7 @@
     
     <div class="container">       
         <h1>Details</h1>
+        
         <div class="card">
             <h4 class="card-header">
                 ID: @Model.Ware_Id
@@ -44,7 +45,7 @@
                     </li>
 
                     <div class="form-group, m-3">
-                        <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning" asp-route-id="@Model.Ware_Id"><i class="fas fa-pen"></i>Bearbeiten</a>
+                        <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning" asp-route-id="@Model.Ware_Id"><i class="fa fa-pen fa-spin"></i>Bearbeiten</a>
                         <input type="submit" value="Ausbuchen" class="btn btn-danger" />
                         <a asp-action="Index" class="btn btn-primary">Zurück</a>
 
@@ -55,7 +56,7 @@
 
             </div>
             <div class="card-footer text-muted">
-                Einlagerungsdatum: @Model.Ware_Einlagerungsdatum.ToShortDateString()<span class="text-danger"> eingebucht von : </span>
+                Einlagerungsdatum: @Model.Ware_Einlagerungsdatum.ToShortDateString()<span class="text-danger"> eingebucht von :</span>
             </div>
 
         </div>

@@ -258,6 +258,19 @@ namespace Lagerverwaltung.Controllers
         public async Task<IActionResult> Buchen(BuchenViewModel model)
         {
 
+            if(string.IsNullOrEmpty(model.Seriennr))
+            {
+                model.Seriennr = "0";
+            }
+            else
+            {
+                model.Menge = 1;
+            }
+
+            if (string.IsNullOrEmpty(model.Modellnummer))
+            {
+                model.Modellnummer = "0";
+            }
 
             if (ModelState.IsValid)
             {
@@ -271,7 +284,11 @@ namespace Lagerverwaltung.Controllers
                     User_id = userID,
                     Seriennr = model.Seriennr,
                     Modellnummer = model.Modellnummer,
-                    Kategorie_Name = model.Kategorie_Name
+                    Kategorie_Name = model.Kategorie_Name,
+                    Lieferant_Id = model.Lieferant_Id,
+                    Hersteller_Id = model.Hersteller_Id,
+                    Kostenstelle_Nr = model.Kostenstelle_Id
+
 
                 };
 
@@ -290,7 +307,7 @@ namespace Lagerverwaltung.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
             var ware = _context.Ware.Find(id);
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
@@ -419,7 +436,7 @@ namespace Lagerverwaltung.Controllers
 
         }
 
-        public async Task<IActionResult> Bearbeiten(int id)
+        public IActionResult Bearbeiten(int id)
         {
            
             var ware = _context.Ware.Find(id);
