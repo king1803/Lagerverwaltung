@@ -41,7 +41,11 @@ namespace Lagerverwaltung.ViewModels
 
         public decimal Anschaffungskosten { get; set; }
 
+        [Range(1,100000,ErrorMessage ="Keine Menge kleiner 1")]
 
+        public int AusbuchenMenge { get; set; }
+
+        public bool Fehler { get; set; }
 
 
 

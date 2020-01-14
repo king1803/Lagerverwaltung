@@ -25,7 +25,7 @@ namespace Lagerverwaltung.Controllers
 
         public IActionResult Index(IndexViewModel model)
         {
-            if (model.Suche)
+            if (model.Suche || !string.IsNullOrEmpty(Request.Cookies["Suche"]))
 
             {
                 string suche_Beschreibung = "";
@@ -41,6 +41,12 @@ namespace Lagerverwaltung.Controllers
                 if (!string.IsNullOrEmpty(model.Suche_Beschreibung))
                 {
                     suche_Beschreibung = model.Suche_Beschreibung;
+                    Response.Cookies.Append("Suche", suche_Beschreibung);
+                }
+                if(!string.IsNullOrEmpty(Request.Cookies["Suche"]) && string.IsNullOrEmpty(model.Suche_Beschreibung))
+                {
+                    suche_Beschreibung = Request.Cookies["Suche"];
+                    Response.Cookies.Delete("Suche");
                 }
                 if (!string.IsNullOrEmpty(model.Suche_Hersteller))
                 {
@@ -331,7 +337,9 @@ namespace Lagerverwaltung.Controllers
                 Kostenstellennr = kostenstellennummer.Kostenstelle_Nr,
                 Modellnummer = ware.Modellnummer,
                 Seriennummer = ware.Seriennr,
-                Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero)
+                Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero),
+                AusbuchenMenge = 1
+                
 
             };
 
@@ -339,16 +347,19 @@ namespace Lagerverwaltung.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Ausbuchen(BearbeitenViewModel model)
+        public async Task<IActionResult> Ausbuchen(DetailsViewModel model)
         {
 
             Ware ware = _context.Ware.Find(model.Ware_Id);
-            decimal i = model.Menge;
-            decimal j = model.MengeNeu;
+            int j = model.AusbuchenMenge;
+            int i = Convert.ToInt32(ware.Menge);
 
-            model.Ware_Id = ware.Ware_Id;
-            model.Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum;
-            model.Ware_Beschreibung = ware.Ware_Beschreibung;
+            if (j > i)
+            {
+                ModelState.AddModelError("AusbuchenMenge", "So viel ist nicht da");
+                
+            }
+
 
             if (ModelState.IsValid)
             {
@@ -361,21 +372,43 @@ namespace Lagerverwaltung.Controllers
 
                     return RedirectToAction("Index");
                 }
-                if (j > i)
-                {
-                    ModelState.AddModelError("MengeNeu", "So viel ist nicht da");
-                    return View(model);
-                }
+                
                 if (j < i)
                 {
 
-                    ware.Menge = ware.Menge - model.MengeNeu;
+                    ware.Menge = ware.Menge - model.AusbuchenMenge;
                     _context.Ware.Update(ware);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
             }
-            return View(model);
+
+            
+            var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
+            //var user = await usernManager.FindByIdAsync(ware.User_id);
+            var hersteller = _context.Hersteller.Find(ware.Hersteller_Id);
+            var lieferant = _context.Lieferant.Find(ware.Lieferant_Id);
+            var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
+            var kostenstellennummer = _context.Kostenstelle.Find(ware.Kostenstelle_Nr);
+
+
+            model.Ware_Beschreibung = ware.Ware_Beschreibung;
+            model.Ware_Id = ware.Ware_Id;
+            model.Menge = ware.Menge;
+            model.Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum;
+            model.Lagerplatz_Beschreibung = lager.Lagerplatz_Beschreibung;
+            //User = user.UserName,
+            model.Hersteller_Beschreibung = hersteller.Hersteller_Beschreibung;
+            model.Lieferant_Beschreibung = lieferant.Lieferant_Beschreibung;
+            model.Kategorie_Beschreibung = kategorie.Kategorie_Name;
+            model.Kostenstellennr = kostenstellennummer.Kostenstelle_Nr;
+            model.Modellnummer = ware.Modellnummer;
+            model.Seriennummer = ware.Seriennr;
+            model.Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero);
+
+            model.Fehler = true;
+
+            return View("Details",model);
         }
         public IActionResult DazuBuchenSuche(DazuBuchenViewModel model)
         {
@@ -501,7 +534,7 @@ namespace Lagerverwaltung.Controllers
                             
                             _context.Ware.Update(ware);
                             await _context.SaveChangesAsync();
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Details", new { id = model.Ware_Id });
                         }
                         return View(model);
                     }

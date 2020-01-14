@@ -26,7 +26,7 @@ namespace Lagerverwaltung.Controllers
                 model.KFilter = true;
                 model.LFilter = true;
                 model.HFilter = true;
-                model.KSFilter = true;
+                model.KSFilter = false;
             }
             
                 string Filter = "";
