@@ -45,11 +45,13 @@
                     </li>
 
                     <div class="form-group, m-3">
-                        <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning" asp-route-id="@Model.Ware_Id"><i class="fa fa-pen fa-spin"></i>Bearbeiten</a>
-                        <input type="submit" value="Ausbuchen" class="btn btn-danger" />
+                        <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning" asp-route-id="@Model.Ware_Id"><i class="fa fa-pen"></i> Bearbeiten</a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-box"></i>  Ausbuchen
+                        </button>
                         <a asp-action="Index" class="btn btn-primary">Zurück</a>
 
-                    </div>
+</div>
 
                 </ul>
 

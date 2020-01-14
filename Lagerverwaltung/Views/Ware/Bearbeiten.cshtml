@@ -70,11 +70,13 @@
                             <span asp-validation-for="Kostenstelle_NEU" class="text-danger"></span>
                         </li>
 
-                                <div class="form-group, m-3">
-                                    <input type="submit" value="Speichern" class="btn btn-danger" />
-                                    <button asp-action="Index" class="btn btn-outline-primary">Abbrechen</button>
-                                    
-                                </div>
+                        <div class="form-group, m-3">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa fa-save"></i>  Speichern
+                            </button>
+                            <button asp-action="Index" class="btn btn-outline-primary">Abbrechen</button>
+
+                        </div>
                             
                         </li>
                     </ul>

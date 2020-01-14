@@ -9,7 +9,7 @@
     <div class="container">
         <h1>Index</h1>
         <a asp-action="Buchen" class="btn btn-primary btn-sm mb-3">
-            Einbuchen
+            <i class="fa fa-file"></i>  Einbuchen
         </a>
         <a asp-action="Dazubuchen" class="btn btn-primary btn-sm mb-3">
             Ware dazu
@@ -61,13 +61,15 @@
                         </div>
                     </div>
 
-                    <input asp-for="Sortierung" type="hidden" value="@Model.Sortierung">
+                    <input asp-for="Sortierung" type="hidden" value="@Model.Sortierung">                  
                     <input asp-for="Suche" type="hidden" value="true">
                 </div>                         
             </div>
 
             <div class="input-group mb-3">
-                <input type="submit"  value="Suchen" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-search"></i>  Suchen
+                </button>
             </div>
         </form>
 

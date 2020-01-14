@@ -31,77 +31,66 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
                             </li>
-                            
-                            
-                                
-                                <div class="nav-item dropdown">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Ware" asp-action="Index">Übersicht</a>
-                                    
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-controller="Ware" asp-action="Buchen">Einbuchen</a>
-                                        <a class="dropdown-item" asp-controller="Ware" asp-action="DazuBuchen">DazuBuchen</a>
 
-                                    </div>
-                                </div>
-                            
                             <li class="nav-item">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" data-target=".dropdown-menu"></a>
+
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Ware" asp-action="Index"><i class="fa fa-pallet"></i> Übersicht</a>
                             </li>
-                            
+
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Verwaltung" asp-action="Index">Verwaltung</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Verwaltung" asp-action="Index"><i class="fa fa-cogs"></i> Verwaltung</a>
                             </li>
                         </ul>
-                        <ul class="navbar-nav flex-grow-1 ml-auto">
-                            @if (signInManager.IsSignedIn(User))
-                            {
-                                <li class="nav-item">
-                                    <form method="post" asp-action="Ausloggen" asp-controller="Account">
-                                        <button type="submit" class="nav-link btn btn-link" style="width:auto">
-                                            Ausloggen @User.Identity.Name
-                                        </button>
+                            <ul class="navbar-nav flex-grow-1 ml-auto">
+                                @if (signInManager.IsSignedIn(User))
+                                {
+                                    <li class="nav-item">
+                                        <form method="post" asp-action="Ausloggen" asp-controller="Account">
+                                            <button type="submit" class="nav-link btn btn-link" style="width:auto">
+                                                Ausloggen @User.Identity.Name
+                                            </button>
 
-                                    </form>
+                                        </form>
 
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a asp-controller="Account" asp-action="Regestrieren" class="nav-link">Regestrieren</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
-                                </li>
-                            }
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a asp-controller="Account" asp-action="Regestrieren" class="nav-link">Regestrieren</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                                    </li>
+                                }
 
-                        </ul>
+                            </ul>
 
+                        </div>
                     </div>
-                </div>
-            </nav>
-        </div>
+                </nav>
+            </div>
 
-    </header>
+        </header>
 
-    <div class="container">
-        <main role="main" class="pb-3 pt-5 mt-3">
-
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - Lagerverwaltung - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <main role="main" class="pb-3 pt-5 mt-3">
+
+                @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/font-awesome/js/all.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-</body>
-</html>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2019 - Lagerverwaltung - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/font-awesome/js/all.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+    </body>
+    </html>
