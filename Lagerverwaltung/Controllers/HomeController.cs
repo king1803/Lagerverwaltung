@@ -43,6 +43,11 @@ namespace Lagerverwaltung.Controllers
             return View();
         }
 
+        public IActionResult Ueber()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
