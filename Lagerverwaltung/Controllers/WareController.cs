@@ -327,7 +327,7 @@ namespace Lagerverwaltung.Controllers
             {
                 Ware_Beschreibung = ware.Ware_Beschreibung,
                 Ware_Id = ware.Ware_Id,
-                Menge = ware.Menge,
+                Menge = decimal.Round(ware.Menge, 0),
                 Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
                 Lagerplatz_Beschreibung = lager.Lagerplatz_Beschreibung,
                 //User = user.UserName,
@@ -486,7 +486,7 @@ namespace Lagerverwaltung.Controllers
             {
                 Ware_Beschreibung = ware.Ware_Beschreibung,
                 Ware_Id = ware.Ware_Id,
-                Menge = ware.Menge,
+                Menge = decimal.Round(ware.Menge, 0),
                 Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
                 Lagerplatz_NEU = ware.Lagerplatz_Id,
                 //User = user.UserName,
