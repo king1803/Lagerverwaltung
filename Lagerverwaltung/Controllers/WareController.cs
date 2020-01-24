@@ -293,7 +293,8 @@ namespace Lagerverwaltung.Controllers
                     Kategorie_Name = model.Kategorie_Name,
                     Lieferant_Id = model.Lieferant_Id,
                     Hersteller_Id = model.Hersteller_Id,
-                    Kostenstelle_Nr = model.Kostenstelle_Id
+                    Kostenstelle_Nr = model.Kostenstelle_Id,
+                    Anschaff_Kosten = model.Anschaff_Kosten
 
 
                 };

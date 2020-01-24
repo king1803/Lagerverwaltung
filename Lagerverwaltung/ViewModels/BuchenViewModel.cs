@@ -56,5 +56,8 @@ namespace Lagerverwaltung.ViewModels
         public string Seriennr { get; set; }
         public string Modellnummer { get; set; }
 
+        [Display(Name = "Anschaffungskosten")]
+        public decimal Anschaff_Kosten { get; set; }
+
     }
 }
