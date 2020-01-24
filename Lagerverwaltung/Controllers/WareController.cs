@@ -519,7 +519,7 @@ namespace Lagerverwaltung.Controllers
                             {
                                 Ware_Id = model.Ware_Id,
                                 Ware_Beschreibung = model.Ware_Beschreibung_NEU,
-                                Ware_Einlagerungsdatum = model.Ware_Einlagerungsdatum,
+                                //Ware_Einlagerungsdatum = model.Ware_Einlagerungsdatum,
                                 Lagerplatz_Id = model.Lagerplatz_NEU,
                                 Menge = model.Menge_NEU,                
                                 Seriennr = model.Seriennummer_NEU,
