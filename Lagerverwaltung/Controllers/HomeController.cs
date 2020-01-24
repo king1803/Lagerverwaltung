@@ -29,13 +29,7 @@ namespace Lagerverwaltung.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            var model = new HomeViewModel();
-            decimal lager = _context.Lagerplatz.Count();
-            decimal ware = _context.Ware.Count();
-            //decimal aus = Decimal.Divide(ware, lager);
-            //model.Auslastung = Convert.ToInt32(aus*100);
-            model.AnzahlWare = _context.Ware.Count();
-            return View(model);
+            return View();
         }
 
         public IActionResult Privacy()

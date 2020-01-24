@@ -7,8 +7,6 @@ namespace Lagerverwaltung.ViewModels
 {
     public class HomeViewModel
     {
-        public int AnzahlWare { get; set; }
-
-        public int Auslastung { get; set; }
+        
     }
 }
