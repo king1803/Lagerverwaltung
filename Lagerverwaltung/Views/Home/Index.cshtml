@@ -7,7 +7,7 @@
 
 <div class="text-center">
     <h3 class="display-3">Willkommen</h3>
-    <h5 class="display-4">@System.DateTime.Now</h5>
+    <div class="display-4 " id="uhr"></div>
     
     <img class="img-fluid" src="~/Bilder/banner.png" width="400" id="bild" />
 
@@ -23,7 +23,19 @@
                 }
                 
             });
+            uhrzeit();
         });
+
+        function uhrzeit() {
+            var jetzt = new Date();
+                h = jetzt.getHours();
+                m = jetzt.getMinutes();
+                s = jetzt.getSeconds();
+            document.getElementById('uhr').innerHTML = h + ':' + m + ':' + s;
+            setTimeout("uhrzeit();", 500);
+        }
+
 
     </script>
 }
+
