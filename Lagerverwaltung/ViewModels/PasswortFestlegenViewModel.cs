@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lagerverwaltung.ViewModels
 {
-    public class LoginViewModel
+    public class PasswortFestlegenViewModel
     {
         [Required]
 
@@ -16,9 +16,9 @@ namespace Lagerverwaltung.ViewModels
         [DataType(DataType.Password)]
         public string Passwort { get; set; }
 
-        
-
-
-
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("Passwort", ErrorMessage = "Passwörter müssen gleich sein")]
+        public string ConfirmPasswort { get; set; }
     }
 }

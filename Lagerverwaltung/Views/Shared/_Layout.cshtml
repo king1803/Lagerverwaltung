@@ -1,5 +1,6 @@
 ﻿@inject SignInManager<IdentityUser> signInManager;
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,15 +55,22 @@
 
                                         </form>
                                     </li>
+                                    if (User.IsInRole("Admin"))
+                                    {
+                                            <li class="nav item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Index"><i class="fa fa-tools"></i></a>
+                                            </li>
+                                    }
+                                    else
+                                    {
                                     <li class="nav item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Verwaltung" asp-action="Index"><i class="fa fa-tools"></i></a>
                                     </li>
+                                    }
                                 }
                                 else
                                 {
-                                    <li class="nav-item">
-                                        <a asp-controller="Account" asp-action="Regestrieren" class="nav-link">Registrieren</a>
-                                    </li>
+
                                     <li class="nav-item">
                                         <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
                                     </li>
