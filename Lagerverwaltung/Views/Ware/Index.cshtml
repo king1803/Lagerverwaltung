@@ -80,16 +80,34 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">
-                            <form asp-action="Index" >
+                            <form asp-action="Index">
                                 <div class="input-group">
                                     <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
                                     <input asp-for="Sortierung" type="hidden" value="Beschreibung">
                                     <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
                                     <input asp-for="Menge" type="hidden" value="@Model.Menge">
                                     <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                    <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
                                     <input asp-for="Suche" type="hidden" value="true">
                                     <button type="submit" class=" btn btn-dark">
                                         Beschreibung
+                                    </button>
+                                </div>
+                            </form>
+
+                        </th>
+                        <th scope="col">
+                            <form asp-action="Index">
+                                <div class="input-group">
+                                    <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
+                                    <input asp-for="Sortierung" type="hidden" value="Lagerplatz">
+                                    <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
+                                    <input asp-for="Menge" type="hidden" value="@Model.Menge">
+                                    <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                    <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
+                                    <input asp-for="Suche" type="hidden" value="true">
+                                    <button type="submit" class=" btn btn-dark">
+                                        Lagerplatz
                                     </button>
                                 </div>
                             </form>
@@ -103,6 +121,7 @@
                                     <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
                                     <input asp-for="Menge" type="hidden" value="@Model.Menge">
                                     <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                    <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
                                     <input asp-for="Suche" type="hidden" value="true">
                                     <button type="submit" class=" btn btn-dark">
                                         Menge
@@ -118,6 +137,7 @@
                                     <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
                                     <input asp-for="Menge" type="hidden" value="@Model.Menge">
                                     <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                    <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
                                     <input asp-for="Suche" type="hidden" value="true">
                                     <button type="submit" class=" btn btn-dark">
                                         Einlagerungsdatum
@@ -125,7 +145,7 @@
                                 </div>
                             </form>
                         </th>
-                        
+
                         <th></th>
                     </tr>
                 </thead>
@@ -142,26 +162,38 @@
                             i++;
 
 
-                        <tr>
-                            <th scope="row">@i</th>
-                            <td>
-                                @ware.Ware_Beschreibung
-                            </td>
-                            <td class="text-center">
-                                @Convert.ToInt32(ware.Menge)
-                            </td>
-                            <td class="text-center">
-                                @ware.Ware_Einlagerungsdatum.ToShortDateString()
-                            </td>
-                            
-                            <td>
-                                <a asp-action="Details" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
-                                   Details
-                                </a>
+
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>
+                            @ware.Ware_Beschreibung
+                        </td>
+
+                        @foreach (var lagerp in Model.Lagerplatz_Beschreibung)
+                        {
+                            if (ware.Lagerplatz_Id == lagerp.Lagerplatz_Id)
+                            {
+                                <td class="text-center">
+                                    @lagerp.Lagerplatz_Beschreibung
+                                </td>
+                            }
+                        }
+
+                         <td class="text-center">
+                              @Convert.ToInt32(ware.Menge)
+                         </td>
+                         <td class="text-center">
+                              @ware.Ware_Einlagerungsdatum.ToShortDateString()
+                         </td>
+
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
+                                        Details
+                                    </a>
 
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         }
                     }
                 </tbody>

@@ -39,5 +39,9 @@ namespace Lagerverwaltung.ViewModels
 
         public string Modellnummer { get; set; }
 
+        public bool Lagerplatz { get; set; }
+
+        public List<Lagerplatz> Lagerplatz_Beschreibung { get; set; }
+
     }
 }
