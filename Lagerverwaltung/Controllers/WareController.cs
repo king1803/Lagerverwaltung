@@ -155,6 +155,9 @@ namespace Lagerverwaltung.Controllers
                        .ToList();
 
                 model.Waren = new List<Ware>();
+                model.Lagerplatz_Beschreibung = new List<Lagerplatz>();
+
+                model.Lagerplatz_Beschreibung = _context.Lagerplatz.ToList();
 
                 foreach (var a in waren)
                 {
@@ -205,6 +208,22 @@ namespace Lagerverwaltung.Controllers
                         else
                         {
                             model.Waren = model.Waren.OrderBy(s => s.Ware_Einlagerungsdatum).ToList();
+                            model.Datum = true;
+                        }
+
+
+                    }
+
+                    if (model.Sortierung == "Lagerplatz")
+                    {
+                        if (model.Lagerplatz)
+                        {
+                            model.Lagerplatz_Beschreibung = model.Lagerplatz_Beschreibung.OrderByDescending(s => s.Lagerplatz_Beschreibung).ToList();
+                            model.Datum = false;
+                        }
+                        else
+                        {
+                            model.Lagerplatz_Beschreibung = model.Lagerplatz_Beschreibung.OrderBy(s => s.Lagerplatz_Beschreibung).ToList();
                             model.Datum = true;
                         }
 
