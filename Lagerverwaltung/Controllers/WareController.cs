@@ -257,6 +257,10 @@ namespace Lagerverwaltung.Controllers
 
                 model.Lagerplatz.RemoveAll(s => s.Lagerplatz_Id == i.Lagerplatz_Id);
             }
+            model.Kategorie = _context.Kategorie.ToList();
+            model.Hersteller = _context.Hersteller.ToList();
+            model.Kostenstelle = _context.Kostenstelle.ToList();
+            model.Lieferant = _context.Lieferant.ToList();
 
             return View("Buchen", model);
         }
