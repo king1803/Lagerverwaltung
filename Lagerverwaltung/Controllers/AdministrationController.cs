@@ -125,20 +125,22 @@ namespace Lagerverwaltung.Controllers
 
             foreach(var user in model.Users)
             {
+                if (user.Name != "ADMIN")
+                {
+                    var user1 = await userManager.FindByNameAsync(user.Name);
 
-                var user1 = await userManager.FindByNameAsync(user.Name);
-
-                if(user.Admin)
-                {
-                   await userManager.AddToRoleAsync(user1, "Admin");
-                }
-                else
-                {
-                    await userManager.RemoveFromRoleAsync(user1, "Admin");
-                }
-                if(user.Zurücksetzten)
-                {
-                   await userManager.RemovePasswordAsync(user1);
+                    if (user.Admin)
+                    {
+                        await userManager.AddToRoleAsync(user1, "Admin");
+                    }
+                    else
+                    {
+                        await userManager.RemoveFromRoleAsync(user1, "Admin");
+                    }
+                    if (user.Zurücksetzten)
+                    {
+                        await userManager.RemovePasswordAsync(user1);
+                    }
                 }
             }
 

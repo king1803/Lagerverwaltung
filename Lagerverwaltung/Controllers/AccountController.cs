@@ -158,6 +158,41 @@ namespace Lagerverwaltung.Controllers
             return View(model);
         }
 
+
+        public IActionResult PasswortAendern()
+        {
+            
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PasswortAendern(PasswortAendernViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user1 = HttpContext.User;
+
+                var user = await userManager.FindByNameAsync(user1.Identity.Name);
+
+                var result = await userManager.ChangePasswordAsync(user, model.AltesPasswort, model.Passwort);
+
+                if (result.Succeeded)
+                {
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("index", "home");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+
+            }
+
+            return View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Ausloggen ()
         {

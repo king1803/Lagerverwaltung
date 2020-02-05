@@ -1,0 +1,39 @@
+﻿
+@model Lagerverwaltung.ViewModels.PasswortAendernViewModel
+@{
+    ViewData["Title"] = "PasswortAendern";
+}
+
+<h1>Passwort Ändern</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="PasswortAendern">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AltesPasswort"></label>
+                <input asp-for="AltesPasswort" class="form-control" />
+                <span asp-validation-for="AltesPasswort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Passwort"></label>
+                <input asp-for="Passwort" class="form-control" />
+                <span asp-validation-for="Passwort" class="text-danger"></span>
+            </div>
+            
+            
+                <div class="form-group">
+                    <label asp-for="ConfirmPasswort"></label>
+                    <input asp-for="ConfirmPasswort" class="form-control" />
+                    <span asp-validation-for="ConfirmPasswort" class="text-danger"></span>
+                </div>
+            
+           
+                <button  type="submit" class="btn btn-primary">Passwort ändern</button>
+
+            
+            
+
+        </form>
+    </div>
+</div>
