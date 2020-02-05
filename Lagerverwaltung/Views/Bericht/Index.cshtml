@@ -1,0 +1,20 @@
+﻿@model Lagerverwaltung.ViewModels.BerichtViewModel
+@{
+    ViewData["Title"] = "Bericht";
+}
+
+<h1>Berichte</h1>
+
+
+<h3>Anzahl Waren im Lager: @Model.Anzahl_Waren</h3>
+
+
+<h3>Gesamtwert aller Waren im Lager: @Model.Warenwert €</h3>
+<p>Auf Basis des Anschaffungswerts</p>
+
+<h3>Lagerauslastung:</h3>
+<div class="progress">
+    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="@Convert.ToInt32(Model.Lagerbelegung).ToString()" aria-valuemin="0" aria-valuemax="100">@Model.Lagerbelegung%</div>
+</div>
+
+<p>Aktuell sind @Model.Anzahl_Waren / @Model.Lagerplaetze Lagerplätze belegt</p>
