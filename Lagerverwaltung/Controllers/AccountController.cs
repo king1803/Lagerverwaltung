@@ -122,11 +122,11 @@ namespace Lagerverwaltung.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult PasswortFestlegen(LoginViewModel user)
+        public IActionResult PasswortFestlegen(LoginViewModel model1)
         {
             PasswortFestlegenViewModel model = new PasswortFestlegenViewModel
             {
-                User = user.User
+                User = model1.User
             };
 
             return View();

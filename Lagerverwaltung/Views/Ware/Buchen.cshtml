@@ -7,10 +7,11 @@
 <h1>Buchen</h1>
 
 <h4>Ware</h4>
+<div asp-validation-summary="All" class="text-danger"></div>
 <hr />
 <form asp-action="Buchen">
     <div class="row">
-        <div asp-validation-summary="All" class="text-danger"></div>
+
         <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="Ware_Beschreibung" class="control-label"></label>
@@ -120,21 +121,19 @@
 
             $("#customRadio").click(function () {
 
-                if (!test)
-                {
+                if (!test) {
                     $("#Menge").show();
                     $("#Serie").hide();
                     $("#Modell").hide();
                     test = true;
-                    alert("test");
+
                 }
 
             });
 
             $("#customRadio2").click(function () {
 
-                if (test)
-                {
+                if (test) {
                     $("#Menge").hide();
                     $("#Serie").show();
                     $("#Modell").show();
@@ -142,7 +141,7 @@
                 }
 
             });
-            
+
 
 
 
