@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Lagerverwaltung.ViewModels;
+﻿using Lagerverwaltung.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Lagerverwaltung.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
@@ -33,25 +32,25 @@ namespace Lagerverwaltung.Controllers
 
             var users = userManager.Users;
 
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 Userberechtigung b = new Userberechtigung
                 {
                     Name = user.UserName
                 };
 
-                
+
                 model.Users.Add(b);
             }
 
-            for(int i= 0; i<model.Users.Count();i++)
+            for (int i = 0; i < model.Users.Count(); i++)
             {
-                if(await userManager.IsInRoleAsync(await userManager.FindByNameAsync(model.Users[i].Name),"Admin"))
+                if (await userManager.IsInRoleAsync(await userManager.FindByNameAsync(model.Users[i].Name), "Admin"))
                 {
                     model.Users[i].Admin = true;
                 }
-                if(!(await userManager.HasPasswordAsync(await userManager.FindByNameAsync(model.Users[i].Name))))
-                    {
+                if (!(await userManager.HasPasswordAsync(await userManager.FindByNameAsync(model.Users[i].Name))))
+                {
                     model.Users[i].Zurücksetzten = true;
                 }
             }
@@ -67,7 +66,7 @@ namespace Lagerverwaltung.Controllers
         [HttpPost]
         public async Task<IActionResult> Erstellen(RolleErstellenViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 IdentityRole identityRole = new IdentityRole
                 {
@@ -89,7 +88,7 @@ namespace Lagerverwaltung.Controllers
             return View(model);
         }
 
-        
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -100,14 +99,14 @@ namespace Lagerverwaltung.Controllers
                 var user = new IdentityUser
                 {
                     UserName = model.UserName,
-                    Email = model.UserName+"@test.de"
+                    Email = model.UserName + "@test.de"
 
                 };
                 var result = await userManager.CreateAsync(user);
 
                 if (result.Succeeded)
                 {
-                    
+
                     return RedirectToAction("index", "home");
                 }
                 foreach (var error in result.Errors)
@@ -117,32 +116,32 @@ namespace Lagerverwaltung.Controllers
             }
             return View(model);
 
-            
+
         }
 
         public async Task<IActionResult> UserRollenBearbeiten(UserVerwaltungViewModel model)
         {
 
-            foreach(var user in model.Users)
+            foreach (var user in model.Users)
             {
 
                 var user1 = await userManager.FindByNameAsync(user.Name);
 
-                if(user.Admin)
+                if (user.Admin)
                 {
-                   await userManager.AddToRoleAsync(user1, "Admin");
+                    await userManager.AddToRoleAsync(user1, "Admin");
                 }
                 else
                 {
                     await userManager.RemoveFromRoleAsync(user1, "Admin");
                 }
-                if(user.Zurücksetzten)
+                if (user.Zurücksetzten)
                 {
-                   await userManager.RemovePasswordAsync(user1);
+                    await userManager.RemovePasswordAsync(user1);
                 }
             }
 
-            return View("Index",model);
+            return View("Index", model);
         }
 
     }

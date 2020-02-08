@@ -1,10 +1,7 @@
 ﻿using Lagerverwaltung.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lagerverwaltung.ViewModels
 {
@@ -52,7 +49,7 @@ namespace Lagerverwaltung.ViewModels
 
         public List<Lagerplatz> Lagerplatz { get; set; }
 
-        public List<Hersteller> Hersteller { get; set;}
+        public List<Hersteller> Hersteller { get; set; }
         public List<Lieferant> Lieferant { get; set; }
         public List<Kategorie> Kategorie { get; set; }
         public List<Kostenstelle> Kostenstelle { get; set; }

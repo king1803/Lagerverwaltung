@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Lagerverwaltung.Models;
+﻿using Lagerverwaltung.Models;
 using Lagerverwaltung.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SSG_Lagerverwaltung.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Lagerverwaltung.Controllers
 {
@@ -43,7 +41,7 @@ namespace Lagerverwaltung.Controllers
                     suche_Beschreibung = model.Suche_Beschreibung;
                     Response.Cookies.Append("Suche", suche_Beschreibung);
                 }
-                if(!string.IsNullOrEmpty(Request.Cookies["Suche"]) && string.IsNullOrEmpty(model.Suche_Beschreibung))
+                if (!string.IsNullOrEmpty(Request.Cookies["Suche"]) && string.IsNullOrEmpty(model.Suche_Beschreibung))
                 {
                     suche_Beschreibung = Request.Cookies["Suche"];
                     Response.Cookies.Delete("Suche");
@@ -287,7 +285,7 @@ namespace Lagerverwaltung.Controllers
         public async Task<IActionResult> Buchen(BuchenViewModel model)
         {
 
-            if(string.IsNullOrEmpty(model.Seriennr))
+            if (string.IsNullOrEmpty(model.Seriennr))
             {
                 model.Seriennr = "0";
             }
@@ -363,7 +361,7 @@ namespace Lagerverwaltung.Controllers
                 Seriennummer = ware.Seriennr,
                 Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero),
                 AusbuchenMenge = 1
-                
+
 
             };
 
@@ -381,7 +379,7 @@ namespace Lagerverwaltung.Controllers
             if (j > i)
             {
                 ModelState.AddModelError("AusbuchenMenge", "So viel ist nicht da");
-                
+
             }
 
 
@@ -396,7 +394,7 @@ namespace Lagerverwaltung.Controllers
 
                     return RedirectToAction("Index");
                 }
-                
+
                 if (j < i)
                 {
 
@@ -407,7 +405,7 @@ namespace Lagerverwaltung.Controllers
                 }
             }
 
-            
+
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
             //var user = await usernManager.FindByIdAsync(ware.User_id);
             var hersteller = _context.Hersteller.Find(ware.Hersteller_Id);
@@ -432,7 +430,7 @@ namespace Lagerverwaltung.Controllers
 
             model.Fehler = true;
 
-            return View("Details",model);
+            return View("Details", model);
         }
         public IActionResult DazuBuchenSuche(DazuBuchenViewModel model)
         {
@@ -495,7 +493,7 @@ namespace Lagerverwaltung.Controllers
 
         public IActionResult Bearbeiten(int id)
         {
-           
+
             var ware = _context.Ware.Find(id);
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
             //var user = await usernManager.FindByIdAsync(ware.User_id);
@@ -531,39 +529,39 @@ namespace Lagerverwaltung.Controllers
 
             return View(model);
         }
-                   [HttpPost]
-                     public async Task<IActionResult> Bearbeiten(BearbeitenViewModel model)
-                     {
+        [HttpPost]
+        public async Task<IActionResult> Bearbeiten(BearbeitenViewModel model)
+        {
 
-                        if (ModelState.IsValid)
-                        {
-                            var userID = usernManager.GetUserId(HttpContext.User);
-                            Ware ware = new Ware
-                            {
-                                Ware_Id = model.Ware_Id,
-                                Ware_Beschreibung = model.Ware_Beschreibung_NEU,
-                                Ware_Einlagerungsdatum = model.Ware_Einlagerungsdatum,
-                                Lagerplatz_Id = model.Lagerplatz_NEU,
-                                Menge = model.Menge_NEU,                
-                                Seriennr = model.Seriennummer_NEU,
-                                Modellnummer = model.Modellnummer_NEU,
-                                Kategorie_Name = model.Kategorie_NEU,
-                                Anschaff_Kosten = model.Anschaffungskosten_NEU,
-                                Lieferant_Id = model.Lieferant_NEU,
-                                Kostenstelle_Nr = model.Kostenstelle_NEU,
-                                Hersteller_Id = model.Hersteller_NEU,
+            if (ModelState.IsValid)
+            {
+                var userID = usernManager.GetUserId(HttpContext.User);
+                Ware ware = new Ware
+                {
+                    Ware_Id = model.Ware_Id,
+                    Ware_Beschreibung = model.Ware_Beschreibung_NEU,
+                    Ware_Einlagerungsdatum = model.Ware_Einlagerungsdatum,
+                    Lagerplatz_Id = model.Lagerplatz_NEU,
+                    Menge = model.Menge_NEU,
+                    Seriennr = model.Seriennummer_NEU,
+                    Modellnummer = model.Modellnummer_NEU,
+                    Kategorie_Name = model.Kategorie_NEU,
+                    Anschaff_Kosten = model.Anschaffungskosten_NEU,
+                    Lieferant_Id = model.Lieferant_NEU,
+                    Kostenstelle_Nr = model.Kostenstelle_NEU,
+                    Hersteller_Id = model.Hersteller_NEU,
 
 
-                            };
-                            
-                            _context.Ware.Update(ware);
-                            await _context.SaveChangesAsync();
-                            return RedirectToAction("Details", new { id = model.Ware_Id });
-                        }
-                        return View(model);
-                    }
-                
-            
-        
+                };
+
+                _context.Ware.Update(ware);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", new { id = model.Ware_Id });
+            }
+            return View(model);
+        }
+
+
+
     }
 }

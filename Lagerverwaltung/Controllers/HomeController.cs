@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Lagerverwaltung.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Lagerverwaltung.Models;
-using Lagerverwaltung.ViewModels;
 using SSG_Lagerverwaltung.Data;
-using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
 
 namespace Lagerverwaltung.Controllers
 {
@@ -23,9 +18,9 @@ namespace Lagerverwaltung.Controllers
             _context = context;
         }
 
-        
 
-        
+
+
         [AllowAnonymous]
         public IActionResult Index()
         {
