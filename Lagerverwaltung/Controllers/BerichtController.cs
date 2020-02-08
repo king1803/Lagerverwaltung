@@ -36,8 +36,8 @@ namespace Lagerverwaltung.Controllers
             var ware = _context.Ware;
             foreach (var i in ware)
             {
-                model.Warenwert += decimal.Round(i.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero);
-                
+                model.Warenwert += decimal.Round((i.Anschaff_Kosten * i.Menge), 2, MidpointRounding.AwayFromZero);
+
             }
 
             // Lagerauslastung ermitteln:

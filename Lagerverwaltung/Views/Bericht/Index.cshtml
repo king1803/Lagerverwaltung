@@ -14,7 +14,7 @@
 
 <h3>Lagerauslastung:</h3>
 <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="@Convert.ToInt32(Model.Lagerbelegung).ToString()" aria-valuemin="0" aria-valuemax="100">@Model.Lagerbelegung%</div>
+    <div class="progress-bar" role="progressbar" style="width: @Convert.ToInt32(Model.Lagerbelegung)%;" aria-valuenow="@Convert.ToInt32(Model.Lagerbelegung)" aria-valuemin="0" aria-valuemax="100">@Model.Lagerbelegung%</div>
 </div>
 
 <p>Aktuell sind @Model.Anzahl_Waren / @Model.Lagerplaetze Lagerplätze belegt</p>
