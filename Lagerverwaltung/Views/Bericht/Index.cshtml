@@ -3,14 +3,11 @@
     ViewData["Title"] = "Bericht";
 }
 
-<h1>Berichte</h1>
-
-
-<h3>Anzahl Waren im Lager: @Model.Anzahl_Waren</h3>
-
-
-<h3>Gesamtwert aller Waren im Lager: @Model.Warenwert €</h3>
-<p>Auf Basis des Anschaffungswerts</p>
+<div class="jumbotron">
+    <h2 class="display-4">Berichte</h2>
+    <p class="lead">Waren im Lager: <b>@Model.Anzahl_Waren</b>
+    <p class="lead">Gesamtwert aller Waren: <b>@Model.Warenwert €</b></p>
+</div>
 
 <h3>Lagerauslastung:</h3>
 <div class="progress">
