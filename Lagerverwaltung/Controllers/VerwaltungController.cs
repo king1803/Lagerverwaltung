@@ -99,6 +99,36 @@ namespace Lagerverwaltung.Controllers
 
             //Lager
 
+            //Fuege eine Lager ein, falls beim ersten start noch keins vorhanden ist:
+
+            if (_context.Lager.FirstOrDefault() == null)
+            {
+                Lager lager = new Lager
+                {
+                    Lager_Id = 1,
+                    Lager_Beschreibung = "Standard Lager"
+                };
+
+                _context.Lager.Add(lager);
+                _context.SaveChanges();
+            }
+
+            if (_context.Lagerplatz.FirstOrDefault() == null)
+            {
+                Lagerplatz lagerplatz = new Lagerplatz
+                {
+                    Lagerplatz_Id = 1,
+                    Lagerplatz_Beschreibung = "A1",
+                    Lager_Id = 1
+                };
+
+                _context.Lagerplatz.Add(lagerplatz);
+                _context.SaveChanges();
+            }
+
+
+
+
             model.Lager = new LagerEditViewModel();
             model.Lager.LetzesElement = _context.Lagerplatz.ToList().Last();
             var test = _context.Lagerplatz;

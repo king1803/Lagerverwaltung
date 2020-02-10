@@ -1,9 +1,13 @@
-﻿using Lagerverwaltung.ViewModels;
+﻿using Lagerverwaltung.Models;
+using Lagerverwaltung.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SSG_Lagerverwaltung.Data;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+
+
 
 namespace Lagerverwaltung.Controllers
 {
@@ -42,7 +46,16 @@ namespace Lagerverwaltung.Controllers
 
             model.Lagerbelegung = decimal.Round(((Convert.ToDecimal(Ber_Anzahl_Ware) / Convert.ToDecimal(Ber_Lagerplatz)) * 100m), 2, MidpointRounding.AwayFromZero);
 
+            
+
+            //Aelteste Waren ermitteln:
+
+
+            model.Ware_List = new List<Ware>();
+            model.Ware_List = model.Ware_List.OrderByDescending(s => s.Ware_Einlagerungsdatum).ToList();
+
             return View(model);
+
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿namespace Lagerverwaltung.ViewModels
+﻿using Lagerverwaltung.Models;
+using System.Collections.Generic;
+
+
+namespace Lagerverwaltung.ViewModels
 {
     public class BerichtViewModel
     {
@@ -10,6 +14,8 @@
         public int Lagerplaetze { get; set; }
 
         public decimal Lagerbelegung { get; set; }
+
+        public List<Ware> Ware_List { get; set; }
 
     }
 }
