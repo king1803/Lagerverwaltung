@@ -15,7 +15,7 @@
                     <input type="hidden" asp-for="Ware_Id" value="@Model.Ware_Id" />
                     <ul class="list-group-flush">
                         <li class="list-group-item">
-                            Beschreibung:      
+                            Beschreibung:
                             <input asp-for="Ware_Beschreibung_NEU" class="form-control" placeholder="Neue Beschreibung" value="@Model.Ware_Beschreibung" />
                             <span asp-validation-for="Ware_Beschreibung_NEU" class="text-danger"></span>
                         </li>
@@ -31,40 +31,45 @@
                             <span asp-validation-for="Lagerplatz_NEU" class="text-danger"></span>
                         </li>
                         <li class="list-group-item">
-                            Hersteller: 
+                            Hersteller:
                             <select asp-for="Hersteller_NEU" asp-items="@(new SelectList(Model.Hersteller,"Hersteller_Id", "Hersteller_Beschreibung", Model.Hersteller_NEU))" class="custom-select">
                             </select>
                             <span asp-validation-for="Hersteller_NEU" class="text-danger"></span>
                         </li>
                         <li class="list-group-item">
-                            Lieferant: 
+                            Lieferant:
                             <select asp-for="Lieferant_NEU" asp-items="@(new SelectList(Model.Lieferant,"Lieferant_Id", "Lieferant_Beschreibung", Model.Lieferant_NEU))" class="custom-select">
                             </select>
                             <span asp-validation-for="Lieferant_NEU" class="text-danger"></span>
                         </li>
                         <li class="list-group-item">
-                            Seriennummer: 
+                            Seriennummer:
                             <input asp-for="Seriennummer_NEU" class="form-control" placeholder="Neue Seriennummer" value="@Model.Seriennummer" />
                             <span asp-validation-for="Seriennummer_NEU" class="text-danger"></span>
                         </li>
                         <li class="list-group-item">
-                            Modellnummer: 
+                            Modellnummer:
                             <input asp-for="Modellnummer_NEU" class="form-control" placeholder="Neue Modellnummer" value="@Model.Modellnummer" />
                             <span asp-validation-for="Modellnummer_NEU" class="text-danger"></span>
                         </li>
                         <li class="list-group-item">
-                            Kategorie: 
+                            Auftragsnummer:
+                            <input asp-for="Auftragsnummer_NEU" class="form-control" placeholder="Neue Modellnummer" value="@Model.Auftragsnummer" />
+                            <span asp-validation-for="Auftragsnummer_NEU" class="text-danger"></span>
+                        </li>
+                        <li class="list-group-item">
+                            Kategorie:
                             <select asp-for="Kategorie_NEU" asp-items="@(new SelectList(Model.Kategorie,"Kategorie_Name", "Kategorie_Beschreibung", Model.Kategorie_NEU))" class="custom-select">
                             </select>
                             <span asp-validation-for="Kategorie_NEU" class="text-danger"></span>
                         </li>
                         <li class="list-group-item">
-                            Anschaffungskosten: 
+                            Anschaffungskosten:
                             <input asp-for="Anschaffungskosten_NEU" class="form-control" placeholder="Neue Anschaffungskosten" value="@Model.Anschaffungskosten_NEU" />
                             <span asp-validation-for="Anschaffungskosten_NEU" class="text-danger"></span>
                         </li>
                         <li class="list-group-item">
-                            Kostenstelle: 
+                            Kostenstelle:
                             <select asp-for="Kostenstelle_NEU" asp-items="@(new SelectList(Model.Kostenstelle,"Kostenstelle_Nr", "Kostenstelle_Beschreibung", Model.Kostenstelle_NEU))" class="custom-select">
                             </select>
                             <span asp-validation-for="Kostenstelle_NEU" class="text-danger"></span>
@@ -77,7 +82,7 @@
                             <button asp-action="Details" asp-route-id="@Model.Ware_Id" class="btn btn-outline-primary">Abbrechen</button>
 
                         </div>
-                            
+
                         </li>
                     </ul>
                     <input type="hidden" asp-for="Ware_Einlagerungsdatum" value="@Model.Ware_Einlagerungsdatum" />
