@@ -37,6 +37,8 @@ namespace Lagerverwaltung.Models
 
         public string Kategorie_Name { get; set; }
 
+        public string Auftragsnummer { get; set; }
+
 
     }
 }
