@@ -1,0 +1,69 @@
+﻿@model Lagerverwaltung.ViewModels.KomBearbeitenViewModel
+@{
+    ViewData["Title"] = "Bearbeiten";
+    int i = 0;
+}
+
+<h1>@Model.Beschreibung</h1>
+<div class="row">
+    <div class="col">
+        <form method="post" asp-action="Erstellen">
+
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Beschreibung</th>
+                        <th scope="col">Menge</th>
+                        <th scope="col" width="100"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ware in Model.BestandWaren)
+                    {
+
+                        <tr>
+                            <input type="hidden" asp-for="BestandWaren[i].Ware_Id" value="@ware.Ware_Id" />
+                            <th scope="row">@i</th>
+                            <td>@ware.Beschreibung</td>
+                            <td>@ware.Menge</td>
+                            <td>
+                                @if (ware.Menge > 1)
+                                {
+                                    <div class="form-group">
+
+                                        <input asp-for="BestandWaren[i].Kom_Menge" type="number" class="form-control" value="@ware.Kom_Menge" />
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <input type="hidden" asp-for="BestandWaren[i].Kom_Menge" value="@ware.Menge" />
+                                }
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox">
+                                    <input asp-for="BestandWaren[i].Ausgewählt" type="checkbox" class="custom-control-input" id="@i">
+                                    <label class="custom-control-label" for="@i"></label>
+                                </div>
+                            </td>
+                        </tr>
+
+                        i = i + 1;
+                    }
+                </tbody>
+            </table>
+            <a class="btn btn-primary float-left" asp-action="Index">Zurück</a>
+            <button type="submit" class="btn btn-primary float-right">Ändern</button>
+            
+            <div class="col collapse show" id="löschen">
+                <button class="btn btn-danger float-right" data-toggle="collapse" type="button" data-target="#löschen" aria-expanded="false" aria-controls="löschen" id="löschen">Löschen</button>
+            </div>
+            <div class="col collapse" id="löschen">
+                <a class="btn btn-danger float-right" asp-action="Löschen">Löschen Bestätigen</a>
+            </div>
+        </form>
+    </div>
+</div>
+

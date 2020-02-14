@@ -5,8 +5,9 @@ namespace Lagerverwaltung.Models
 {
     public class WareHistorie
     {
-
         [Key]
+        public int Historie_Id { get; set; }
+
         public int Ware_Id_hi { get; set; }
 
         [Display(Name = "Beschreibung")]
@@ -37,6 +38,8 @@ namespace Lagerverwaltung.Models
         public int Hersteller_Id_hi { get; set; }
 
         public string Kategorie_Name_hi { get; set; }
+
+        public string Ausbuchen_User { get; set; }
 
     }
 }

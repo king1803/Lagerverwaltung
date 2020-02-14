@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace Lagerverwaltung.Migrations
 {
-    public partial class InitialNeu : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -153,8 +153,9 @@ namespace Lagerverwaltung.Migrations
                 name: "WareHistorie",
                 columns: table => new
                 {
-                    Ware_Id_hi = table.Column<int>(nullable: false)
+                    Historie_Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Ware_Id_hi = table.Column<int>(nullable: false),
                     Ware_Beschreibung_hi = table.Column<string>(nullable: true),
                     Ware_Einlagerungsdatum_hi = table.Column<DateTime>(nullable: false),
                     Menge_hi = table.Column<decimal>(nullable: false),
@@ -167,11 +168,12 @@ namespace Lagerverwaltung.Migrations
                     Lieferant_Id_hi = table.Column<int>(nullable: false),
                     Kostenstelle_Nr_hi = table.Column<int>(nullable: false),
                     Hersteller_Id_hi = table.Column<int>(nullable: false),
-                    Kategorie_Name_hi = table.Column<string>(nullable: true)
+                    Kategorie_Name_hi = table.Column<string>(nullable: true),
+                    Ausbuchen_User = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WareHistorie", x => x.Ware_Id_hi);
+                    table.PrimaryKey("PK_WareHistorie", x => x.Historie_Id);
                 });
 
             migrationBuilder.CreateTable(

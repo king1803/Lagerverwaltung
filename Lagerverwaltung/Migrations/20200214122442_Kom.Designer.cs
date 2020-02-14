@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SSG_Lagerverwaltung.Data;
 
 namespace Lagerverwaltung.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200214122442_Kom")]
+    partial class Kom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,26 +67,6 @@ namespace Lagerverwaltung.Migrations
                     b.HasKey("Kom_Id");
 
                     b.ToTable("Kommissionierung");
-                });
-
-            modelBuilder.Entity("Lagerverwaltung.Models.KommissionierungWaren", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Kommision_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Menge")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Ware_Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("KommissionierungWaren");
                 });
 
             modelBuilder.Entity("Lagerverwaltung.Models.Kostenstelle", b =>

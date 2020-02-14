@@ -69,12 +69,12 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
+                <input asp-for="UserName" class="form-control" id="user"/>
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
 
 
-            <button type="submit" class="btn btn-primary">User Erstellen</button>
+            <button type="submit" class="btn btn-primary" id="erstellen">User Erstellen</button>
 
         </form>
     </div>
@@ -85,8 +85,8 @@
 
         $(document).ready(function () {
 
-            
 
+           
             
 
 

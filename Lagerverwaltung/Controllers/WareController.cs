@@ -375,6 +375,7 @@ namespace Lagerverwaltung.Controllers
             Ware ware = _context.Ware.Find(model.Ware_Id);
             int j = model.AusbuchenMenge;
             int i = Convert.ToInt32(ware.Menge);
+            var userID = usernManager.GetUserId(HttpContext.User);
 
             if (j > i)
             {
@@ -389,6 +390,28 @@ namespace Lagerverwaltung.Controllers
                 if (i == j)
                 {
 
+                    var historie = new WareHistorie
+                    {
+                        Ware_Id_hi = ware.Ware_Id,
+                        Ware_Beschreibung_hi = ware.Ware_Beschreibung,
+                        Ware_Einlagerungsdatum_hi = ware.Ware_Einlagerungsdatum,
+                        Menge_hi = ware.Menge,
+                        Seriennr_hi = ware.Seriennr,
+                        Modellnr_hi = ware.Modellnummer,
+                        Anschaff_Kosten_hi = ware.Anschaff_Kosten,
+                        Kategorie_Name_hi = ware.Kategorie_Name,
+                        Lagerplatz_Id_hi = ware.Lagerplatz_Id,
+                        Lieferant_Id_hi = ware.Lagerplatz_Id,
+                        Kostenstelle_Nr_hi = ware.Kostenstelle_Nr,
+                        Hersteller_Id_hi = ware.Hersteller_Id,
+                        User_id_hi = ware.User_id,
+                        Ausbuchen_User = userID,
+                        Ware_Auslagerungsdatum_hi = DateTime.Today
+
+                    };
+                    _context.WareHistorie.Add(historie);
+                    await _context.SaveChangesAsync();
+
                     _context.Ware.Remove(ware);
                     await _context.SaveChangesAsync();
 
@@ -399,6 +422,29 @@ namespace Lagerverwaltung.Controllers
                 {
 
                     ware.Menge = ware.Menge - model.AusbuchenMenge;
+
+                    var historie = new WareHistorie
+                    {
+                        Ware_Id_hi = ware.Ware_Id,
+                        Ware_Beschreibung_hi = ware.Ware_Beschreibung,
+                        Ware_Einlagerungsdatum_hi = ware.Ware_Einlagerungsdatum,
+                        Menge_hi = model.AusbuchenMenge,
+                        Seriennr_hi = ware.Seriennr,
+                        Modellnr_hi = ware.Modellnummer,
+                        Anschaff_Kosten_hi = ware.Anschaff_Kosten,
+                        Kategorie_Name_hi = ware.Kategorie_Name,
+                        Lagerplatz_Id_hi = ware.Lagerplatz_Id,
+                        Lieferant_Id_hi = ware.Lagerplatz_Id,
+                        Kostenstelle_Nr_hi = ware.Kostenstelle_Nr,
+                        Hersteller_Id_hi = ware.Hersteller_Id,
+                        User_id_hi = ware.User_id,
+                        Ausbuchen_User = userID,
+                        Ware_Auslagerungsdatum_hi = DateTime.Today
+
+                    };
+                    _context.WareHistorie.Add(historie);
+                    await _context.SaveChangesAsync();
+
                     _context.Ware.Update(ware);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index");

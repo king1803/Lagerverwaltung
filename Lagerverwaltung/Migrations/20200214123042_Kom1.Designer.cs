@@ -9,14 +9,14 @@ using SSG_Lagerverwaltung.Data;
 namespace Lagerverwaltung.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200105091122_InitialNeu")]
-    partial class InitialNeu
+    [Migration("20200214123042_Kom1")]
+    partial class Kom1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Lagerverwaltung.Models.Hersteller", b =>
@@ -44,6 +44,46 @@ namespace Lagerverwaltung.Migrations
                     b.HasKey("Kategorie_Name");
 
                     b.ToTable("Kategorie");
+                });
+
+            modelBuilder.Entity("Lagerverwaltung.Models.Kommissionierung", b =>
+                {
+                    b.Property<int>("Kom_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Abschlussdatum")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Beschreibung")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("Erstelldatum")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("User_Id")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Kom_Id");
+
+                    b.ToTable("Kommissionierung");
+                });
+
+            modelBuilder.Entity("Lagerverwaltung.Models.KommissionierungWaren", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Kommision_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ware_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KommissionierungWaren");
                 });
 
             modelBuilder.Entity("Lagerverwaltung.Models.Kostenstelle", b =>
@@ -154,12 +194,15 @@ namespace Lagerverwaltung.Migrations
 
             modelBuilder.Entity("Lagerverwaltung.Models.WareHistorie", b =>
                 {
-                    b.Property<int>("Ware_Id_hi")
+                    b.Property<int>("Historie_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<decimal>("Anschaff_Kosten_hi")
                         .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("Ausbuchen_User")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("Hersteller_Id_hi")
                         .HasColumnType("int");
@@ -197,7 +240,10 @@ namespace Lagerverwaltung.Migrations
                     b.Property<DateTime>("Ware_Einlagerungsdatum_hi")
                         .HasColumnType("datetime(6)");
 
-                    b.HasKey("Ware_Id_hi");
+                    b.Property<int>("Ware_Id_hi")
+                        .HasColumnType("int");
+
+                    b.HasKey("Historie_Id");
 
                     b.ToTable("WareHistorie");
                 });

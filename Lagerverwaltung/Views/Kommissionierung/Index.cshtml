@@ -1,0 +1,38 @@
+﻿@model List<Lagerverwaltung.ViewModels.KomIndexViewModel>
+@{
+    ViewData["Title"] = "Index";
+    int i = 0;
+}
+
+
+    <div class="container">
+        <h1>Meine Kommissionierungen</h1>
+        <a asp-action="Erstellen" class="btn btn-primary btn-sm mb-3">
+            <i class="fa fa-file"></i>  Neue Kommisionierung
+        </a>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Beschreibung</th>
+                    <th scope="col">Anzahl Waren</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var w in Model)
+                {
+                    i = i + 1;
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@w.Kom.Beschreibung</td>
+                    <td>@w.Anzahl</td>
+                    <td>
+                        <a class="btn btn-outline-warning float-right" asp-action="Bearbeiten" asp-route-Id="@w.Kom.Kom_Id">Bearbeiten</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+</div>
