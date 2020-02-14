@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Lagerverwaltung.Models;
+﻿using Lagerverwaltung.Models;
 using Lagerverwaltung.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using SSG_Lagerverwaltung.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Lagerverwaltung.Controllers
 {
@@ -30,45 +30,45 @@ namespace Lagerverwaltung.Controllers
             var model = new LagerEditViewModel();
             model.LetzesElement = _context.Lagerplatz.ToList().Last();
             var test = _context.Lagerplatz;
-            
 
-            foreach(var i in test)
+
+            foreach (var i in test)
             {
-               
+
                 if (!(model.lagerbezeichner == null))
                 {
                     if (!model.lagerbezeichner.Contains(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1))))
                     {
                         model.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
-                        
+
                     }
                 }
                 else
                 {
                     model.lagerbezeichner = new List<char>();
                     model.lagerbezeichner.Add(Convert.ToChar(i.Lagerplatz_Beschreibung.Remove(1)));
-                    
-                    
-                    
+
+
+
                 }
 
             }
             model.bestand = new List<int>();
-            foreach(var i in model.lagerbezeichner)
-            {   
-                
-                
+            foreach (var i in model.lagerbezeichner)
+            {
+
+
                 model.bestand.Add(_context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(i.ToString())).Count());
-                
+
             }
-           
+
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(VerwaltungÜbersichtViewmodel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var liste = _context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(model.Lager.lager.ToString()));
                 int nummer = liste.Count();

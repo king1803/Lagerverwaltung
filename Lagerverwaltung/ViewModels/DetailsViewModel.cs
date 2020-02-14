@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lagerverwaltung.ViewModels
 {
@@ -18,7 +15,7 @@ namespace Lagerverwaltung.ViewModels
         public DateTime Ware_Einlagerungsdatum { get; set; }
 
 
-       
+
         public decimal Menge { get; set; }
 
         public int Lagerplatz_Id { get; set; }
@@ -41,7 +38,7 @@ namespace Lagerverwaltung.ViewModels
 
         public decimal Anschaffungskosten { get; set; }
 
-        [Range(1,100000,ErrorMessage ="Keine Menge kleiner 1")]
+        [Range(1, 100000, ErrorMessage = "Keine Menge kleiner 1")]
 
         public int AusbuchenMenge { get; set; }
 

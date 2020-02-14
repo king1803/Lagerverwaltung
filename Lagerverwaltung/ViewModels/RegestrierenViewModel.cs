@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lagerverwaltung.ViewModels
 {
@@ -19,10 +16,10 @@ namespace Lagerverwaltung.ViewModels
 
         [Required]
         [DataType(DataType.Password)]
-        [Compare("Passwort",ErrorMessage ="Passwörter müssen gleich sein")]
+        [Compare("Passwort", ErrorMessage = "Passwörter müssen gleich sein")]
 
-        public string ConfirmPasswort  { get; set; }
+        public string ConfirmPasswort { get; set; }
 
-        
-}
+
+    }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Lagerverwaltung.ViewModels;
+﻿using Lagerverwaltung.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Lagerverwaltung.Controllers
 {
@@ -37,22 +34,22 @@ namespace Lagerverwaltung.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Regestrieren(RegestrierenViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var user = new IdentityUser
                 {
                     UserName = model.UserName,
                     Email = "test@test.de"
-                    
+
                 };
                 var result = await userManager.CreateAsync(user, model.Passwort);
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("index", "home");
                 }
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
@@ -73,7 +70,7 @@ namespace Lagerverwaltung.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
 
-            if(await userManager.FindByNameAsync("ADMIN") == null)
+            if (await userManager.FindByNameAsync("ADMIN") == null)
             {
                 var user = new IdentityUser
                 {
@@ -81,16 +78,16 @@ namespace Lagerverwaltung.Controllers
                     Email = "test@test.de"
 
                 };
-                await userManager.CreateAsync(user,"Passwort.123");
+                await userManager.CreateAsync(user, "Passwort.123");
 
                 IdentityRole identityRole = new IdentityRole
                 {
                     Name = "Admin"
                 };
 
-                 await roleManager.CreateAsync(identityRole);
+                await roleManager.CreateAsync(identityRole);
                 user = await userManager.FindByNameAsync("ADMIN");
-                await userManager.AddToRoleAsync(user,"Admin");
+                await userManager.AddToRoleAsync(user, "Admin");
             }
 
             if (!(await userManager.HasPasswordAsync(await userManager.FindByNameAsync(model.User))) && model.Passwort == "Erst,20")
@@ -137,10 +134,10 @@ namespace Lagerverwaltung.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PasswortFestlegen(PasswortFestlegenViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var user = await userManager.FindByNameAsync(model.User);
-                var result = await userManager.AddPasswordAsync(user,model.Passwort);
+                var result = await userManager.AddPasswordAsync(user, model.Passwort);
 
                 if (result.Succeeded)
                 {
@@ -152,7 +149,7 @@ namespace Lagerverwaltung.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
 
-                
+
             }
 
             return View(model);
@@ -194,7 +191,7 @@ namespace Lagerverwaltung.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Ausloggen ()
+        public async Task<IActionResult> Ausloggen()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Lagerverwaltung.Models;
+﻿using Lagerverwaltung.Models;
 using Lagerverwaltung.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using SSG_Lagerverwaltung.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Lagerverwaltung.Controllers
 {
@@ -28,27 +28,27 @@ namespace Lagerverwaltung.Controllers
                 model.HFilter = true;
                 model.KSFilter = false;
             }
-            
-                string Filter = "";
 
-                if (model.KFilter)
-                {
-                    Filter = Filter + "Kategorie";
-                }
-                if (model.HFilter)
-                {
-                    Filter = Filter + "Hersteller";
-                }
-                if (model.LFilter)
-                {
-                    Filter = Filter + "Lieferant";
-                }
-                if (model.KSFilter)
-                {
-                    Filter = Filter + "Kostenstelle";
-                }
-                Response.Cookies.Append("Filter", Filter);
-            
+            string Filter = "";
+
+            if (model.KFilter)
+            {
+                Filter = Filter + "Kategorie";
+            }
+            if (model.HFilter)
+            {
+                Filter = Filter + "Hersteller";
+            }
+            if (model.LFilter)
+            {
+                Filter = Filter + "Lieferant";
+            }
+            if (model.KSFilter)
+            {
+                Filter = Filter + "Kostenstelle";
+            }
+            Response.Cookies.Append("Filter", Filter);
+
 
 
             model.Kategorien = _context.Kategorie.ToList();
@@ -57,8 +57,8 @@ namespace Lagerverwaltung.Controllers
             model.Kostenstellen = _context.Kostenstelle.ToList();
 
 
-            if(model.Kategorie == null)
-                {
+            if (model.Kategorie == null)
+            {
                 model.Kategorie = new Kategorie();
             }
             if (model.Hersteller == null)
@@ -98,6 +98,36 @@ namespace Lagerverwaltung.Controllers
             }
 
             //Lager
+
+            //Fuege eine Lager ein, falls beim ersten start noch keins vorhanden ist:
+
+            if (_context.Lager.FirstOrDefault() == null)
+            {
+                Lager lager = new Lager
+                {
+                    Lager_Id = 1,
+                    Lager_Beschreibung = "Standard Lager"
+                };
+
+                _context.Lager.Add(lager);
+                _context.SaveChanges();
+            }
+
+            if (_context.Lagerplatz.FirstOrDefault() == null)
+            {
+                Lagerplatz lagerplatz = new Lagerplatz
+                {
+                    Lagerplatz_Id = 1,
+                    Lagerplatz_Beschreibung = "A1",
+                    Lager_Id = 1
+                };
+
+                _context.Lagerplatz.Add(lagerplatz);
+                _context.SaveChanges();
+            }
+
+
+
 
             model.Lager = new LagerEditViewModel();
             model.Lager.LetzesElement = _context.Lagerplatz.ToList().Last();
@@ -191,7 +221,7 @@ namespace Lagerverwaltung.Controllers
             }
 
 
-            
+
 
             return RedirectToAction("Index", model);
         }
@@ -201,9 +231,9 @@ namespace Lagerverwaltung.Controllers
         {
             if (Id == "Kategorie")
             {
-                foreach(var ware in _context.Ware)
+                foreach (var ware in _context.Ware)
                 {
-                    if(ware.Kategorie_Name == model.Kategorie.Kategorie_Name)
+                    if (ware.Kategorie_Name == model.Kategorie.Kategorie_Name)
                     {
                         ModelState.AddModelError("Kategorie", "Kategorie noch in verwendung");
                         break;
@@ -358,7 +388,7 @@ namespace Lagerverwaltung.Controllers
 
             }
 
-            
+
 
             return RedirectToAction("Index", model);
         }
@@ -386,7 +416,7 @@ namespace Lagerverwaltung.Controllers
                     _context.Lagerplatz.Add(lager);
                     await _context.SaveChangesAsync();
                 }
-                
+
             }
 
             model.Lager.LetzesElement = _context.Lagerplatz.ToList().Last();
@@ -428,11 +458,11 @@ namespace Lagerverwaltung.Controllers
             model.Lieferanten = _context.Lieferant.ToList();
             model.Kostenstellen = _context.Kostenstelle.ToList();
 
-            return View("Index",model);
+            return View("Index", model);
         }
     }
 
-   
 
-    
+
+
 }

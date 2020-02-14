@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lagerverwaltung.ViewModels
 {
@@ -15,8 +13,8 @@ namespace Lagerverwaltung.ViewModels
 
         public string Suche { get; set; }
 
-        [Range(0,100000, ErrorMessage = "Darf nicht negativ sein")]
-        [Display(Name ="Menge Dazu")]
+        [Range(0, 100000, ErrorMessage = "Darf nicht negativ sein")]
+        [Display(Name = "Menge Dazu")]
         public int MengeNeu { get; set; }
     }
 }
