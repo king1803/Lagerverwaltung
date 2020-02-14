@@ -61,5 +61,9 @@ namespace Lagerverwaltung.ViewModels
 
         public int Lagerplatz_NEU { get; set; }
 
+        public string Auftragsnummer { get; set; }
+
+        public string Auftragsnummer_NEU { get; set; }
+
     }
 }

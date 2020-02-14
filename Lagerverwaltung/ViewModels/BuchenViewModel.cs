@@ -56,5 +56,7 @@ namespace Lagerverwaltung.ViewModels
         [Display(Name = "Anschaffungskosten")]
         public decimal Anschaff_Kosten { get; set; }
 
+        public string Auftragsnummer { get; set; }
+
     }
 }

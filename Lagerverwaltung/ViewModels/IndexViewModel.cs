@@ -23,6 +23,8 @@ namespace Lagerverwaltung.ViewModels
 
         public string Suche_Kategorie { get; set; }
 
+        public string Suche_Auftragsnummer { get; set; }
+
         public string Sortierung { get; set; }
 
         public bool Beschreiung { get; set; }

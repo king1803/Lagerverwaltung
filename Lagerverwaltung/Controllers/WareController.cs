@@ -35,6 +35,7 @@ namespace Lagerverwaltung.Controllers
                 string suche_Lieferant = "";
                 string suche_Modelnr = "";
                 string suche_Seriennr = "";
+                string suche_Auftragsnr = "";
 
                 if (!string.IsNullOrEmpty(model.Suche_Beschreibung))
                 {
@@ -74,7 +75,10 @@ namespace Lagerverwaltung.Controllers
                 {
                     suche_Seriennr = model.Suche_Seriennummer;
                 }
-
+                if (!string.IsNullOrEmpty(model.Suche_Auftragsnummer))
+                {
+                    suche_Auftragsnr = model.Suche_Auftragsnummer;
+                }
 
 
                 var waren = _context.Ware.Join(_context.Hersteller, ware => ware.Hersteller_Id, hersteller => hersteller.Hersteller_Id,
@@ -88,7 +92,8 @@ namespace Lagerverwaltung.Controllers
                        Lagerplatz_Id = ware.Lagerplatz_Id,
                        Lieferant_Id = ware.Lieferant_Id,
                        Modellnummer = ware.Modellnummer,
-                       Seriennr = ware.Seriennr
+                       Seriennr = ware.Seriennr,
+                       Auftragsnr = ware.Auftragsnummer
                    }).Join(_context.Kategorie, ware => ware.Kategorie_Name, kategorie => kategorie.Kategorie_Name,
                    (ware, kategorie) => new
                    {
@@ -100,7 +105,8 @@ namespace Lagerverwaltung.Controllers
                        Lagerplatz_Id = ware.Lagerplatz_Id,
                        Lieferant_Id = ware.Lieferant_Id,
                        Modellnummer = ware.Modellnummer,
-                       Seriennr = ware.Seriennr
+                       Seriennr = ware.Seriennr,
+                       Auftragsnr = ware.Auftragsnr
                    }
                        ).Join(_context.Kostenstelle, ware => ware.Kostenstelle_Nr, kostenstelle => kostenstelle.Kostenstelle_Nr,
                    (ware, kostenstelle) => new
@@ -113,7 +119,8 @@ namespace Lagerverwaltung.Controllers
                        Lagerplatz_Id = ware.Lagerplatz_Id,
                        Lieferant_Id = ware.Lieferant_Id,
                        Modellnummer = ware.Modellnummer,
-                       Seriennr = ware.Seriennr
+                       Seriennr = ware.Seriennr,
+                       Auftragsnr = ware.Auftragsnr
                    }
                        ).Join(_context.Lagerplatz, ware => ware.Lagerplatz_Id, lagerplatz => lagerplatz.Lagerplatz_Id,
                    (ware, lagerplatz) => new
@@ -126,7 +133,8 @@ namespace Lagerverwaltung.Controllers
                        Lagerplatz = lagerplatz.Lagerplatz_Beschreibung,
                        Lieferant_Id = ware.Lieferant_Id,
                        Modellnummer = ware.Modellnummer,
-                       Seriennr = ware.Seriennr
+                       Seriennr = ware.Seriennr,
+                       Auftragsnr = ware.Auftragsnr
                    }
                        ).Join(_context.Lieferant, ware => ware.Lieferant_Id, lieferant => lieferant.Lieferant_Id,
                    (ware, lieferant) => new
@@ -139,7 +147,8 @@ namespace Lagerverwaltung.Controllers
                        Lagerplatz = ware.Lagerplatz,
                        Lieferant = lieferant.Lieferant_Beschreibung,
                        Modellnummer = ware.Modellnummer,
-                       Seriennr = ware.Seriennr
+                       Seriennr = ware.Seriennr,
+                       Auftragsnr = ware.Auftragsnr
                    }
                        )
                        .Where(a => a.Ware_Beschreibung.Contains(suche_Beschreibung))
@@ -150,6 +159,7 @@ namespace Lagerverwaltung.Controllers
                        .Where(a => a.Lieferant.Contains(suche_Lieferant))
                        .Where(a => a.Modellnummer.Contains(suche_Modelnr))
                        .Where(a => a.Seriennr.Contains(suche_Seriennr))
+                       .Where(a => a.Auftragsnr.Contains(suche_Auftragsnr))
                        .ToList();
 
                 model.Waren = new List<Ware>();
@@ -315,7 +325,8 @@ namespace Lagerverwaltung.Controllers
                     Lieferant_Id = model.Lieferant_Id,
                     Hersteller_Id = model.Hersteller_Id,
                     Kostenstelle_Nr = model.Kostenstelle_Id,
-                    Anschaff_Kosten = model.Anschaff_Kosten
+                    Anschaff_Kosten = model.Anschaff_Kosten,
+                    Auftragsnummer = model.Auftragsnummer
 
 
                 };
@@ -360,7 +371,8 @@ namespace Lagerverwaltung.Controllers
                 Modellnummer = ware.Modellnummer,
                 Seriennummer = ware.Seriennr,
                 Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero),
-                AusbuchenMenge = 1
+                AusbuchenMenge = 1,
+                Auftragsnummer = ware.Auftragsnummer
 
 
             };
@@ -378,7 +390,7 @@ namespace Lagerverwaltung.Controllers
 
             if (j > i)
             {
-                ModelState.AddModelError("AusbuchenMenge", "So viel ist nicht da");
+                ModelState.AddModelError("AusbuchenMenge", "Keine ausreichende Menge im Lager zum ausbuchen vorhanden");
 
             }
 
@@ -427,6 +439,7 @@ namespace Lagerverwaltung.Controllers
             model.Modellnummer = ware.Modellnummer;
             model.Seriennummer = ware.Seriennr;
             model.Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero);
+            model.Auftragsnummer = ware.Auftragsnummer;
 
             model.Fehler = true;
 
@@ -518,6 +531,7 @@ namespace Lagerverwaltung.Controllers
                 Kostenstellennr = kostenstellennummer.Kostenstelle_Nr,
                 Modellnummer = ware.Modellnummer,
                 Seriennummer = ware.Seriennr,
+                Auftragsnummer = ware.Auftragsnummer,
                 Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero),
                 Lagerplatz = _context.Lagerplatz.ToList(),
                 Kategorie = _context.Kategorie.ToList(),
@@ -550,6 +564,7 @@ namespace Lagerverwaltung.Controllers
                     Lieferant_Id = model.Lieferant_NEU,
                     Kostenstelle_Nr = model.Kostenstelle_NEU,
                     Hersteller_Id = model.Hersteller_NEU,
+                    Auftragsnummer = model.Auftragsnummer_NEU,
 
 
                 };

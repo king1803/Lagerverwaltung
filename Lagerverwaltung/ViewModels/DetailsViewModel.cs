@@ -44,6 +44,8 @@ namespace Lagerverwaltung.ViewModels
 
         public bool Fehler { get; set; }
 
+        public string Auftragsnummer { get; set; }
+
 
 
     }
