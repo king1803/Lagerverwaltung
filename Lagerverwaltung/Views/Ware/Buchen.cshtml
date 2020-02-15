@@ -36,7 +36,7 @@
                 <input asp-for="Seriennr" class="form-control" value="@Model.Seriennr" />
                 <span asp-validation-for="Seriennr" class="text-danger"></span>
             </div>
-            <div class="form-group collapse" id="Modell">
+            <div class="form-group" id="Modell">
                 <label asp-for="Modellnummer" class="control-label"></label>
                 <input asp-for="Modellnummer" class="form-control" value="@Model.Modellnummer" />
                 <span asp-validation-for="Modellnummer" class="text-danger"></span>
@@ -56,6 +56,11 @@
                 <select asp-for="Lagerplatz_Id" asp-items="@(new SelectList(Model.Lagerplatz,"Lagerplatz_Id", "Lagerplatz_Beschreibung"))" class="custom-select">
                 </select>
                 <span asp-validation-for="Lagerplatz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Auftragsnummer" class="control-label"></label>
+                <input asp-for="Auftragsnummer" class="form-control" value="@Model.Auftragsnummer" />
+                <span asp-validation-for="Auftragsnummer" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -98,11 +103,7 @@
                 <input asp-for="Anschaff_Kosten" class="form-control" value="@Model.Anschaff_Kosten" />
                 <span asp-validation-for="Anschaff_Kosten" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Auftragsnummer" class="control-label"></label>
-                <input asp-for="Auftragsnummer" class="form-control" value="@Model.Auftragsnummer" />
-                <span asp-validation-for="Auftragsnummer" class="text-danger"></span>
-            </div>
+
 
 
 
@@ -130,7 +131,6 @@
                 if (!test) {
                     $("#Menge").show();
                     $("#Serie").hide();
-                    $("#Modell").hide();
                     test = true;
 
                 }
@@ -142,7 +142,6 @@
                 if (test) {
                     $("#Menge").hide();
                     $("#Serie").show();
-                    $("#Modell").show();
                     test = false;
                 }
 
