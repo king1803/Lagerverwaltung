@@ -8,7 +8,7 @@ namespace Lagerverwaltung.ViewModels
     public class LagerEditViewModel
     {
         [Required]
-        [Range(1, 100)]
+        [Range(1, 1000)]
         public int Anzahl { get; set; }
 
         public String LetzesLager { get; set; }
