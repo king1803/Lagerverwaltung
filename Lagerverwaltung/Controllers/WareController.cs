@@ -276,7 +276,10 @@ namespace Lagerverwaltung.Controllers
         {
             var ware = _context.Ware;
 
-
+            if (String.IsNullOrEmpty(model.Suche))
+            {
+                model.Suche = "";
+            }
 
             model.Lagerplatz = _context.Lagerplatz.Where(s => s.Lagerplatz_Beschreibung.Contains(model.Suche)).OrderBy(i => i.Lagerplatz_Beschreibung).ToList();
             foreach (var i in ware)
@@ -284,6 +287,7 @@ namespace Lagerverwaltung.Controllers
 
                 model.Lagerplatz.RemoveAll(s => s.Lagerplatz_Id == i.Lagerplatz_Id);
             }
+
             model.Kategorie = _context.Kategorie.ToList();
             model.Hersteller = _context.Hersteller.ToList();
             model.Kostenstelle = _context.Kostenstelle.ToList();
