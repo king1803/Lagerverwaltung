@@ -1,6 +1,7 @@
 ﻿@model Lagerverwaltung.ViewModels.BerichtViewModel
 @{
     ViewData["Title"] = "Bericht";
+    int i = 0;
 }
 
 <div class="jumbotron">
@@ -15,6 +16,31 @@
 </div>
 
 <p>Aktuell sind @Model.Anzahl_Waren / @Model.Lagerplaetze Lagerplätze belegt</p>
+
+<h3>25 ältesten Waren im Lager:</h3>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Beschreibung</th>
+            <th scope="col">Einlagerungsdatum</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var w in Model.Ware_List)
+        {
+           
+            i = i + 1;
+            <tr>
+                <th scope="row">@i</th>
+                <td>@w.Ware_Beschreibung</td>
+                <td>@w.Ware_Einlagerungsdatum</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 
 
