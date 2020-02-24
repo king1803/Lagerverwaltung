@@ -1,5 +1,7 @@
 ﻿using Lagerverwaltung.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System;
 
 
 namespace Lagerverwaltung.ViewModels
@@ -16,6 +18,11 @@ namespace Lagerverwaltung.ViewModels
         public decimal Lagerbelegung { get; set; }
 
         public List<Ware> Ware_List { get; set; }
+
+        public string Ware_Beschreibung { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Ware_Einlagerungsdatum { get; set; }
 
     }
 }

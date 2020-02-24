@@ -52,7 +52,19 @@ namespace Lagerverwaltung.Controllers
 
 
             model.Ware_List = new List<Ware>();
-            model.Ware_List = model.Ware_List.OrderByDescending(s => s.Ware_Einlagerungsdatum).ToList();
+            foreach (var w in _context.Ware.ToList())
+            {
+                model.Ware_List.Add(w);
+                model.Ware_Beschreibung = w.Ware_Beschreibung;
+                model.Ware_Einlagerungsdatum = w.Ware_Einlagerungsdatum;
+            }
+            model.Ware_List = model.Ware_List.OrderBy(s => s.Ware_Einlagerungsdatum).Take(25).ToList();
+                
+      
+            
+
+
+
 
             return View(model);
 

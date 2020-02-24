@@ -458,7 +458,7 @@ namespace Lagerverwaltung.Controllers
             model.Lieferanten = _context.Lieferant.ToList();
             model.Kostenstellen = _context.Kostenstelle.ToList();
 
-            return View("Index", model);
+            return RedirectToAction("Index");
         }
     }
 
