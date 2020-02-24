@@ -11,6 +11,8 @@ namespace Lagerverwaltung.ViewModels
 
         public string Beschreibung { get; set; }
 
+        public int Id { get; set; }
+
         public List<KomWaren> NeueWaren { get; set; }
     }
 }

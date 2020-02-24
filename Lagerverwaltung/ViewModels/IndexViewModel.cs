@@ -42,5 +42,7 @@ namespace Lagerverwaltung.ViewModels
 
         public List<Lagerplatz> Lagerplatz_Beschreibung { get; set; }
 
+        public List<Reservierungen> Reservierung { get; set; }
+
     }
 }

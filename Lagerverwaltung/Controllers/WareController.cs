@@ -163,6 +163,7 @@ namespace Lagerverwaltung.Controllers
                        .ToList();
 
                 model.Waren = new List<Ware>();
+                model.Reservierung = new List<Reservierungen>();
                 model.Lagerplatz_Beschreibung = new List<Lagerplatz>();
 
                 model.Lagerplatz_Beschreibung = _context.Lagerplatz.ToList();
@@ -170,6 +171,34 @@ namespace Lagerverwaltung.Controllers
                 foreach (var a in waren)
                 {
                     model.Waren.Add(_context.Ware.Find(a.Ware_Id));
+
+                    var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(a.Ware_Id));
+                    if (k.Any())
+                    {
+                        int Menge = 0;
+                        foreach(var kw in k)
+                        {
+                            Menge = Menge + kw.Menge;
+                        }
+
+                        Reservierungen reservierungen = new Reservierungen
+                        {
+                            Reserviert = true,
+                            Menge = Menge
+                        };
+                        model.Reservierung.Add(reservierungen);
+
+                    }
+                    else
+                    {
+                        Reservierungen reservierungen = new Reservierungen
+                        {
+                            Reserviert = false,
+                            Menge = 0
+                        };
+                        model.Reservierung.Add(reservierungen);
+                    }
+                    
                 }
 
                 if (!string.IsNullOrEmpty(model.Sortierung))

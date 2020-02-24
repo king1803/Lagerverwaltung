@@ -172,6 +172,10 @@
                         <th scope="row">@i</th>
                         <td>
                             @ware.Ware_Beschreibung
+                            @if (Model.Reservierung[i - 1].Reserviert)
+                            {
+                                <span class="badge badge-pill badge-warning">Reserviert @Model.Reservierung[i - 1].Menge</span>
+                            }
                         </td>
 
                         @foreach (var lagerp in Model.Lagerplatz_Beschreibung)
