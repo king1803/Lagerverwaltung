@@ -107,14 +107,14 @@ namespace Lagerverwaltung.Controllers
                 if (result.Succeeded)
                 {
 
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("index");
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
             }
-            return View(model);
+            return RedirectToAction("Index");
 
 
         }

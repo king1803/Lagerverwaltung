@@ -5,71 +5,71 @@
 }
 
 <h1>@Model.Beschreibung</h1>
-<form method="post" asp-action="Erstellen">
+<form method="post" asp-action="Bearbeiten">
     <div class="row">
         <div class="col-12">
 
-            <div id="Print">
+            <div asp-validation-summary="All" class="text-danger"></div>
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Beschreibung</th>
                             <th scope="col">Menge</th>
-                            <th scope="col" width="100"></th>
-                            <th scope="col"></th>
+                            <th scope="col" width="100">Bestand</th>
+                            <th scope="col">Ausgewählt</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var ware in Model.BestandWaren)
                         {
 
-                            <tr>
-                                <input type="hidden" asp-for="BestandWaren[i].Ware_Id" value="@ware.Ware_Id" />
-                                <th scope="row">@i</th>
-                                <td>@ware.Beschreibung</td>
-                                <td>@ware.Menge</td>
-                                <td>
-                                    @if (ware.Menge > 1)
-                                    {
-                                        <div class="form-group">
+                        <tr>
+                            <input type="hidden" asp-for="BestandWaren[i].Ware_Id" value="@ware.Ware_Id" />
+                            <input type="hidden" asp-for="BestandWaren[i].Menge" value="@ware.Menge" />
+                            <th scope="row">@i</th>
+                            <td>@ware.Beschreibung</td>
+                            <td>@ware.Menge</td>
+                            <td>
+                                @if (ware.Menge > 1)
+                                {
+                                    <div class="form-group">
 
-                                            <input asp-for="BestandWaren[i].Kom_Menge" type="number" class="form-control" value="@ware.Kom_Menge" />
+                                        <input asp-for="BestandWaren[i].Kom_Menge" type="number" class="form-control" value="@ware.Kom_Menge" />
 
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <input type="hidden" asp-for="BestandWaren[i].Kom_Menge" value="@ware.Menge" />
-                                    }
-                                </td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input asp-for="BestandWaren[i].Ausgewählt" type="checkbox" class="custom-control-input" id="@i">
-                                        <label class="custom-control-label" for="@i"></label>
                                     </div>
-                                </td>
-                            </tr>
+                                }
+                                else
+                                {
+                                    <input type="hidden" asp-for="BestandWaren[i].Kom_Menge" value="@ware.Menge" />
+                                }
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox">
+                                    <input asp-for="BestandWaren[i].Ausgewählt" type="checkbox" class="custom-control-input" id="@i">
+                                    <label class="custom-control-label" for="@i"></label>
+                                </div>
+                            </td>
+                        </tr>
 
                             i = i + 1;
                         }
                     </tbody>
                 </table>
-            </div>
+            
         </div>
-        <div class="col-12">
-            <a class="btn btn-primary float-left" >Zurück</a>
-            <a class="btn btn-success" asp-action="Abschließen" asp-route-Id="@Model.Id">Bestätigen</a>
-            <button type="submit" class="btn btn-primary float-right">Ändern</button>
-        </div>
-        <div class="col-12">
-            <div class="col collapse show" id="löschen">
-                <button class="btn btn-danger float-right my-2" data-toggle="collapse" type="button" data-target="#löschen" id="löschen">Löschen</button>
+        
+            <a class="btn btn-primary m-2" asp-action="Index">Zurück</a>
+            <button type="button" class="btn btn-primary m-2 float-right" data-toggle="modal" data-target="#myModal">Abschließen</button>
+            <button type="submit" class="btn btn-warning m-2 float-right ">Ändern</button>
+            <div class="col collapse show float-right" id="löschen">
+                <button class="btn btn-danger float-right m-2" data-toggle="collapse" type="button" data-target="#löschen" id="löschen">Löschen</button>
             </div>
-            <div class="col collapse" id="löschen">
-                <a class="btn btn-danger float-right" asp-action="Löschen" asp-route-Id="@Model.Id">Löschen Bestätigen</a>
+            <div class="col collapse float-right" id="löschen">
+                <a class="btn btn-danger float-right m-2" asp-action="Löschen" asp-route-Id="@Model.Id">Löschen Bestätigen</a>
             </div>
-        </div>
+
+        
 
 
 
@@ -78,3 +78,28 @@
 
 </form>
 
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Abschließen</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <span class="text-danger">@Model.BestandWaren.Count() Waren ausbuchen</span>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+                
+                <a asp-action="Abschließen" asp-route-Id="@Model.Id" class="btn btn-success float-right">Abschließen</a>
+            </div>
+
+        </div>
+    </div>
+</div>

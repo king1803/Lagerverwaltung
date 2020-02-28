@@ -89,7 +89,11 @@ namespace Lagerverwaltung.Controllers
                 user = await userManager.FindByNameAsync("ADMIN");
                 await userManager.AddToRoleAsync(user, "Admin");
             }
-
+            if(await userManager.FindByNameAsync(model.User) == null)
+            {
+                ModelState.AddModelError("", "Falscher User oder falsches Passwort");
+                return View(model);
+            }
             if (!(await userManager.HasPasswordAsync(await userManager.FindByNameAsync(model.User))) && model.Passwort == "Erst,20")
             {
                 var model1 = new PasswortFestlegenViewModel

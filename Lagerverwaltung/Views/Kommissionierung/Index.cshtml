@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     int i = 0;
+    int j = 0;
 }
 
 
@@ -10,7 +11,7 @@
         <a asp-action="Erstellen" class="btn btn-primary btn-sm mb-3">
             <i class="fa fa-file"></i>  Neue Kommisionierung
         </a>
-
+        <h4>Offene Kommissionierungen</h4>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -23,16 +24,48 @@
             <tbody>
                 @foreach (var w in Model)
                 {
-                    i = i + 1;
-                <tr>
-                    <th scope="row">@i</th>
-                    <td>@w.Kom.Beschreibung</td>
-                    <td>@w.Anzahl</td>
-                    <td>
-                        <a class="btn btn-outline-warning float-right" asp-action="Bearbeiten" asp-route-Id="@w.Kom.Kom_Id">Bearbeiten</a>
-                    </td>
-                </tr>
+                    if ((w.Kom.Abschlussdatum == DateTime.MinValue))
+                    {
+                        i = i + 1;
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@w.Kom.Beschreibung</td>
+                        <td>@w.Anzahl</td>
+                        <td>
+                            <a class="btn btn-outline-warning float-right" asp-action="Bearbeiten" asp-route-Id="@w.Kom.Kom_Id">Bearbeiten</a>
+                        </td>
+                    </tr>
+                    }
                 }
             </tbody>
         </table>
-</div>
+        <h4>Abgeschlossene Kommissionierungen</h4>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Beschreibung</th>
+                    <th scope="col">Anzahl Waren</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var w in Model)
+                {
+                    if (!(w.Kom.Abschlussdatum == DateTime.MinValue))
+                    {
+                        j = j + 1;
+                        <tr>
+                            <th scope="row">@j</th>
+                            <td>@w.Kom.Beschreibung</td>
+                            <td>@w.Anzahl</td>
+                            <td>
+                                <a class="btn btn-warning float-right" asp-action="Download" asp-route-Id="@w.Kom.Kom_Id">Download</a>
+                            </td>
+                        </tr>
+}
+
+                }
+            </tbody>
+        </table>
+    </div>
