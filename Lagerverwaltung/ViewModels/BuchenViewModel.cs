@@ -10,7 +10,7 @@ namespace Lagerverwaltung.ViewModels
         public int Ware_Id { get; set; }
 
         [Display(Name = "Beschreibung")]
-        [Required(ErrorMessage = "Beschreibung muss ausgefült sein")]
+        [Required(ErrorMessage = "Beschreibung muss ausgefüllt sein")]
         public string Ware_Beschreibung { get; set; }
 
         //[Required(ErrorMessage = "Lagerplatz muss ausgefült sein")]

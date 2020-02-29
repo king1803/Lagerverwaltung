@@ -13,7 +13,7 @@ namespace Lagerverwaltung.ViewModels
 
         public string Suche { get; set; }
 
-        [Range(0, 100000, ErrorMessage = "Darf nicht negativ sein")]
+        [Range(0, 100000, ErrorMessage = "Darf nicht negativ oder groesser 100000 sein")]
         [Display(Name = "Menge Dazu")]
         public int MengeNeu { get; set; }
     }
