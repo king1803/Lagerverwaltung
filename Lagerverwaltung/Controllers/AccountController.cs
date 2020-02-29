@@ -89,9 +89,9 @@ namespace Lagerverwaltung.Controllers
                 user = await userManager.FindByNameAsync("ADMIN");
                 await userManager.AddToRoleAsync(user, "Admin");
             }
-            if(await userManager.FindByNameAsync(model.User) == null)
+            if(string.IsNullOrEmpty(model.User) || string.IsNullOrEmpty(model.Passwort) ||await userManager.FindByNameAsync(model.User) == null)
             {
-                ModelState.AddModelError("", "Falscher User oder falsches Passwort");
+                ModelState.AddModelError("", "User nicht vorhanden oder leer!?");
                 return View(model);
             }
             if (!(await userManager.HasPasswordAsync(await userManager.FindByNameAsync(model.User))) && model.Passwort == "Erst,20")
