@@ -45,7 +45,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Beschreibung</th>
-                    <th scope="col">Anzahl Waren</th>
+                    <th scope="col">Abschlussdatum</th>
                     <th></th>
                 </tr>
             </thead>
@@ -58,7 +58,7 @@
                         <tr>
                             <th scope="row">@j</th>
                             <td>@w.Kom.Beschreibung</td>
-                            <td>@w.Anzahl</td>
+                            <td>@w.Kom.Abschlussdatum.ToShortDateString()</td>
                             <td>
                                 <a class="btn btn-warning float-right" asp-action="Download" asp-route-Id="@w.Kom.Kom_Id">Download</a>
                             </td>

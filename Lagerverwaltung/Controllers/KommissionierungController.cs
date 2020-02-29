@@ -309,6 +309,8 @@ namespace Lagerverwaltung.Controllers
                     worksheet.Cells["D" + i].Value = k.Menge;
 
                     worksheet.Cells["E" + i].Value = _context.Lagerplatz.Find(_context.Ware.Find(k.Ware_Id).Lagerplatz_Id).Lagerplatz_Beschreibung;
+
+                    i = i + 1;
                 }
 
 
