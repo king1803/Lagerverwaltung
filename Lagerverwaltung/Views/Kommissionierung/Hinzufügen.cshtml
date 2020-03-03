@@ -1,0 +1,125 @@
+﻿@model Lagerverwaltung.ViewModels.KomHinzufügenViewModel
+@{
+    ViewData["Title"] = "Hinzufügen";
+    int i = 0;
+    int j = 0;
+}
+
+<h1>Hinzufügen</h1>
+
+<h3>@Model.Beschreibung</h3>
+
+<div class="container-fluid">
+    
+    <div class="form-row">
+        <div class="col-6">
+            <form>
+
+                
+
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Beschreibung</th>
+                            <th scope="col">Bestand</th>
+                            <th scope="col" width="100">Menge</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ware in Model.Waren)
+                        {
+
+                            <tr>
+                                <input type="hidden" asp-for="Waren[i].Ware_Id" value="@ware.Ware_Id" />
+                                <th scope="row">@i</th>
+                                <td>@ware.Beschreibung</td>
+                                <td>@ware.Menge</td>
+                                <td>
+                                    @if (ware.Menge > 1)
+                                    {
+                                        <div class="form-group">
+
+                                            <input asp-for="Waren[i].Kom_Menge" type="number" class="form-control" value="1" />
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" asp-for="Waren[i].Kom_Menge" value="@ware.Menge" />
+                                    }
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input asp-for="Waren[i].Ausgewählt" type="checkbox" class="custom-control-input" id="@i">
+                                        <label class="custom-control-label" for="@i"></label>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            i = i + 1;
+                        }
+                    </tbody>
+                </table>
+                <input type="hidden" asp-for="Hinzu" value="true" />
+                <button asp-action="Hinzufügen" type="submit" class="btn btn-primary float-right">Hinzufügen</button>
+            </form>
+        </div>
+
+
+        <div class="col-6">
+            <form>
+
+
+
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Beschreibung</th>
+                            <th scope="col">Bestand</th>
+                            <th scope="col" width="100">Menge</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ware in Model.ZwischenWaren)
+                        {
+
+                            <tr>
+                                <input type="hidden" asp-for="ZwischenWaren[j].Ware_Id" value="@ware.Ware_Id" />
+                                <th scope="row">@j</th>
+                                <td>@ware.Beschreibung</td>
+                                <td>@ware.Menge</td>
+                                <td>
+
+                                    <div class="form-group">
+
+                                        <input asp-for="ZwischenWaren[j].Kom_Menge" type="number" class="form-control" value="@ware.Kom_Menge" />
+
+                                    </div>
+
+
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input asp-for="ZwischenWaren[j].Ausgewählt" type="checkbox" class="custom-control-input" id="T @j">
+                                        <label class="custom-control-label" for="T @j"></label>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            j = j + 1;
+                        }
+                    </tbody>
+                </table>
+                <input type="hidden" asp-for="Id" value="@Model.Id" />
+                <input type="hidden" asp-for="Hinzu" value="false"/>
+                <button asp-action="Hinzufügen" type="submit" class="btn btn-primary float-left">Enfernen</button>
+                <button asp-action="Hinzufügen" formmethod="post" type="submit" class="btn btn-primary float-right">Speichern</button>
+            </form>
+        </div>
+    </div>
+    <a class="btn btn-danger float-left" asp-action="Bearbeiten" asp-route-Id="@Model.Id">Zurück</a>
+</div>

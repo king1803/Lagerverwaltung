@@ -163,11 +163,11 @@ namespace Lagerverwaltung.Controllers
         [HttpPost]
         public async Task<IActionResult> Bearbeiten(KomBearbeitenViewModel model)
         {
-            foreach(var kw in model.BestandWaren)
+            foreach (var kw in model.BestandWaren)
             {
-                if(!kw.Ausgewählt)
+                if (!kw.Ausgewählt)
                 {
-                   foreach(var t in _context.KommissionierungWaren.Where(a => a.Kommision_Id.Equals(model.Id)).Where(s => s.Ware_Id.Equals(kw.Ware_Id)).ToList())
+                    foreach (var t in _context.KommissionierungWaren.Where(a => a.Kommision_Id.Equals(model.Id)).Where(s => s.Ware_Id.Equals(kw.Ware_Id)).ToList())
                     {
                         _context.KommissionierungWaren.Remove(t);
                         await _context.SaveChangesAsync();
@@ -177,7 +177,7 @@ namespace Lagerverwaltung.Controllers
                 {
                     foreach (var t in _context.KommissionierungWaren.Where(a => a.Kommision_Id.Equals(model.Id)).Where(s => s.Ware_Id.Equals(kw.Ware_Id)).ToList())
                     {
-                        if(kw.Kom_Menge <= kw.Menge)
+                        if (kw.Kom_Menge <= kw.Menge)
                         {
                             t.Menge = kw.Kom_Menge;
                             _context.KommissionierungWaren.Update(t);
@@ -198,7 +198,7 @@ namespace Lagerverwaltung.Controllers
             model.BestandWaren = new List<KomWaren>();
             model.NeueWaren = new List<KomWaren>();
 
-            
+
 
             foreach (var w in _context.KommissionierungWaren.Where(s => s.Kommision_Id.Equals(Kom.Kom_Id)).ToList())
             {
@@ -217,7 +217,7 @@ namespace Lagerverwaltung.Controllers
             return View(model);
         }
 
-            public async Task<IActionResult> Löschen(int Id)
+        public async Task<IActionResult> Löschen(int Id)
         {
             var KomWaren = _context.KommissionierungWaren.Where(a => a.Kommision_Id.Equals(Id)).ToList();
 
@@ -399,5 +399,138 @@ namespace Lagerverwaltung.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Hinzufügen(int Id, KomHinzufügenViewModel model)
+        {
+
+            model.Id = Id;
+
+            if(model.ZwischenWaren == null)
+            {
+                model.ZwischenWaren = new List<KomWaren>();
+            }
+
+            
+
+
+
+            if (model.Hinzu)
+            {
+
+
+
+                foreach (var k in model.Waren)
+                {
+                    if (k.Ausgewählt)
+                    {
+                        var ware = _context.Ware.Find(k.Ware_Id);
+
+                        k.Beschreibung = ware.Ware_Beschreibung;
+
+                        k.Menge = Convert.ToInt32(ware.Menge);
+
+                        model.ZwischenWaren.Add(k);
+                    }
+                }
+
+                
+            }
+
+
+            model.Beschreibung = _context.Kommissionierung.Find(Id).Beschreibung;
+
+            model.Waren = new List<KomWaren>();
+
+            var Waren = _context.Ware;
+
+            foreach (var w in Waren)
+            {
+                
+                    var KW = new KomWaren
+                    {
+                        Ware_Id = w.Ware_Id,
+                        Beschreibung = w.Ware_Beschreibung,
+                        Menge = Convert.ToInt32(w.Menge),
+                        Ausgewählt = false
+                    };
+                    model.Waren.Add(KW);
+                
+            }
+
+            foreach (var t in _context.KommissionierungWaren.Where(a => a.Kommision_Id.Equals(Id)).ToList())
+            {
+                var k = model.Waren.Find(a => a.Ware_Id.Equals(t.Ware_Id));
+                model.Waren.Remove(k);
+            }
+
+            int i = 0;
+            foreach (var k in model.ZwischenWaren.ToList())
+            {
+                if (!k.Ausgewählt)
+                {
+                    model.ZwischenWaren.Remove(k);
+                }
+                else
+                {
+                    var ware = _context.Ware.Find(k.Ware_Id);
+
+                    model.ZwischenWaren[i].Beschreibung = ware.Ware_Beschreibung;
+
+                    model.ZwischenWaren[i].Menge = Convert.ToInt32(ware.Menge);
+
+                    
+                }
+
+                i = i + 1;
+            }
+
+            if(model.ZwischenWaren.Count() == 0)
+            {
+                model.ZwischenWaren = new List<KomWaren>();
+            }
+
+            foreach (var t in model.ZwischenWaren)
+            {
+                var k = model.Waren.Find(a => a.Ware_Id.Equals(t.Ware_Id));
+                model.Waren.Remove(k);
+            }
+
+            
+
+            return View(model);
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Hinzufügen(KomHinzufügenViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                
+
+                foreach (var w in model.ZwischenWaren)
+                {
+                    if (w.Ausgewählt)
+                    {
+                        KommissionierungWaren kw = new KommissionierungWaren
+                        {
+                            Ware_Id = w.Ware_Id,
+                            Kommision_Id = model.Id,
+                            Menge = w.Kom_Menge
+                        };
+
+                        _context.KommissionierungWaren.Add(kw);
+                        await _context.SaveChangesAsync();
+
+                    }
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
     }
 }

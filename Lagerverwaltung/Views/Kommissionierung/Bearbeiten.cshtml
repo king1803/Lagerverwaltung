@@ -10,19 +10,19 @@
         <div class="col-12">
 
             <div asp-validation-summary="All" class="text-danger"></div>
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Beschreibung</th>
-                            <th scope="col">Menge</th>
-                            <th scope="col" width="100">Bestand</th>
-                            <th scope="col">Ausgewählt</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var ware in Model.BestandWaren)
-                        {
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Beschreibung</th>
+                        <th scope="col">Menge</th>
+                        <th scope="col" width="100">Bestand</th>
+                        <th scope="col">Ausgewählt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ware in Model.BestandWaren)
+                    {
 
                         <tr>
                             <input type="hidden" asp-for="BestandWaren[i].Ware_Id" value="@ware.Ware_Id" />
@@ -52,24 +52,25 @@
                             </td>
                         </tr>
 
-                            i = i + 1;
-                        }
-                    </tbody>
-                </table>
-            
-        </div>
-        
-            <a class="btn btn-primary m-2" asp-action="Index">Zurück</a>
-            <button type="button" class="btn btn-primary m-2 float-right" data-toggle="modal" data-target="#myModal">Abschließen</button>
-            <button type="submit" class="btn btn-warning m-2 float-right ">Ändern</button>
-            <div class="col collapse show float-right" id="löschen">
-                <button class="btn btn-danger float-right m-2" data-toggle="collapse" type="button" data-target="#löschen" id="löschen">Löschen</button>
-            </div>
-            <div class="col collapse float-right" id="löschen">
-                <a class="btn btn-danger float-right m-2" asp-action="Löschen" asp-route-Id="@Model.Id">Löschen Bestätigen</a>
-            </div>
+                        i = i + 1;
+                    }
+                </tbody>
+            </table>
 
-        
+        </div>
+
+        <a class="btn btn-primary m-2" asp-action="Index">Zurück</a>
+        <button type="button" class="btn btn-primary m-2 float-right" data-toggle="modal" data-target="#myModal">Abschließen</button>
+        <button type="submit" class="btn btn-warning m-2 float-right ">Ändern</button>
+        <a class="btn btn-primary m-2" asp-action="Hinzufügen" asp-route-Id="@Model.Id">Hinzufügen</a>
+        <div class="col collapse show float-right" id="löschen">
+            <button class="btn btn-danger float-right m-2" data-toggle="collapse" type="button" data-target="#löschen" id="löschen">Löschen</button>
+        </div>
+        <div class="col collapse float-right" id="löschen">
+            <a class="btn btn-danger float-right m-2" asp-action="Löschen" asp-route-Id="@Model.Id">Löschen Bestätigen</a>
+        </div>
+
+
 
 
 
