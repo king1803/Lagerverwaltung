@@ -1,10 +1,12 @@
 ﻿using Lagerverwaltung.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lagerverwaltung.ViewModels
 {
     public class VerwaltungÜbersichtViewmodel
     {
+        
         public List<Kategorie> Kategorien { get; set; }
 
         public List<Hersteller> Herstellers { get; set; }
@@ -14,7 +16,7 @@ namespace Lagerverwaltung.ViewModels
         public List<Kostenstelle> Kostenstellen { get; set; }
 
         public Kategorie Kategorie { get; set; }
-
+        
         public Hersteller Hersteller { get; set; }
 
         public Lieferant Lieferant { get; set; }

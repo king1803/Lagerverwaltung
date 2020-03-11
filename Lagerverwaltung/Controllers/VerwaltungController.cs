@@ -339,9 +339,12 @@ namespace Lagerverwaltung.Controllers
             if (Id == "Kategorie")
             {
 
-                model.Kategorie.Kategorie_Name = model.Kategorie.Kategorie_Beschreibung;
-                _context.Kategorie.Add(model.Kategorie);
-                await _context.SaveChangesAsync();
+                if (!string.IsNullOrEmpty(model.Kategorie.Kategorie_Beschreibung))
+                {
+                    model.Kategorie.Kategorie_Name = model.Kategorie.Kategorie_Beschreibung;
+                    _context.Kategorie.Add(model.Kategorie);
+                    await _context.SaveChangesAsync();
+                }
 
 
 
@@ -351,11 +354,12 @@ namespace Lagerverwaltung.Controllers
 
             if (Id == "Hersteller")
             {
-
-                model.Hersteller.Hersteller_Id = 0;
-                _context.Hersteller.Add(model.Hersteller);
-                await _context.SaveChangesAsync();
-
+                if (!string.IsNullOrEmpty(model.Hersteller.Hersteller_Beschreibung))
+                {
+                    model.Hersteller.Hersteller_Id = 0;
+                    _context.Hersteller.Add(model.Hersteller);
+                    await _context.SaveChangesAsync();
+                }
 
 
 
@@ -364,11 +368,12 @@ namespace Lagerverwaltung.Controllers
 
             if (Id == "Lieferant")
             {
-
-                model.Lieferant.Lieferant_Id = 0;
-                _context.Lieferant.Add(model.Lieferant);
-                await _context.SaveChangesAsync();
-
+                if (!string.IsNullOrEmpty(model.Lieferant.Lieferant_Beschreibung))
+                {
+                    model.Lieferant.Lieferant_Id = 0;
+                    _context.Lieferant.Add(model.Lieferant);
+                    await _context.SaveChangesAsync();
+                }
 
 
 
@@ -377,11 +382,12 @@ namespace Lagerverwaltung.Controllers
 
             if (Id == "Kostenstelle")
             {
-
-                model.Kostenstelle.Kostenstelle_Nr = 0;
-                _context.Kostenstelle.Add(model.Kostenstelle);
-                await _context.SaveChangesAsync();
-
+                if (!string.IsNullOrEmpty(model.Kostenstelle.Kostenstelle_Beschreibung))
+                {
+                    model.Kostenstelle.Kostenstelle_Nr = 0;
+                    _context.Kostenstelle.Add(model.Kostenstelle);
+                    await _context.SaveChangesAsync();
+                }
 
 
 
