@@ -9,7 +9,7 @@ namespace Lagerverwaltung.ViewModels
 {
     public class KomErstellenViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Beschreibung muss ausgefüllt sein")]
         public string Beschreibung { get; set; }
 
         public List<KomWaren> Waren { get; set; }
