@@ -8,7 +8,7 @@
 <form method="post" asp-action="Bearbeiten">
     <div class="row">
         <div class="col-12">
-
+            <a class="btn btn-primary m-2" asp-action="Hinzufügen" asp-route-Id="@Model.Id">Hinzufügen</a>
             <div asp-validation-summary="All" class="text-danger"></div>
             <table class="table">
                 <thead class="thead-dark">
@@ -62,7 +62,7 @@
         <a class="btn btn-primary m-2" asp-action="Index">Zurück</a>
         <button type="button" class="btn btn-primary m-2 float-right" data-toggle="modal" data-target="#myModal">Abschließen</button>
         <button type="submit" class="btn btn-warning m-2 float-right ">Ändern</button>
-        <a class="btn btn-primary m-2" asp-action="Hinzufügen" asp-route-Id="@Model.Id">Hinzufügen</a>
+        
         <div class="col collapse show float-right" id="löschen">
             <button class="btn btn-danger float-right m-2" data-toggle="collapse" type="button" data-target="#löschen" id="löschen">Löschen</button>
         </div>

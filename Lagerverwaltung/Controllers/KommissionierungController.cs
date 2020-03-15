@@ -502,7 +502,113 @@ namespace Lagerverwaltung.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Hinzufügen(KomHinzufügenViewModel model)
+        public IActionResult Hinzufügen (KomHinzufügenViewModel model)
+        {
+
+            
+
+            if (model.ZwischenWaren == null)
+            {
+                model.ZwischenWaren = new List<KomWaren>();
+            }
+
+            if(string.IsNullOrEmpty(model.Suche))
+            {
+                model.Suche = "";
+            }
+
+
+
+            if (model.Hinzu)
+            {
+
+                if (!(model.Waren == null))
+                {
+                    foreach (var k in model.Waren)
+                    {
+                        if (k.Ausgewählt)
+                        {
+                            var ware = _context.Ware.Find(k.Ware_Id);
+
+                            k.Beschreibung = ware.Ware_Beschreibung;
+
+                            k.Menge = Convert.ToInt32(ware.Menge);
+
+                            model.ZwischenWaren.Add(k);
+                        }
+                    }
+                }
+
+            }
+
+
+            model.Beschreibung = _context.Kommissionierung.Find(model.Id).Beschreibung;
+
+            model.Waren = new List<KomWaren>();
+
+            var Waren = _context.Ware.Where(a => a.Ware_Beschreibung.Contains(model.Suche));
+
+            foreach (var w in Waren)
+            {
+
+                var KW = new KomWaren
+                {
+                    Ware_Id = w.Ware_Id,
+                    Beschreibung = w.Ware_Beschreibung,
+                    Menge = Convert.ToInt32(w.Menge),
+                    Ausgewählt = false
+                };
+                model.Waren.Add(KW);
+
+            }
+
+            foreach (var t in _context.KommissionierungWaren.Where(a => a.Kommision_Id.Equals(model.Id)).ToList())
+            {
+                var k = model.Waren.Find(a => a.Ware_Id.Equals(t.Ware_Id));
+                model.Waren.Remove(k);
+            }
+
+            int i = 0;
+            foreach (var k in model.ZwischenWaren.ToList())
+            {
+                if (!k.Ausgewählt)
+                {
+                    model.ZwischenWaren.Remove(k);
+                }
+                else
+                {
+                    var ware = _context.Ware.Find(k.Ware_Id);
+
+                    model.ZwischenWaren[i].Beschreibung = ware.Ware_Beschreibung;
+
+                    model.ZwischenWaren[i].Menge = Convert.ToInt32(ware.Menge);
+
+
+                }
+
+                i = i + 1;
+            }
+
+            if (model.ZwischenWaren.Count() == 0)
+            {
+                model.ZwischenWaren = new List<KomWaren>();
+            }
+
+            foreach (var t in model.ZwischenWaren)
+            {
+                var k = model.Waren.Find(a => a.Ware_Id.Equals(t.Ware_Id));
+                model.Waren.Remove(k);
+            }
+
+
+
+            return View(model);
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> HinzuAb(KomHinzufügenViewModel model)
         {
 
             if (ModelState.IsValid)

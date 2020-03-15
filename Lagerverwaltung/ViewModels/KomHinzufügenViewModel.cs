@@ -17,5 +17,7 @@ namespace Lagerverwaltung.ViewModels
         public string Beschreibung { get; set; }
 
         public bool Hinzu { get; set; }
+
+        public string Suche { get; set; }
     }
 }

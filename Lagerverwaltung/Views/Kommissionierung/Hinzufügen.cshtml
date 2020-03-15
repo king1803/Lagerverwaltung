@@ -10,12 +10,20 @@
 <h3>@Model.Beschreibung</h3>
 
 <div class="container-fluid">
-    
-    <div class="form-row">
-        <div class="col-6">
-            <form>
+    <form asp-action="Hinzufügen" method="post">
+        <div class="form-row">
 
-                
+            <div class="input-group mb-3">
+                <input asp-for="Suche" class="form-control" placeholder="Beschreibung Suche...">
+                <div class="input-group-append">
+                    <input type="submit" value="Suchen" class="btn btn-primary" />
+                </div>
+            </div>
+
+            <div class="col-6">
+
+
+
 
                 <table class="table">
                     <thead class="thead-dark">
@@ -63,13 +71,13 @@
                     </tbody>
                 </table>
                 <input type="hidden" asp-for="Hinzu" value="true" />
-                <button asp-action="Hinzufügen" type="submit" class="btn btn-primary float-right">Hinzufügen</button>
-            </form>
-        </div>
+                <button type="submit" class="btn btn-primary float-right">Hinzufügen</button>
+
+            </div>
 
 
-        <div class="col-6">
-            <form>
+            <div class="col-6">
+
 
 
 
@@ -115,11 +123,12 @@
                     </tbody>
                 </table>
                 <input type="hidden" asp-for="Id" value="@Model.Id" />
-                <input type="hidden" asp-for="Hinzu" value="false"/>
-                <button asp-action="Hinzufügen" type="submit" class="btn btn-primary float-left">Enfernen</button>
-                <button asp-action="Hinzufügen" formmethod="post" type="submit" class="btn btn-primary float-right">Speichern</button>
-            </form>
+                <input type="hidden" asp-for="Hinzu" value="false" />
+                <button class="btn btn-primary float-left">Enfernen</button>
+                <button asp-action="HinzuAb" formmethod="post" type="submit" class="btn btn-primary float-right">Speichern</button>
+
+            </div>
         </div>
-    </div>
-    <a class="btn btn-danger float-left" asp-action="Bearbeiten" asp-route-Id="@Model.Id">Zurück</a>
+        <a class="btn btn-danger float-left" asp-action="Bearbeiten" asp-route-Id="@Model.Id">Zurück</a>
+    </form>
 </div>
