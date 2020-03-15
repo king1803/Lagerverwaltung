@@ -570,7 +570,7 @@ namespace Lagerverwaltung.Controllers
         [HttpPost]
         public async Task<IActionResult> DazuBuchen(DazuBuchenViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Ware_Id != 0)
             {
                 var ware = _context.Ware.Find(model.Ware_Id);
                 ware.Menge = ware.Menge + model.MengeNeu;
