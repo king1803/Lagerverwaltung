@@ -22,7 +22,7 @@ namespace Lagerverwaltung.ViewModels
 
         public string Lagerplatz_Beschreibung { get; set; }
 
-        //public string User { get; set; }
+        public string User { get; set; }
 
         public string Hersteller_Beschreibung { get; set; }
 
