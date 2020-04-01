@@ -270,12 +270,11 @@ namespace Lagerverwaltung.Controllers
 
                 }
 
-
                 int t = model.Waren.Count();
 
-                if (t >= 25)
+                if (t >= model.ausgabeanzahl && model.ausgabeanzahl != 0)
                 {
-                    model.Waren.RemoveRange(1, (t - 25));
+                    model.Waren.RemoveRange(1, (t - model.ausgabeanzahl));
                 }
 
             }

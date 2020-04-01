@@ -1,5 +1,6 @@
 ﻿using Lagerverwaltung.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lagerverwaltung.ViewModels
 {
@@ -43,6 +44,9 @@ namespace Lagerverwaltung.ViewModels
         public List<Lagerplatz> Lagerplatz_Beschreibung { get; set; }
 
         public List<Reservierungen> Reservierung { get; set; }
+        
+        [Display(Name = "Zeilenanzahl: ")]
+        public int ausgabeanzahl { get; set; }
 
     }
 }
