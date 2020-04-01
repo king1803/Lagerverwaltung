@@ -45,7 +45,7 @@ namespace Lagerverwaltung.ViewModels
 
         public List<Reservierungen> Reservierung { get; set; }
 
-        [Range(0, 1000000, ErrorMessage = "Ergebnisanzahl darf nicht negativ sein")]
+        [Range(0, 1000001, ErrorMessage = "Ergebnisanzahl darf nicht negativ sein")]
         public int ausgabeanzahl { get; set; }
 
     }
