@@ -272,7 +272,7 @@ namespace Lagerverwaltung.Controllers
 
                 int t = model.Waren.Count();
 
-                if (t >= model.ausgabeanzahl && model.ausgabeanzahl != 0)
+                if (t >= model.ausgabeanzahl && model.ausgabeanzahl != 0 && ModelState.IsValid)
                 {
                     model.Waren.RemoveRange(1, (t - model.ausgabeanzahl));
                 }
@@ -394,6 +394,8 @@ namespace Lagerverwaltung.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            String username = "unkown";
+
             var ware = _context.Ware.Find(id);
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
             var user = await usernManager.FindByIdAsync(ware.User_id);
@@ -402,6 +404,11 @@ namespace Lagerverwaltung.Controllers
             var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
             var kostenstellennummer = _context.Kostenstelle.Find(ware.Kostenstelle_Nr);
 
+            if (user != null)
+            {
+                username = user.UserName;
+            }
+
             DetailsViewModel model = new DetailsViewModel
             {
                 Ware_Beschreibung = ware.Ware_Beschreibung,
@@ -409,7 +416,7 @@ namespace Lagerverwaltung.Controllers
                 Menge = decimal.Round(ware.Menge, 0),
                 Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
                 Lagerplatz_Beschreibung = lager.Lagerplatz_Beschreibung,
-                User = user.UserName,
+                User = username,
                 Hersteller_Beschreibung = hersteller.Hersteller_Beschreibung,
                 Lieferant_Beschreibung = lieferant.Lieferant_Beschreibung,
                 Kategorie_Beschreibung = kategorie.Kategorie_Name,
