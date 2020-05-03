@@ -18,6 +18,14 @@
                 </li>
                 <li class="list-group-item">
                     Eingelagerte Menge: <span class="text-danger">@Convert.ToInt32(Model.Menge)</span>
+                    @if (Model.Reservierung != 0 && Model.Reservierung < Model.Menge)
+                    {
+                        <span class="badge badge-pill badge-warning"> @Model.Reservierung Reserviert </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-pill badge-warning"> Alle Reserviert </span>
+                    }
                 </li>
                 <li class="list-group-item">
                     Lagerplatz: <span class="text-danger ">@Model.Lagerplatz_Beschreibung</span>
@@ -49,9 +57,18 @@
 
                 <div class="form-group, m-3">
                     <a asp-controller="Ware" asp-action="Bearbeiten" class="btn btn-warning" asp-route-id="@Model.Ware_Id"><i class="fa fa-pen"></i> Bearbeiten</a>
+                    @if (Convert.ToInt32(Model.Menge) == Model.Reservierung)
+                    {
+                    <button disabled type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Alle Waren reserviert">
+                    <i class="fa fa-box"></i>  Ausbuchen
+                    </button>
+                    }
+                    else
+                    {
                     <button data-toggle="modal" data-target="#Ausbuchen" class="btn btn-danger">
                         <i class="fa fa-box"></i>  Ausbuchen
                     </button>
+                    }
                     <a asp-action="Index" class="btn btn-primary">Zurück</a>
 
                 </div>

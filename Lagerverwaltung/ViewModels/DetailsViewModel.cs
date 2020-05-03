@@ -46,6 +46,8 @@ namespace Lagerverwaltung.ViewModels
 
         public string Auftragsnummer { get; set; }
 
+        public int Reservierung { get; set; }
+
 
 
     }

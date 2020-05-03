@@ -172,32 +172,7 @@ namespace Lagerverwaltung.Controllers
                 {
                     model.Waren.Add(_context.Ware.Find(a.Ware_Id));
 
-                    var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(a.Ware_Id));
-                    if (k.Any())
-                    {
-                        int Menge = 0;
-                        foreach(var kw in k)
-                        {
-                            Menge = Menge + kw.Menge;
-                        }
-
-                        Reservierungen reservierungen = new Reservierungen
-                        {
-                            Reserviert = true,
-                            Menge = Menge
-                        };
-                        model.Reservierung.Add(reservierungen);
-
-                    }
-                    else
-                    {
-                        Reservierungen reservierungen = new Reservierungen
-                        {
-                            Reserviert = false,
-                            Menge = 0
-                        };
-                        model.Reservierung.Add(reservierungen);
-                    }
+                    
                     
                 }
 
@@ -270,13 +245,38 @@ namespace Lagerverwaltung.Controllers
 
                 }
 
-
-                int t = model.Waren.Count();
-
-                if (t >= 25)
+                foreach(var w in model.Waren)
                 {
-                    model.Waren.RemoveRange(1, (t - 25));
+                    var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(w.Ware_Id));
+                    if (k.Any())
+                    {
+                        int Menge = 0;
+                        foreach (var kw in k)
+                        {
+                            Menge = Menge + kw.Menge;
+                        }
+
+                        Reservierungen reservierungen = new Reservierungen
+                        {
+                            Reserviert = true,
+                            Menge = Menge
+                        };
+                        model.Reservierung.Add(reservierungen);
+
+                    }
+                    else
+                    {
+                        Reservierungen reservierungen = new Reservierungen
+                        {
+                            Reserviert = false,
+                            Menge = 0
+                        };
+                        model.Reservierung.Add(reservierungen);
+                    }
                 }
+
+
+                
 
             }
 
@@ -403,6 +403,21 @@ namespace Lagerverwaltung.Controllers
             var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
             var kostenstellennummer = _context.Kostenstelle.Find(ware.Kostenstelle_Nr);
 
+            int rmenge = 0;
+
+            var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(id));
+            if (k.Any())
+            {
+                
+                foreach (var kw in k)
+                {
+                    rmenge = rmenge + kw.Menge;
+                }
+
+               
+
+            }
+
             DetailsViewModel model = new DetailsViewModel
             {
                 Ware_Beschreibung = ware.Ware_Beschreibung,
@@ -419,7 +434,9 @@ namespace Lagerverwaltung.Controllers
                 Seriennummer = ware.Seriennr,
                 Anschaffungskosten = decimal.Round(ware.Anschaff_Kosten, 2, MidpointRounding.AwayFromZero),
                 AusbuchenMenge = 1,
-                Auftragsnummer = ware.Auftragsnummer
+                Auftragsnummer = ware.Auftragsnummer,
+                Reservierung = rmenge
+                
 
 
             };
@@ -436,77 +453,100 @@ namespace Lagerverwaltung.Controllers
             int i = Convert.ToInt32(ware.Menge);
             var userID = usernManager.GetUserId(HttpContext.User);
 
-            if (j > i)
+            int rmenge = 0;
+
+            var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(ware.Ware_Id));
+            if (k.Any())
             {
-                ModelState.AddModelError("AusbuchenMenge", "Keine ausreichende Menge im Lager zum ausbuchen vorhanden");
+
+                foreach (var kw in k)
+                {
+                    rmenge = rmenge + kw.Menge;
+                }
+
+
 
             }
 
-
-            if (ModelState.IsValid)
+            if (j > (i - rmenge) && j <= i)
+            {
+                ModelState.AddModelError("AusbuchenMenge", "Menge Im Lager vorhanden, aber zum teil reserviert");
+            }
+            else
             {
 
-                if (i == j)
+                if (j > i)
                 {
+                    ModelState.AddModelError("AusbuchenMenge", "Keine ausreichende Menge im Lager zum ausbuchen vorhanden");
 
-                    var historie = new WareHistorie
-                    {
-                        Ware_Id_hi = ware.Ware_Id,
-                        Ware_Beschreibung_hi = ware.Ware_Beschreibung,
-                        Ware_Einlagerungsdatum_hi = ware.Ware_Einlagerungsdatum,
-                        Menge_hi = ware.Menge,
-                        Seriennr_hi = ware.Seriennr,
-                        Modellnr_hi = ware.Modellnummer,
-                        Anschaff_Kosten_hi = ware.Anschaff_Kosten,
-                        Kategorie_Name_hi = ware.Kategorie_Name,
-                        Lagerplatz_Id_hi = ware.Lagerplatz_Id,
-                        Lieferant_Id_hi = ware.Lagerplatz_Id,
-                        Kostenstelle_Nr_hi = ware.Kostenstelle_Nr,
-                        Hersteller_Id_hi = ware.Hersteller_Id,
-                        User_id_hi = ware.User_id,
-                        Ausbuchen_User = userID,
-                        Ware_Auslagerungsdatum_hi = DateTime.Today
-
-                    };
-                    _context.WareHistorie.Add(historie);
-                    await _context.SaveChangesAsync();
-
-                    _context.Ware.Remove(ware);
-                    await _context.SaveChangesAsync();
-
-                    return RedirectToAction("Index");
                 }
 
-                if (j < i)
+
+                if (ModelState.IsValid)
                 {
 
-                    ware.Menge = ware.Menge - model.AusbuchenMenge;
-
-                    var historie = new WareHistorie
+                    if (i == j)
                     {
-                        Ware_Id_hi = ware.Ware_Id,
-                        Ware_Beschreibung_hi = ware.Ware_Beschreibung,
-                        Ware_Einlagerungsdatum_hi = ware.Ware_Einlagerungsdatum,
-                        Menge_hi = model.AusbuchenMenge,
-                        Seriennr_hi = ware.Seriennr,
-                        Modellnr_hi = ware.Modellnummer,
-                        Anschaff_Kosten_hi = ware.Anschaff_Kosten,
-                        Kategorie_Name_hi = ware.Kategorie_Name,
-                        Lagerplatz_Id_hi = ware.Lagerplatz_Id,
-                        Lieferant_Id_hi = ware.Lagerplatz_Id,
-                        Kostenstelle_Nr_hi = ware.Kostenstelle_Nr,
-                        Hersteller_Id_hi = ware.Hersteller_Id,
-                        User_id_hi = ware.User_id,
-                        Ausbuchen_User = userID,
-                        Ware_Auslagerungsdatum_hi = DateTime.Today
 
-                    };
-                    _context.WareHistorie.Add(historie);
-                    await _context.SaveChangesAsync();
+                        var historie = new WareHistorie
+                        {
+                            Ware_Id_hi = ware.Ware_Id,
+                            Ware_Beschreibung_hi = ware.Ware_Beschreibung,
+                            Ware_Einlagerungsdatum_hi = ware.Ware_Einlagerungsdatum,
+                            Menge_hi = ware.Menge,
+                            Seriennr_hi = ware.Seriennr,
+                            Modellnr_hi = ware.Modellnummer,
+                            Anschaff_Kosten_hi = ware.Anschaff_Kosten,
+                            Kategorie_Name_hi = ware.Kategorie_Name,
+                            Lagerplatz_Id_hi = ware.Lagerplatz_Id,
+                            Lieferant_Id_hi = ware.Lagerplatz_Id,
+                            Kostenstelle_Nr_hi = ware.Kostenstelle_Nr,
+                            Hersteller_Id_hi = ware.Hersteller_Id,
+                            User_id_hi = ware.User_id,
+                            Ausbuchen_User = userID,
+                            Ware_Auslagerungsdatum_hi = DateTime.Today
 
-                    _context.Ware.Update(ware);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                        };
+                        _context.WareHistorie.Add(historie);
+                        await _context.SaveChangesAsync();
+
+                        _context.Ware.Remove(ware);
+                        await _context.SaveChangesAsync();
+
+                        return RedirectToAction("Index");
+                    }
+
+                    if (j < i)
+                    {
+
+                        ware.Menge = ware.Menge - model.AusbuchenMenge;
+
+                        var historie = new WareHistorie
+                        {
+                            Ware_Id_hi = ware.Ware_Id,
+                            Ware_Beschreibung_hi = ware.Ware_Beschreibung,
+                            Ware_Einlagerungsdatum_hi = ware.Ware_Einlagerungsdatum,
+                            Menge_hi = model.AusbuchenMenge,
+                            Seriennr_hi = ware.Seriennr,
+                            Modellnr_hi = ware.Modellnummer,
+                            Anschaff_Kosten_hi = ware.Anschaff_Kosten,
+                            Kategorie_Name_hi = ware.Kategorie_Name,
+                            Lagerplatz_Id_hi = ware.Lagerplatz_Id,
+                            Lieferant_Id_hi = ware.Lagerplatz_Id,
+                            Kostenstelle_Nr_hi = ware.Kostenstelle_Nr,
+                            Hersteller_Id_hi = ware.Hersteller_Id,
+                            User_id_hi = ware.User_id,
+                            Ausbuchen_User = userID,
+                            Ware_Auslagerungsdatum_hi = DateTime.Today
+
+                        };
+                        _context.WareHistorie.Add(historie);
+                        await _context.SaveChangesAsync();
+
+                        _context.Ware.Update(ware);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Index");
+                    }
                 }
             }
 
