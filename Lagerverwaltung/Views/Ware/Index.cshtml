@@ -8,6 +8,7 @@
 
     <div class="container">
         <h1>Index</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <a asp-action="Buchen" class="btn btn-primary btn-sm mb-3">
             <i class="fa fa-file"></i>  Einbuchen
         </a>
@@ -68,143 +69,150 @@
 
                     <input asp-for="Sortierung" type="hidden" value="@Model.Sortierung">
                     <input asp-for="Suche" type="hidden" value="true">
-                </div>                         
+                </div>
             </div>
+            <div class="row">
+                <div class="input-group mb-3 col-8">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-search"></i>  Suchen
+                    </button>
 
-            <div class="input-group mb-3">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-search"></i>  Suchen
-                </button>
-            </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Suchergebnisse: </label>
+                    <div class="col-sm-8">
+                        <input asp-for="ausgabeanzahl" class="form-control float-right" placeholder="Max. Zeilenanzahl" value="@Model.ausgabeanzahl" width="10" />
+                    </div>
+                </div>
         </form>
 
 
 
-            <table class="table table-sm table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <form asp-action="Index">
-                                <div class="input-group">
-                                    <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
-                                    <input asp-for="Sortierung" type="hidden" value="Beschreibung">
-                                    <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
-                                    <input asp-for="Menge" type="hidden" value="@Model.Menge">
-                                    <input asp-for="Datum" type="hidden" value="@Model.Datum">
-                                    <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
-                                    <input asp-for="Suche" type="hidden" value="true">
-                                    <button type="submit" class=" btn btn-dark">
-                                        Beschreibung
-                                    </button>
-                                </div>
-                            </form>
+        <table class="table table-sm table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">
+                        <form asp-action="Index">
+                            <div class="input-group">
+                                <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
+                                <input asp-for="Sortierung" type="hidden" value="Beschreibung">
+                                <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
+                                <input asp-for="Menge" type="hidden" value="@Model.Menge">
+                                <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
+                                <input asp-for="Suche" type="hidden" value="true">
+                                <button type="submit" class=" btn btn-dark">
+                                    Beschreibung
+                                </button>
+                            </div>
+                        </form>
 
-                        </th>
-                        <th scope="col">
-                            <form asp-action="Index">
-                                <div class="input-group">
-                                    <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
-                                    <input asp-for="Sortierung" type="hidden" value="Lagerplatz">
-                                    <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
-                                    <input asp-for="Menge" type="hidden" value="@Model.Menge">
-                                    <input asp-for="Datum" type="hidden" value="@Model.Datum">
-                                    <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
-                                    <input asp-for="Suche" type="hidden" value="true">
-                                    <button type="submit" class=" btn btn-dark">
-                                        Lagerplatz
-                                    </button>
-                                </div>
-                            </form>
+                    </th>
+                    <th scope="col">
+                        <form asp-action="Index">
+                            <div class="input-group">
+                                <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
+                                <input asp-for="Sortierung" type="hidden" value="Lagerplatz">
+                                <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
+                                <input asp-for="Menge" type="hidden" value="@Model.Menge">
+                                <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
+                                <input asp-for="Suche" type="hidden" value="true">
+                                <button type="submit" class=" btn btn-dark">
+                                    Lagerplatz
+                                </button>
+                            </div>
+                        </form>
 
-                        </th>
-                        <th scope="col" class="align-items-center">
-                            <form asp-action="Index">
-                                <div class="input-group">
-                                    <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
-                                    <input asp-for="Sortierung" type="hidden" value="Menge">
-                                    <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
-                                    <input asp-for="Menge" type="hidden" value="@Model.Menge">
-                                    <input asp-for="Datum" type="hidden" value="@Model.Datum">
-                                    <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
-                                    <input asp-for="Suche" type="hidden" value="true">
-                                    <button type="submit" class=" btn btn-dark">
-                                        Menge
-                                    </button>
-                                </div>
-                            </form>
-                        </th>
-                        <th scope="col" class="align-items-center">
-                            <form asp-action="Index">
-                                <div class="input-group">
-                                    <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
-                                    <input asp-for="Sortierung" type="hidden" value="Datum">
-                                    <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
-                                    <input asp-for="Menge" type="hidden" value="@Model.Menge">
-                                    <input asp-for="Datum" type="hidden" value="@Model.Datum">
-                                    <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
-                                    <input asp-for="Suche" type="hidden" value="true">
-                                    <button type="submit" class=" btn btn-dark">
-                                        Einlagerungsdatum
-                                    </button>
-                                </div>
-                            </form>
-                        </th>
+                    </th>
+                    <th scope="col" class="align-items-center">
+                        <form asp-action="Index">
+                            <div class="input-group">
+                                <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
+                                <input asp-for="Sortierung" type="hidden" value="Menge">
+                                <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
+                                <input asp-for="Menge" type="hidden" value="@Model.Menge">
+                                <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
+                                <input asp-for="Suche" type="hidden" value="true">
+                                <button type="submit" class=" btn btn-dark">
+                                    Menge
+                                </button>
+                            </div>
+                        </form>
+                    </th>
+                    <th scope="col" class="align-items-center">
+                        <form asp-action="Index">
+                            <div class="input-group">
+                                <input asp-for="Suche_Beschreibung" type="hidden" value="@Model.Suche_Beschreibung">
+                                <input asp-for="Sortierung" type="hidden" value="Datum">
+                                <input asp-for="Beschreiung" type="hidden" value="@Model.Beschreiung">
+                                <input asp-for="Menge" type="hidden" value="@Model.Menge">
+                                <input asp-for="Datum" type="hidden" value="@Model.Datum">
+                                <input asp-for="Lagerplatz" type="hidden" value="@Model.Lagerplatz">
+                                <input asp-for="Suche" type="hidden" value="true">
+                                <button type="submit" class=" btn btn-dark">
+                                    Einlagerungsdatum
+                                </button>
+                            </div>
+                        </form>
+                    </th>
 
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{ int i = 0;
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 0;
 
-                    }
-                    @if (Model.Waren != null)
+                }
+                @if (Model.Waren != null)
+                {
+
+
+                    @foreach (var ware in Model.Waren)
                     {
-
-
-                        @foreach (var ware in Model.Waren)
-                        {
-                            i++;
+                        i++;
 
 
 
-                    <tr>
-                        <th scope="row">@i</th>
-                        <td>
-                            @ware.Ware_Beschreibung
-                            @if (Model.Reservierung[i - 1].Reserviert)
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>
+                                @ware.Ware_Beschreibung
+                                @if (Model.Reservierung[i - 1].Reserviert)
+                                {
+                                    <span class="badge badge-pill badge-warning">Reserviert @Model.Reservierung[i - 1].Menge</span>
+                                }
+                            </td>
+
+                            @foreach (var lagerp in Model.Lagerplatz_Beschreibung)
                             {
-                                <span class="badge badge-pill badge-warning">Reserviert @Model.Reservierung[i - 1].Menge</span>
+                                if (ware.Lagerplatz_Id == lagerp.Lagerplatz_Id)
+                                {
+                                    <td class="text-center">
+                                        @lagerp.Lagerplatz_Beschreibung
+                                    </td>
+                                }
                             }
-                        </td>
 
-                        @foreach (var lagerp in Model.Lagerplatz_Beschreibung)
-                        {
-                            if (ware.Lagerplatz_Id == lagerp.Lagerplatz_Id)
-                            {
-                                <td class="text-center">
-                                    @lagerp.Lagerplatz_Beschreibung
-                                </td>
-                            }
-                        }
+                            <td class="text-center">
+                                @Convert.ToInt32(ware.Menge)
+                            </td>
+                            <td class="text-center">
+                                @ware.Ware_Einlagerungsdatum.ToShortDateString()
+                            </td>
 
-                         <td class="text-center">
-                              @Convert.ToInt32(ware.Menge)
-                         </td>
-                         <td class="text-center">
-                              @ware.Ware_Einlagerungsdatum.ToShortDateString()
-                         </td>
-
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
-                                        Details
-                                    </a>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@ware.Ware_Id " class="btn btn-outline-danger btn-sm">
+                                    Details
+                                </a>
 
 
-                                </td>
-                            </tr>
-                        }
+                            </td>
+                        </tr>
                     }
-                </tbody>
-            </table>
+                }
+            </tbody>
+        </table>
     </div>

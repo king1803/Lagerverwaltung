@@ -245,34 +245,12 @@ namespace Lagerverwaltung.Controllers
 
                 }
 
-                foreach(var w in model.Waren)
+
+                int t = model.Waren.Count();
+
+                if (t >= 25)
                 {
-                    var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(w.Ware_Id));
-                    if (k.Any())
-                    {
-                        int Menge = 0;
-                        foreach (var kw in k)
-                        {
-                            Menge = Menge + kw.Menge;
-                        }
-
-                        Reservierungen reservierungen = new Reservierungen
-                        {
-                            Reserviert = true,
-                            Menge = Menge
-                        };
-                        model.Reservierung.Add(reservierungen);
-
-                    }
-                    else
-                    {
-                        Reservierungen reservierungen = new Reservierungen
-                        {
-                            Reserviert = false,
-                            Menge = 0
-                        };
-                        model.Reservierung.Add(reservierungen);
-                    }
+                    model.Waren.RemoveRange(1, (t - 25));
                 }
 
 
@@ -395,6 +373,8 @@ namespace Lagerverwaltung.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            String username = "unkown";
+
             var ware = _context.Ware.Find(id);
             var lager = _context.Lagerplatz.Find(ware.Lagerplatz_Id);
             var user = await usernManager.FindByIdAsync(ware.User_id);
@@ -403,21 +383,6 @@ namespace Lagerverwaltung.Controllers
             var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
             var kostenstellennummer = _context.Kostenstelle.Find(ware.Kostenstelle_Nr);
 
-            int rmenge = 0;
-
-            var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(id));
-            if (k.Any())
-            {
-                
-                foreach (var kw in k)
-                {
-                    rmenge = rmenge + kw.Menge;
-                }
-
-               
-
-            }
-
             DetailsViewModel model = new DetailsViewModel
             {
                 Ware_Beschreibung = ware.Ware_Beschreibung,
@@ -425,7 +390,7 @@ namespace Lagerverwaltung.Controllers
                 Menge = decimal.Round(ware.Menge, 0),
                 Ware_Einlagerungsdatum = ware.Ware_Einlagerungsdatum,
                 Lagerplatz_Beschreibung = lager.Lagerplatz_Beschreibung,
-                User = user.UserName,
+                User = username,
                 Hersteller_Beschreibung = hersteller.Hersteller_Beschreibung,
                 Lieferant_Beschreibung = lieferant.Lieferant_Beschreibung,
                 Kategorie_Beschreibung = kategorie.Kategorie_Name,

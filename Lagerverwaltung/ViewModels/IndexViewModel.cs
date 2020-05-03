@@ -1,5 +1,6 @@
 ﻿using Lagerverwaltung.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lagerverwaltung.ViewModels
 {
@@ -43,6 +44,9 @@ namespace Lagerverwaltung.ViewModels
         public List<Lagerplatz> Lagerplatz_Beschreibung { get; set; }
 
         public List<Reservierungen> Reservierung { get; set; }
+
+        [Range(0, 1000000, ErrorMessage = "Ergebnisanzahl darf nicht negativ sein")]
+        public int ausgabeanzahl { get; set; }
 
     }
 }
