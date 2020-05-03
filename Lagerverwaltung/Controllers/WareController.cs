@@ -172,8 +172,8 @@ namespace Lagerverwaltung.Controllers
                 {
                     model.Waren.Add(_context.Ware.Find(a.Ware_Id));
 
-                    
-                    
+
+
                 }
 
                 if (!string.IsNullOrEmpty(model.Sortierung))
@@ -245,20 +245,53 @@ namespace Lagerverwaltung.Controllers
 
                 }
 
-
                 int t = model.Waren.Count();
 
                 if (t >= 25)
+                    if (t >= model.ausgabeanzahl && model.ausgabeanzahl != 0)
+                    {
+                        model.Waren.RemoveRange(1, (t - 25));
+                        model.Waren.RemoveRange(1, (t - model.ausgabeanzahl));
+                    }
+
+
+                foreach (var w in model.Waren)
                 {
-                    model.Waren.RemoveRange(1, (t - 25));
+                    var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(w.Ware_Id));
+                    if (k.Any())
+                    {
+                        int Menge = 0;
+                        foreach (var kw in k)
+                        {
+                            Menge = Menge + kw.Menge;
+                        }
+
+
+                        Reservierungen reservierungen = new Reservierungen
+                        {
+                            Reserviert = true,
+                            Menge = Menge
+                        };
+                        model.Reservierung.Add(reservierungen);
+
+                    }
+                    else
+                    {
+                        Reservierungen reservierungen = new Reservierungen
+                        {
+                            Reserviert = false,
+                            Menge = 0
+                        };
+                        model.Reservierung.Add(reservierungen);
+                    }
+
+
+
+
+
                 }
 
-
-                
-
             }
-
-            
 
             
 
@@ -382,6 +415,21 @@ namespace Lagerverwaltung.Controllers
             var lieferant = _context.Lieferant.Find(ware.Lieferant_Id);
             var kategorie = _context.Kategorie.Find(ware.Kategorie_Name);
             var kostenstellennummer = _context.Kostenstelle.Find(ware.Kostenstelle_Nr);
+
+            int rmenge = 0;
+
+            var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(id));
+            if (k.Any())
+            {
+
+                foreach (var kw in k)
+                {
+                    rmenge = rmenge + kw.Menge;
+                }
+
+
+
+            }
 
             DetailsViewModel model = new DetailsViewModel
             {
