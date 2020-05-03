@@ -467,14 +467,16 @@ namespace Lagerverwaltung.Controllers
             var userID = usernManager.GetUserId(HttpContext.User);
 
             int rmenge = 0;
+            string Reservierungen = "";
 
-            var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(ware.Ware_Id));
+            var k = _context.KommissionierungWaren.Where(s => s.Ware_Id.Equals(ware.Ware_Id)).ToList();
             if (k.Any())
             {
 
                 foreach (var kw in k)
                 {
                     rmenge = rmenge + kw.Menge;
+                    Reservierungen = Reservierungen + _context.Kommissionierung.Find(kw.Kommision_Id).Beschreibung + " : " + kw.Menge;
                 }
 
 
@@ -483,7 +485,8 @@ namespace Lagerverwaltung.Controllers
 
             if (j > (i - rmenge) && j <= i)
             {
-                ModelState.AddModelError("AusbuchenMenge", "Menge Im Lager vorhanden, aber zum teil reserviert");
+
+                ModelState.AddModelError("AusbuchenMenge", "Menge Im Lager vorhanden, aber "+rmenge+" reserviert in:" + Reservierungen);
             }
             else
             {
