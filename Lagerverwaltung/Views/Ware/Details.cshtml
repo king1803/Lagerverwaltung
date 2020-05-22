@@ -22,7 +22,7 @@
                     {
                         <span class="badge badge-pill badge-warning"> @Model.Reservierung Reserviert </span>
                     }
-                    else
+                    @if(Model.Reservierung != 0 && Model.Reservierung == Model.Menge)
                     {
                         <span class="badge badge-pill badge-warning"> Alle Reserviert </span>
                     }
